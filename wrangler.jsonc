@@ -1,0 +1,16 @@
+// Cloudflare Workers: Vorschau bis zum Livegang (nicht für Infomaniak nötig)
+// Dashboard: Build command `npm run build:vorschau`, Deploy command `npx wrangler deploy`
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "kustomwork",
+  "main": "worker/index.js",
+  "compatibility_date": "2025-11-01",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": true,
+    "html_handling": "auto-trailing-slash",
+    "not_found_handling": "404-page"
+  },
+  "observability": { "enabled": true }
+}

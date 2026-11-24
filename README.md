@@ -73,14 +73,16 @@ Für die Auswertung schickt das Formular mit, über welche Seite und Quelle (Ref
 
 Für eine geschützte Vorschau: `npm run build:vorschau` und Verzeichnisschutz im Infomaniak Manager aktivieren.
 
-## Vorschau auf Cloudflare Pages (bis zum Livegang)
+## Vorschau auf Cloudflare (Workers, bis zum Livegang)
 
-1. In Cloudflare: Workers & Pages → Create → Pages → Connect to Git → Repo `i-Dos/Kustomwork` wählen.
-2. Build command: `npm run build:vorschau` · Build output directory: `dist`
-3. Unter Settings → Variables and Secrets: `VORSCHAU_PASSWORT` (als Secret) setzen, optional `VORSCHAU_BENUTZER` (Standard `kustom`).
-4. Jeder Push auf `main` aktualisiert die Vorschau automatisch.
+Konfiguration: `wrangler.jsonc` (Worker `kustomwork`, statische Dateien aus `dist/`) und `worker/index.js` (Passwortschutz).
 
-Der Passwortschutz steckt in `functions/_middleware.js`. Dazu ist die Vorschau dreifach gegen Suchmaschinen gesperrt: meta robots, robots.txt und X-Robots-Tag. Das Anfrageformular funktioniert dort nicht (kein PHP).
+Im Cloudflare-Dashboard unter Workers & Pages → `kustomwork` → Settings:
+1. **Build:** Build command `npm run build:vorschau`, Deploy command `npx wrangler deploy`, Root directory leer, Branch `main`.
+2. **Variables and Secrets:** Secret `VORSCHAU_PASSWORT` setzen, optional Text-Variable `VORSCHAU_BENUTZER` (Standard `kustom`).
+3. Jeder Push auf `main` baut und veröffentlicht die Vorschau neu.
+
+Die Vorschau ist dreifach gegen Suchmaschinen gesperrt: meta robots, robots.txt und X-Robots-Tag. `.htaccess` und `anfrage.php` werden dort nicht hochgeladen (`public/.assetsignore`), das Formular funktioniert also erst auf Infomaniak.
 
 ## PWA
 
