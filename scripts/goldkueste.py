@@ -134,16 +134,17 @@ def svg(inhalt, attrs=''):
     return f'<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 {W} {H}" {attrs}>{inhalt}</svg>'
 
 fuss = svg(
-    f'<path d="{hinten}" fill="{BRAUN}" fill-opacity=".32"/><path d="{turm}" fill="{BRAUN}" fill-opacity=".32"/>'
-    f'<path d="{hang_pfad}" fill="{BRAUN}" fill-opacity=".38"/>'
-    f'<path d="{reben}" stroke="{BRAUN}" stroke-opacity=".35" stroke-width="1.2" fill="none"/>'
-    f'<path d="{" ".join(hangvillen)}" fill="{BRAUN}" fill-opacity=".75"/>'
-    f'<path d="{" ".join(vorne)} {kirche} M0,{UFER} H{W} V{H} H0 Z" fill="{BRAUN}"/>'
-    f'<path d="{kreuz}" stroke="{BRAUN}" stroke-width="1.6" fill="none"/>'
-    f'<path d="{uhr}" stroke="{SAND}" stroke-opacity=".35" stroke-width="1" fill="none"/>'
-    f'<path d="{wellen} {spiegel}" stroke="{SAND}" stroke-opacity=".2" stroke-width="1.2" stroke-linecap="round" fill="none"/>'
-    f'<path d="{faehre} {segel}" fill="{SAND}" fill-opacity=".22"/>'
-    f'<path d="{flagge}" fill="#a33b2a" fill-opacity=".6"/>',
+    f'<path d="{hinten}" fill="{BRAUN}" fill-opacity=".1"/><path d="{turm}" fill="{BRAUN}" fill-opacity=".1"/>'
+    f'<path d="{hang_pfad}" fill="{BRAUN}" fill-opacity=".14"/>'
+    f'<path d="{reben}" stroke="{BRAUN}" stroke-opacity=".14" stroke-width="1.2" fill="none"/>'
+    f'<path d="{" ".join(hangvillen)}" fill="{BRAUN}" fill-opacity=".25"/>'
+    f'<path d="{" ".join(vorne)} {kirche}" fill="{BRAUN}" fill-opacity=".38"/>'
+    f'<path d="M0,{UFER} H{W} V{H} H0 Z" fill="{BRAUN}"/>'
+    f'<path d="{kreuz}" stroke="{BRAUN}" stroke-opacity=".38" stroke-width="1.6" fill="none"/>'
+    f'<path d="{uhr}" stroke="{SAND}" stroke-opacity=".2" stroke-width="1" fill="none"/>'
+    f'<path d="{wellen} {spiegel}" stroke="{SAND}" stroke-opacity=".12" stroke-width="1.2" stroke-linecap="round" fill="none"/>'
+    f'<path d="{faehre} {segel}" fill="{SAND}" fill-opacity=".13"/>'
+    f'<path d="{flagge}" fill="#a33b2a" fill-opacity=".3"/>',
     'preserveAspectRatio="xMidYMax slice"')
 open('public/grafik/goldkueste-fuss.svg', 'w').write(fuss)
 
