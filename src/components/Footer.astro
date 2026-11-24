@@ -1,8 +1,10 @@
 ---
 import { site } from '../config/site';
+import Goldkueste from './Goldkueste.astro';
 const year = new Date().getFullYear();
 ---
 <footer class="fuss section--dark">
+  <Goldkueste variante="fuss" />
   <div class="wrap fuss__grid">
     <div>
       <img src={site.logo.hell} alt={`Logo ${site.name}`} width="170" height="153" class="fuss__logo" loading="lazy" />
@@ -50,7 +52,7 @@ const year = new Date().getFullYear();
 </footer>
 
 <style>
-  .fuss { padding-block: 4rem 2rem; font-size: var(--step--1); background: var(--leder-tief) var(--grain); color: var(--on-dark); }
+  .fuss { position: relative; padding-block: 4rem 2rem; font-size: var(--step--1); background: var(--leder-tief) var(--grain); color: var(--on-dark); }
   .fuss a { color: var(--on-dark); }
   .fuss__grid { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); }
   .fuss__logo { width: 170px; height: auto; margin-bottom: 1rem; }
