@@ -4,5 +4,5 @@ import Seitenkopf from '../../components/Seitenkopf.astro';
 import { site } from '../../config/site';
 ---
 <Base title="Offline" noindex>
-  <Seitenkopf eyebrow="Kein Netz" title="Gerade offline." lead={`Sobald du wieder Empfang hast, geht es weiter. Andy erreichst du unter ${site.phone}.`} />
+  <Seitenkopf eyebrow="Kein Netz" title="Gerade offline." lead={`Sobald du wieder Empfang hast, geht es weiter. Andy erreichst du unter ${site.phone.replace(/ /g, "\u00a0")}.`} />
 </Base>

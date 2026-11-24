@@ -1,46 +1,18 @@
 ---
 /**
- * Silhouette der Zürcher Goldküste: Pfannenstiel mit Aussichtsturm, Ufer mit Häusern,
- * reformierte Kirche Meilen und die Fähre Meilen–Horgen. Handgezeichnet als SVG, ohne Bilddatei.
+ * Silhouette der Zürcher Goldküste (Meilen), erzeugt mit scripts/goldkueste.py.
  * variante «fuss»: gefüllt, sitzt oben auf der Fusszeile. «linie»: feine Trennlinie.
+ * Als <img> eingebunden: einmal geladen, danach aus dem Cache, HTML bleibt schlank.
  */
 interface Props { variante?: 'fuss' | 'linie'; class?: string }
 const { variante = 'linie', class: klasse } = Astro.props;
-const huegel = 'M0,112 C20,110.7 77,107.3 120,104 C163,100.7 213,96.0 260,92 C307,88.0 357,83.7 400,80 C443,76.3 480,73.3 520,70 C560,66.7 600,63.0 640,60 C680,57.0 720,54.2 760,52 C800,49.8 847,48.0 880,47 C913,46.0 933,45.7 960,46 C987,46.3 1007,47.0 1040,49 C1073,51.0 1120,54.5 1160,58 C1200,61.5 1240,66.0 1280,70 C1320,74.0 1363,78.3 1400,82 C1437,85.7 1467,89.3 1500,92 C1533,94.7 1583,97.0 1600,98';
-const turm = 'M955,46 L957,30 L961,30 L963,46 M954,30 L964,30 L959,26 Z';
-const ufer = 'M180,122 V108 L190,101 L200,108 V122 Z M236,122 V108 L246,103 L256,108 V122 Z M259,122 V114 L266,110 L273,114 V122 Z M321,122 C321,109 333,109 333,122 Z M339,122 V114 L349,110 L359,114 V122 Z M361,122 V115 L368,108 L376,115 V122 Z M383,122 V112 L390,106 L398,112 V122 Z M407,122 V108 L414,102 L420,108 V122 Z M477,122 C477,107 491,107 491,122 Z M495,122 C495,102 513,102 513,122 Z M517,122 V114 L528,107 L538,114 V122 Z M541,122 C541,104 557,104 557,122 Z M606,122 C606,109 618,109 618,122 Z M642,122 V109 L651,105 L660,109 V122 Z M665,122 C665,107 679,107 679,122 Z M683,122 V115 L692,108 L700,115 V122 Z M703,122 V115 L710,111 L716,115 V122 Z M725,122 C725,109 737,109 737,122 Z M744,122 C744,104 760,104 760,122 Z M846,122 V109 L857,105 L868,109 V122 Z M876,122 V115 L884,109 L891,115 V122 Z M917,122 V114 L926,110 L935,114 V122 Z M939,122 V115 L947,109 L955,115 V122 Z M961,122 V114 L968,109 L974,114 V122 Z M979,122 V110 L988,103 L996,110 V122 Z M1035,122 C1035,109 1047,109 1047,122 Z M1055,122 V113 L1066,107 L1077,113 V122 Z M1082,122 C1082,109 1094,109 1094,122 Z M1101,122 V112 L1112,105 L1123,112 V122 Z M1132,122 C1132,104 1148,104 1148,122 Z M1150,122 V111 L1156,106 L1162,111 V122 Z M1170,122 V108 L1180,102 L1191,108 V122 Z M1201,122 V113 L1208,108 L1214,113 V122 Z M1223,122 C1223,102 1241,102 1241,122 Z M1247,122 V112 L1254,108 L1262,112 V122 Z M1265,122 V112 L1274,108 L1284,112 V122 Z M1286,122 V113 L1294,109 L1303,113 V122 Z M1310,122 V110 L1320,105 L1329,110 V122 Z M1408,122 V115 L1414,111 L1420,115 V122 Z';
-const kirche = 'M770,122 V106 L790,96 L810,106 V122 Z M808,122 V70 H822 V122 Z M806,70 L815,38 L824,70 Z';
-const kreuz = 'M815,38 V31 M812,34 H818';
-const faehre = 'M1080,134 L1086,141 H1170 L1176,134 Z M1092,134 V129 H1162 V134 Z M1118,129 V123 H1136 V129 Z M1124,123 V119 H1128 V123 Z';
-const wellen = 'M140,132 q6,-3 12,0 t12,0 M380,138 q6,-3 12,0 t12,0 M620,131 q6,-3 12,0 t12,0 M940,136 q6,-3 12,0 t12,0 M1240,133 q6,-3 12,0 t12,0 M1450,139 q6,-3 12,0 t12,0 M1020,141 q6,-3 12,0 t12,0';
 ---
-{variante === 'fuss' ? (
-  <svg class:list={['gk gk--fuss', klasse]} viewBox="0 0 1600 150" preserveAspectRatio="xMidYMax slice" aria-hidden="true" focusable="false">
-    <path class="gk__huegel" d={`${huegel} L1600,122 L0,122 Z ${turm}`} />
-    <path class="gk__vorne" d={`${ufer} ${kirche} M0,122 H1600 V150 H0 Z`} />
-    <path class="gk__kreuz" d={kreuz} />
-    <path class="gk__wellen" d={wellen} />
-    <path class="gk__faehre" d={faehre} />
-  </svg>
-) : (
-  <svg class:list={['gk gk--linie', klasse]} viewBox="0 0 1600 150" aria-hidden="true" focusable="false">
-    <path class="gk__l" d={`${huegel} ${turm}`} />
-    <path class="gk__l gk__deck" d={`${ufer} ${kirche}`} />
-    <path class="gk__l" d={`M0,122 H1600 ${kreuz} ${faehre}`} />
-    <path class="gk__l gk__w" d={wellen} />
-  </svg>
-)}
+{variante === 'fuss'
+  ? <img class:list={['gk gk--fuss', klasse]} src="/grafik/goldkueste-fuss.svg" alt="" width="1600" height="210" loading="lazy" decoding="async" />
+  : <img class:list={['gk gk--linie', klasse]} src="/grafik/goldkueste-linie.svg" alt="Zeichnung der Goldküste bei Meilen mit Pfannenstiel, Kirche und Fähre" width="1600" height="210" loading="lazy" decoding="async" />}
 
 <style>
   .gk { display: block; width: 100%; height: auto; }
-  .gk--fuss { position: absolute; left: 0; right: 0; bottom: calc(100% - 1px); height: clamp(4.5rem, 9vw, 9rem); pointer-events: none; }
-  .gk__huegel { fill: var(--leder-tief); opacity: .45; }
-  .gk__vorne { fill: var(--leder-tief); }
-  .gk__kreuz { stroke: var(--leder-tief); stroke-width: 1.5; fill: none; }
-  .gk__wellen { fill: none; stroke: var(--sand); stroke-opacity: .22; stroke-width: 1.2; stroke-linecap: round; }
-  .gk__faehre { fill: var(--sand); opacity: .22; }
-  .gk--linie { color: var(--leder); opacity: .65; margin-block: 2.5rem; }
-  .gk__l { fill: none; stroke: currentColor; stroke-width: 1.6; stroke-linejoin: round; stroke-linecap: round; vector-effect: non-scaling-stroke; }
-  .gk__deck { fill: var(--gk-grund, var(--sand)); }
-  .gk__w { opacity: .55; }
+  .gk--fuss { position: absolute; left: 0; right: 0; bottom: calc(100% - 1px); height: auto; min-height: 3.5rem; object-fit: cover; object-position: center bottom; pointer-events: none; }
+  .gk--linie { margin-block: 2.5rem; opacity: .9; }
 </style>
