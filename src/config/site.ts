@@ -57,10 +57,11 @@ export const site = {
   },
 
   partners: [
-    { name: 'Motorcycle Storehouse', url: '' },
-    { name: 'Iron & Resin', url: '' },
-    { name: 'The Rokker Company', url: '' },
-    { name: 'WWAG', url: '' },
+    // logo = einfarbige Version in public/partner (Original in brand/partner-original)
+    { name: 'Motorcycle Storehouse', url: 'https://www.motorcyclestorehouse.com/', logo: '/partner/motorcycle-storehouse.png', w: 634, h: 120 },
+    { name: 'Iron & Resin', url: 'https://ironandresin.com/', logo: '/partner/iron-and-resin.png', w: 324, h: 120 },
+    { name: 'The Rokker Company', url: 'https://www.therokkercompany.com/', logo: '/partner/rokker.png', w: 243, h: 120 },
+    { name: 'W&W Cycles', url: 'https://www.wwag.com/de/shop', logo: '/partner/wwag.png', w: 180, h: 120 },
   ],
 
   // --- Navigation --------------------------------------------

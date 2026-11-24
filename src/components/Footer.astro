@@ -31,10 +31,18 @@ const year = new Date().getFullYear();
         <li><a href="/blog/">Blog</a> · <a href="/rss.xml">RSS</a></li>
         <li><a href="/sixnineteen/">Sixnineteen</a></li>
       </ul>
-      <h2 class="fuss__h">Partner</h2>
-      <p class="fuss__partner">{site.partners.map((p) => p.name).join(' · ')}</p>
     </div>
   </div>
+  {site.partners.length > 0 && (
+    <div class="wrap fuss__partner">
+      <h2 class="fuss__h">Unsere Partner</h2>
+      <ul>
+        {site.partners.map((p) => (
+          <li><a href={p.url} rel="noopener" target="_blank" title={p.name}><img src={p.logo} alt={`Logo ${p.name}`} width={p.w} height={p.h} loading="lazy" decoding="async" /></a></li>
+        ))}
+      </ul>
+    </div>
+  )}
   <div class="wrap fuss__unten">
     <span>© {year} {site.name}</span>
     <span><a href={site.legal.impressumPath}>Impressum</a> · <a href={site.legal.datenschutzPath}>Datenschutz</a></span>
@@ -50,9 +58,13 @@ const year = new Date().getFullYear();
   .fuss__h { font-size: .9rem; letter-spacing: .2em; color: var(--on-dark-muted); margin-bottom: .6em; }
   address { font-style: normal; }
   ul { list-style: none; padding: 0; margin: 0 0 1em; }
-  .fuss__partner { color: var(--on-dark-muted); }
+  .fuss__partner { margin-top: 3rem; padding-top: 2rem; border-top: 1px solid rgba(239,229,209,.15); }
+  .fuss__partner ul { display: flex; flex-wrap: wrap; align-items: center; gap: 1.5rem clamp(2rem, 5vw, 4rem); margin: 1rem 0 0; }
+  .fuss__partner a { display: block; opacity: .6; transition: opacity .2s, transform .2s; }
+  .fuss__partner a:hover, .fuss__partner a:focus-visible { opacity: 1; transform: translateY(-2px); }
+  .fuss__partner img { height: clamp(2.4rem, 5vw, 3.2rem); width: auto; }
   .fuss__unten {
-    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin-top: 3rem; padding-top: 1.5rem;
+    display: flex; flex-wrap: wrap; justify-content: space-between; gap: 1rem; margin-top: 2rem; padding-top: 1.5rem;
     border-top: 1px solid rgba(239,229,209,.15); color: var(--on-dark-muted);
   }
 </style>
