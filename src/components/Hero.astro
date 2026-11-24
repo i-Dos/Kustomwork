@@ -39,7 +39,6 @@ const pic = { widths: [640, 960, 1280, 1600, 2000], sizes: '100vw', formats: ['a
   </script>
 
   <div class="wrap hero__text">
-    <img src={site.logo.hell} alt={`Logo ${site.name}, Craft & Motorcycles, Est. 2018`} class="hero__stempel" width="420" height="377" fetchpriority="high" />
     <p class="eyebrow">Harley-Davidson Kustom · Meilen am Zürichsee</p>
     <h1>Kustom<br /><span class="script">statt Katalog.</span></h1>
     <p class="hero__lead">Harley-Davidson-Umbauten mit selbst gefertigten Teilen, gebaut zum Fahren. Von Andy Gemperle, Schrauber aus Leidenschaft.</p>
@@ -75,14 +74,8 @@ const pic = { widths: [640, 960, 1280, 1600, 2000], sizes: '100vw', formats: ['a
       radial-gradient(ellipse at center, transparent 55%, rgba(26,18,11,.45));
   }
   .hero__text { padding-block: 6rem 6.5rem; position: relative; z-index: 2; }
-  .hero__text > :not(.hero__ctas):not(.hero__stempel) { text-shadow: 0 1px 2px rgba(20,13,8,.55), 0 2px 18px rgba(20,13,8,.45); }
+  .hero__text > :not(.hero__ctas) { text-shadow: 0 1px 2px rgba(20,13,8,.55), 0 2px 18px rgba(20,13,8,.45); }
   .hero__text .eyebrow { color: var(--sand); }
-  /* Logo links oben, bündig mit «Kustom» */
-  .hero__stempel {
-    width: clamp(8.5rem, 18vw, 13rem); height: auto; display: block; margin: 0 0 1.4rem;
-    filter: drop-shadow(0 2px 3px rgba(0,0,0,.5)) drop-shadow(0 4px 22px rgba(0,0,0,.6));
-  }
-  @media (min-width: 60rem) { .hero__text { padding-top: 8rem; } }
   .hero h1 { font-size: var(--step-4); max-width: 12ch; margin-bottom: .35em; }
   .hero__lead { font-size: var(--step-1); max-width: 34rem; line-height: 1.45; }
   .hero__ctas { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.6rem; }

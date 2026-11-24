@@ -6,7 +6,7 @@ const isHome = path === '/';
 <header class:list={['kopf', { 'kopf--home': isHome }]}>
   <div class="wrap kopf__inner">
     <a href="/" class="marke" aria-label={`${site.name}, Startseite`}>
-      <img src={site.logo.hell} alt="" width="78" height="70" class="marke__logo" />
+      <img src={site.logo.hell} alt="" width="78" height="70" class="marke__logo" fetchpriority={isHome ? 'high' : undefined} />
       <span class="marke__text"><span class="marke__name">Gemperle's</span><span class="marke__kw">KustomWork</span></span>
     </a>
     <nav aria-label="Hauptnavigation">
@@ -39,8 +39,12 @@ const isHome = path === '/';
   .marke { color: var(--on-dark); text-decoration: none; line-height: .9; display: flex; align-items: center; gap: .8rem; }
   .marke__logo { width: 78px; height: auto; display: block; }
   .marke__text { display: grid; }
-  .kopf--home .marke__logo, .kopf--home .marke__text { display: none; }
-  @media (max-width: 30rem) { .marke__logo { width: 60px; } .marke__text { display: none; } }
+  /* Startseite: nur das runde Logo, gross, oben links auf Höhe der Menüleiste, bündig mit «Kustom» */
+  .kopf--home .marke__text { display: none; }
+  .kopf--home .kopf__inner { align-items: flex-start; padding-top: 1.1rem; }
+  .kopf--home .marke__logo { width: clamp(5.5rem, 10vw, 8.5rem); filter: drop-shadow(0 2px 3px rgba(0,0,0,.5)) drop-shadow(0 4px 18px rgba(0,0,0,.55)); }
+  .kopf--home nav { padding-top: .6rem; }
+  @media (max-width: 30rem) { .marke__logo { width: 60px; } .marke__text { display: none; } .kopf--home .marke__logo { width: 5.5rem; } }
   .marke:hover { color: var(--on-dark); }
   .marke__name { font-family: var(--font-body); font-style: italic; font-size: 1.05rem; color: var(--on-dark-muted); }
   .marke__kw { font-family: var(--font-display); font-weight: 700; font-size: 1.7rem; text-transform: uppercase; letter-spacing: .04em; }
