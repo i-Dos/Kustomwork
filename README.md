@@ -73,6 +73,15 @@ Für die Auswertung schickt das Formular mit, über welche Seite und Quelle (Ref
 
 Für eine geschützte Vorschau: `npm run build:vorschau` und Verzeichnisschutz im Infomaniak Manager aktivieren.
 
+## Vorschau auf Cloudflare Pages (bis zum Livegang)
+
+1. In Cloudflare: Workers & Pages → Create → Pages → Connect to Git → Repo `i-Dos/Kustomwork` wählen.
+2. Build command: `npm run build:vorschau` · Build output directory: `dist`
+3. Unter Settings → Variables and Secrets: `VORSCHAU_PASSWORT` (als Secret) setzen, optional `VORSCHAU_BENUTZER` (Standard `kustom`).
+4. Jeder Push auf `main` aktualisiert die Vorschau automatisch.
+
+Der Passwortschutz steckt in `functions/_middleware.js`. Dazu ist die Vorschau dreifach gegen Suchmaschinen gesperrt: meta robots, robots.txt und X-Robots-Tag. Das Anfrageformular funktioniert dort nicht (kein PHP).
+
 ## PWA
 
 `manifest.webmanifest`, Icons in `public/icons/`, Service Worker `public/sw.js` (Seiten Netz-zuerst, Bilder Cache-zuerst, Offline-Seite). Bei grösseren Änderungen `VERSION` in `sw.js` erhöhen.
