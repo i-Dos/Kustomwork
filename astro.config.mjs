@@ -71,6 +71,9 @@ function htaccess() {
 }
 
 export default defineConfig({
+  // Fertig optimierte Bilder (AVIF/WebP) liegen im Repo, damit Cloudflare sie nicht
+  // bei jedem Build neu rechnen muss (sonst über 10 Minuten). Aufräumen: npm run bildcache:neu
+  cacheDir: './.bildcache',
   site: SITE_URL,
   trailingSlash: 'always',
   output: 'static',

@@ -14,6 +14,9 @@ const SRC = 'fotos-original';
 const OUT = 'src/assets/fotos';
 const look = JSON.parse(await readFile('src/config/look.json', 'utf8'));
 const force = process.argv.includes('--force');
+// Beim Build (--fehlende) nur Bilder filtern, die noch fehlen. Nach einem frischen git clone
+// sind die Datei-Zeiten zufällig, der Zeitvergleich würde sonst alles neu rechnen (ca. 1 Min.).
+const nurFehlende = process.argv.includes('--fehlende');
 
 await mkdir(OUT, { recursive: true });
 
@@ -34,7 +37,8 @@ for (const file of files) {
   const target = path.join(OUT, rel);
   if (!force) {
     try {
-      if ((await stat(target)).mtimeMs > (await stat(file)).mtimeMs) continue;
+      const t = await stat(target);
+      if (nurFehlende || t.mtimeMs > (await stat(file)).mtimeMs) continue;
     } catch {}
   }
   await mkdir(path.dirname(target), { recursive: true });
