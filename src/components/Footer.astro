@@ -1,10 +1,8 @@
 ---
 import { site } from '../config/site';
-import Goldkueste from './Goldkueste.astro';
 const year = new Date().getFullYear();
 ---
 <footer class="fuss section--dark">
-  <Goldkueste variante="fuss" />
   <div class="wrap fuss__grid">
     <div>
       <img src={site.logo.hell} alt={`Logo ${site.name}`} width="170" height="153" class="fuss__logo" loading="lazy" />

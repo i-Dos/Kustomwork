@@ -208,5 +208,3 @@ h1 .script, h2 .script {
 
 /* Telefonnummern nie umbrechen */
 a[href^="tel:"], .tel { white-space: nowrap; }
-/* Inhalte der Abschnitte liegen über der Goldküste-Silhouette der Fusszeile */
-.section > .wrap, .section > .narrow, .cta > .wrap { position: relative; z-index: 1; }
