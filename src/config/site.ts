@@ -96,7 +96,7 @@ export const site = {
     impressumPath: '/impressum/',
     datenschutzPath: '/datenschutz/',
     responsible: 'Andy Gemperle',
-    uid: '', // [OFFEN] UID, falls im Handelsregister eingetragen
+    uid: firma.uid, // [OFFEN] UID, falls im Handelsregister eingetragen (firma.json)
   },
 
   logo: { hell: '/logo/logo-sand.svg', dunkel: '/logo/logo-braun.svg', ratio: 2142 / 1923 },

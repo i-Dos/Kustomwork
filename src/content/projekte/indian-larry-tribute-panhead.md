@@ -73,6 +73,10 @@ technik:
     offen: Material und Blechstärke, ungefähre Stunden pro Teil.
   - bereich: Drehmomente
     offen: Andys Werte und Reihenfolge für Zylinderköpfe, Kipphebelböcke und Achsmuttern.
+ergaenzungen:
+  - frage: In welchem Jahr war das Bike fertig, und wann erschien der Artikel? Wie sieht es heute aus, und was wurde seither umgebaut? Existieren neue Fotos?
+    antwort: ""
+    nach: ende
 ---
 
 Dieses Bike ist der Anfang von allem. Andy hat es für einen Mann gebaut, den er nie getroffen hat: Indian Larry, Motorradbauer aus New York, der im August 2004 bei einer Show tödlich verunglückte. Kein Show-Bike sollte es werden, sondern eine Maschine zum Fahren.
@@ -96,5 +100,3 @@ Nach rund neun Monaten fuhr das Bike zum ersten Mal auf die Strasse. Seither gil
 ## Und heute?
 
 Das Bike gibt es noch, inzwischen weiter umgebaut. Die neueren Aufnahmen in der Galerie zeigen es in einer späteren Ausbaustufe.
-
-<p class="offen-block"><strong>Offen, Andy ergänzt:</strong> In welchem Jahr war das Bike fertig, und wann erschien der Artikel? Wie sieht es heute aus, und was wurde seither umgebaut? Existieren neue Fotos?</p>

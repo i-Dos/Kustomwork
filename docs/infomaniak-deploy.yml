@@ -1,0 +1,36 @@
+# Vorlage für den Livebetrieb auf Infomaniak (noch NICHT aktiv).
+# Aktivieren: Datei nach .github/workflows/infomaniak.yml kopieren und in GitHub unter
+# Settings > Secrets and variables > Actions diese Geheimnisse anlegen:
+#   INFOMANIAK_HOST      z. B. xxxx.ftp.infomaniak.com (SSH/SFTP-Server des Webhostings)
+#   INFOMANIAK_USER      SSH-Benutzer des Webhostings
+#   INFOMANIAK_SSH_KEY   privater SSH-Schlüssel (öffentlicher Teil im Infomaniak-Manager hinterlegen)
+#   INFOMANIAK_PFAD      Ziel-Ordner, z. B. sites/kustomwork.ch/
+# Ablauf: Jede Änderung auf main (auch aus /admin) baut die Seite und lädt dist/ per rsync hoch.
+name: Deploy Infomaniak
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+concurrency: { group: deploy, cancel-in-progress: true }
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with: { node-version: 22, cache: npm }
+      # Optimierte Bilder zwischen den Läufen behalten (neue Uploads aus /admin)
+      - uses: actions/cache@v4
+        with:
+          path: .bildcache
+          key: bildcache-${{ github.sha }}
+          restore-keys: bildcache-
+      - run: npm ci
+      - run: npm run build
+      - name: Hochladen
+        env:
+          KEY: ${{ secrets.INFOMANIAK_SSH_KEY }}
+        run: |
+          install -m 600 /dev/null ~/.ssh_key && printf '%s\n' "$KEY" > ~/.ssh_key
+          rsync -az --delete --exclude 'kustomwork-geheim.php' -e "ssh -i ~/.ssh_key -o StrictHostKeyChecking=accept-new" \
+            dist/ "${{ secrets.INFOMANIAK_USER }}@${{ secrets.INFOMANIAK_HOST }}:${{ secrets.INFOMANIAK_PFAD }}"

@@ -1,16 +1,47 @@
 {
   "telefon": "+41 77 523 14 54",
   "email": "gemperles@kustomwork.ch",
-  "adresse": { "strasse": "Seestrasse 619", "plz": "8706", "ort": "Meilen" },
+  "adresse": {
+    "strasse": "Seestrasse 619",
+    "plz": "8706",
+    "ort": "Meilen"
+  },
   "parkplatz": "Parkplätze direkt vor der Werkstatt.",
   "oeffnungszeiten": [
-    { "label": "Dienstag bis Freitag", "tage": ["Tuesday", "Wednesday", "Thursday", "Friday"], "von": "10:00", "bis": "18:00" },
-    { "label": "Samstag", "tage": ["Saturday"], "von": "10:00", "bis": "15:00" }
+    {
+      "label": "Dienstag bis Freitag",
+      "tage": [
+        "Tuesday",
+        "Wednesday",
+        "Thursday",
+        "Friday"
+      ],
+      "von": "10:00",
+      "bis": "18:00"
+    },
+    {
+      "label": "Samstag",
+      "tage": [
+        "Saturday"
+      ],
+      "von": "10:00",
+      "bis": "15:00"
+    }
   ],
   "oeffnungsHinweis": "Montag geschlossen. Oder jederzeit nach Vereinbarung.",
   "instagram": "https://www.instagram.com/gemperles_kustomwork/",
   "facebook": "",
   "googleBusiness": "",
   "fussText": "Kustom-Umbauten, Occasionen und das Label Sixnineteen.",
-  "formularThemen": ["Kustom-Umbau", "Neuaufbau / Restauration", "Motor- / Getrieberevision", "Tuning", "Service / Reparatur / MFK", "For Sale / Occasion", "Sixnineteen / Bekleidung", "Etwas anderes"]
+  "formularThemen": [
+    "Kustom-Umbau",
+    "Neuaufbau / Restauration",
+    "Motor- / Getrieberevision",
+    "Tuning",
+    "Service / Reparatur / MFK",
+    "For Sale / Occasion",
+    "Sixnineteen / Bekleidung",
+    "Etwas anderes"
+  ],
+  "uid": ""
 }

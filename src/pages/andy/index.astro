@@ -5,11 +5,12 @@ import Cta from '../../components/Cta.astro';
 import { Image } from 'astro:assets';
 import { render } from 'astro:content';
 import { seite } from '../../lib/inhalte';
-import { text, klartext } from '../../lib/text';
+import { text, klartext, mitErgaenzungen } from '../../lib/text';
 import { breadcrumbSchema, personSchema } from '../../lib/schema';
 
 const t = await seite('andy');
 const { Content } = await render(t.eintrag);
+const html = mitErgaenzungen(t.eintrag.rendered?.html ?? '', t.ergaenzungen);
 const zs = t.a('zeitstrahl');
 const cta = t.a('cta');
 const meilensteine = t.l('meilensteine');
@@ -22,7 +23,7 @@ const meilensteine = t.l('meilensteine');
   <section class="section">
     <div class="wrap andy">
       <div class="prose andy__text">
-        <Content />
+        <Fragment set:html={html} />
         {t.a('unterschrift').text && <p class="unterschrift">{t.a('unterschrift').text}</p>}
       </div>
 

@@ -42,6 +42,13 @@ listen:
       text: Ein Bike gehört auf die Strasse. Darum plane ich jeden Umbau so, dass er in der Schweiz eingelöst werden kann.
     - titel: Respekt vor der Technik
       text: "Flathead, Knuckle, Pan, Shovel: Die alte Technik verdient es, verstanden statt versteckt zu werden."
+ergaenzungen:
+  - frage: Aufgewachsen in Oetwil am See? Welches Bike war das erste, in welchem Jahr? Was hast du gelernt, bevor du Schrauber wurdest?
+    antwort: ""
+    nach: Old School im Blut
+  - frage: Seit wann genau gibt es KustomWork? Warum der Umzug nach Meilen? Was war dein wichtigstes Projekt seither? Wer ist Fabienne (Fotos im Magazin), und darf sie genannt werden?
+    antwort: ""
+    nach: Vom Hobby zur Werkstatt
 ---
 
 Ich bin Andy Gemperle. Seit ich denken kann, faszinieren mich alte Harley-Davidsons. Schon früh habe ich davon geträumt, mit so einer Maschine über die Strasse zu rollen.
@@ -51,8 +58,6 @@ Aber das Fahren allein war mir nie genug. Noch spannender war für mich immer da
 ## Old School im Blut
 
 Angefangen hat es mit dem Kauf eines Harley-Oldies. Mich hat die betagte Technik gepackt, und von da an hat mich vor allem interessiert, was «Old School» war und ist. Die klassischen Chopper. Die Kunst von Ed «Big Daddy» Roth und Von Dutch. Pinstriping, Hot Rods, die ganze Kultur dahinter.
-
-<p class="offen-block"><strong>Offen, Andy ergänzt:</strong> Aufgewachsen in Oetwil am See? Welches Bike war das erste, in welchem Jahr? Was hast du gelernt, bevor du Schrauber wurdest?</p>
 
 > Mit einem Chopper durch die Strassen zu cruisen, ist ein Gefühl von Freiheit, das man nicht beschreiben kann.
 
@@ -67,8 +72,6 @@ Ich wollte ihm ein Bike bauen. Kein Show-Bike, sondern eines, das mich beim Fahr
 ## Vom Hobby zur Werkstatt
 
 Aus dem Tribute-Bike wurden weitere Projekte, und aus dem Hobby wurde mein Beruf. Mit Gemperle's KustomWork habe ich mich selbständig gemacht, zuerst in Oetwil am See, heute an der Seestrasse 619 in Meilen. Hier baue ich Harleys um, baue Klassiker neu auf und verkaufe Bikes, hinter denen ich stehe.
-
-<p class="offen-block"><strong>Offen, Andy ergänzt:</strong> Seit wann genau gibt es KustomWork? Warum der Umzug nach Meilen? Was war dein wichtigstes Projekt seither? Wer ist Fabienne (Fotos im Magazin), und darf sie genannt werden?</p>
 
 ## Warum nur noch Kustom
 

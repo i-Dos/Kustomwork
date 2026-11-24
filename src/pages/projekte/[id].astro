@@ -7,6 +7,7 @@ import Bauzettel from '../../components/Bauzettel.astro';
 import BuildLog from '../../components/BuildLog.astro';
 import { teilenummer } from '../../lib/fotos';
 import { Image, getImage } from 'astro:assets';
+import { mitErgaenzungen } from '../../lib/text';
 import { render } from 'astro:content';
 import { projekte } from '../../lib/inhalte';
 import { breadcrumbSchema, projectSchema } from '../../lib/schema';
@@ -33,7 +34,7 @@ const cta = (await (await import('../../lib/inhalte')).seite('projekte')).a('cta
   <section class="section">
     <div class="wrap projekt">
       <article class="prose">
-        <Content />
+        <Fragment set:html={mitErgaenzungen(p.rendered?.html ?? '', p.data.ergaenzungen)} />
         <BuildLog eintraege={p.data.technik} />
         {p.data.quelle && <p class="quelle">{p.data.quelle}</p>}
       </article>

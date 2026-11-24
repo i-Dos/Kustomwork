@@ -5,6 +5,7 @@ import Karte from '../../components/Karte.astro';
 import Cta from '../../components/Cta.astro';
 import BuildLog from '../../components/BuildLog.astro';
 import { Picture, getImage } from 'astro:assets';
+import { mitErgaenzungen } from '../../lib/text';
 import { render, getEntry } from 'astro:content';
 import { beitraege } from '../../lib/inhalte';
 import { datum } from '../../lib/fotos';
@@ -50,7 +51,7 @@ const lesezeit = Math.max(1, Math.round((p.body ?? '').split(/\s+/).length / 200
             <ol>{headings.filter((h) => h.depth === 2).map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}</ol>
           </nav>
         )}
-        <div class="prose"><Content /></div>
+        <div class="prose"><Fragment set:html={mitErgaenzungen(p.rendered?.html ?? '', p.data.ergaenzungen)} /></div>
         <BuildLog eintraege={technik} link={technikLink} />
         {p.data.faq.length > 0 && (
           <section class="artikel-faq">

@@ -21,6 +21,9 @@ technik:
     offen: Was am Rahmen geändert, gekürzt oder neu gebaut wurde.
   - bereich: Eigenbau-Teile
     offen: Welche Teile Andy selbst gefertigt hat.
+ergaenzungen:
+  - frage: "Fotos stammen von der bisherigen Website. Die Geschichte erzählt Andy beim nächsten Werkstattbesuch: Basis, Wunsch des Kunden, was selbst gefertigt wurde, Bauzeit, Besonderheiten."
+    antwort: ""
+    nach: ende
 ---
 
-<p class="offen-block"><strong>Offen:</strong> Fotos stammen von der bisherigen Website. Die Geschichte erzählt Andy beim nächsten Werkstattbesuch: Basis, Wunsch des Kunden, was selbst gefertigt wurde, Bauzeit, Besonderheiten.</p>

@@ -4,7 +4,7 @@ description: Welcher Harley-Motor ist welcher? Ein kurzer Überblick über die k
 date: 2026-11-20
 cover: ../../assets/fotos/larry-hinterrad.jpg
 coverAlt: Detail eines Panhead-Choppers mit Auspuff und Speichenrad
-tags: [Technik, Panhead, Shovelhead, Knucklehead, Flathead]
+tags: [ Technik, Panhead, Shovelhead, Knucklehead, Flathead ]
 faq:
   - frage: "Welche Baujahre hat der Harley-Davidson Panhead?"
     antwort: "Der Panhead wurde von 1948 bis 1965 gebaut. Den Namen hat er von den Ventildeckeln, die wie umgedrehte Pfannen aussehen."
@@ -21,6 +21,10 @@ technik:
     offen: Welches Öl Andy für alte Motoren empfiehlt und warum.
   - bereich: Drehmomente
     offen: Andys Tabelle für Zylinderkopfschrauben der klassischen Motoren.
+ergaenzungen:
+  - frage: Stimmen die Angaben so für dich? Welche Motoren hast du schon aufgebaut, und was ist dein Favorit?
+    antwort: ""
+    nach: ende
 ---
 
 Wer sich mit alten Harleys beschäftigt, hört schnell Namen wie Knucklehead oder Shovelhead. Gemeint sind die Motoren, genauer: ihre Zylinderköpfe. Jede Generation hat einen Spitznamen, der beschreibt, wie die Ventildeckel aussehen. Hier ein Überblick über die Motoren, mit denen wir in der Werkstatt am liebsten arbeiten.
@@ -52,5 +56,3 @@ Ab Mitte der 80er Jahre kam der Evolution, ab 1999 der Twin Cam. Moderner, zuver
 ## Und was passt zu mir?
 
 Das hängt davon ab, was du mit dem Bike vorhast. Willst du jeden Tag fahren, ist ein Evo oder Twin Cam entspannter. Willst du das echte Old-School-Gefühl mit Kickstarter und Magnetzündung, führt kein Weg an Pan oder Shovel vorbei. Komm vorbei, dann reden wir darüber.
-
-<p class="offen-block"><strong>Offen, Andy prüft:</strong> Stimmen die Angaben so für dich? Welche Motoren hast du schon aufgebaut, und was ist dein Favorit?</p>

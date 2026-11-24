@@ -4,12 +4,16 @@ description: Kustom mit K steht für eine eigene Kultur. Was einen Chopper von e
 date: 2026-11-18
 cover: ../../assets/fotos/larry-profil.jpg
 coverAlt: Old-School-Chopper mit hohem Lenker und Springergabel
-tags: [Kustom, Chopper, Bobber, Kultur]
+tags: [ Kustom, Chopper, Bobber, Kultur ]
 faq:
   - frage: "Was ist der Unterschied zwischen Chopper und Bobber?"
     antwort: "Ein Bobber ist ein Motorrad, an dem alles Überflüssige weggelassen oder gekürzt wurde, vor allem die Schutzbleche. Ein Chopper geht weiter: Oft ist die Gabel verlängert, der Lenkkopf flacher gestellt und der Lenker hoch."
   - frage: "Warum schreibt man Kustom mit K?"
     antwort: "Die Schreibweise mit K stammt aus der amerikanischen Hot-Rod- und Kustom-Kultur der 50er und 60er Jahre, geprägt von Künstlern wie George Barris und Ed «Big Daddy» Roth. Sie steht für handgemachte Einzelstücke statt Serienzubehör."
+ergaenzungen:
+  - frage: Was bedeutet Kustom für dich in einem Satz? Das Zitat oben ist ein Platzhalter, bitte durch deine eigenen Worte ersetzen.
+    antwort: ""
+    nach: Was Kustom für uns heisst
 ---
 
 Custom heisst «nach Mass». Kustom mit K heisst mehr. Die Schreibweise stammt aus der Hot-Rod-Szene der 50er und 60er Jahre in Kalifornien, aus der Welt von Ed «Big Daddy» Roth, Von Dutch und den ersten Choppern. Sie steht für Einzelstücke, für Handarbeit und für eine Haltung: Ein Motorrad wird nicht ausgestattet, es wird gebaut.
@@ -27,8 +31,6 @@ Der Chopper geht einen Schritt weiter. Längere Gabel, flacherer Lenkkopf, hoher
 Bei Gemperle's KustomWork heisst Kustom: so viele Teile wie möglich selbst bauen. Tank, Schutzblech, Halter, Griffe, Schaltknauf. Die Technik respektieren, statt sie zu verstecken. Und ein Bike bauen, das man fährt, nicht nur anschaut.
 
 > Jedes Bike erzählt die Geschichte seines Fahrers.
-
-<p class="offen-block"><strong>Offen, Andy ergänzt:</strong> Was bedeutet Kustom für dich in einem Satz? Das Zitat oben ist ein Platzhalter, bitte durch deine eigenen Worte ersetzen.</p>
 
 ## Wie entsteht ein Kustom-Bike bei uns?
 

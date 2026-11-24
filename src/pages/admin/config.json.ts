@@ -55,6 +55,13 @@ const seite = (name: string, label: string, fields: F[], x: F = {}): F => ({
 });
 const liste = (name: string, label: string, fields: F[], x: F = {}): F => ({ name, label, widget: 'list', required: false, collapsed: true, fields, ...x });
 
+/** Offene Fragen an Andy: Frage ist vorgegeben, Andy schreibt nur die Antwort. Leer = gelbe Box auf der Seite. */
+const ergaenzungen = liste('ergaenzungen', 'Offene Fragen an Andy', [
+  str('frage', 'Frage', { readonly: true }),
+  opt(txt('antwort', 'Deine Antwort', { hint: 'Sobald hier Text steht, ersetzt er auf der Website die gelbe Box. ' + TEXT_HINWEIS })),
+  opt(str('nach', 'Erscheint nach dem Abschnitt', { readonly: true, hint: '«ende» = am Schluss des Textes' })),
+], { collapsed: false, allow_add: false, allow_remove: false, allow_reorder: false, summary: '{{fields.frage}}', hint: 'Gelb markierte Stellen auf der Website. Antwort eintragen und speichern, fertig.' });
+
 const leistung = (mitBild: boolean): F[] => [
   str('titel', 'Titel'),
   opt(txt('kurz', 'Kurztext')),
@@ -97,13 +104,14 @@ const seiten: F = {
     seite('andy', 'Andy (Über mich)', [
       kopf(),
       body('Geschichte'),
+      ergaenzungen,
       { name: 'abschnitte', label: 'Abschnitte', widget: 'object', fields: [
         abschnitt('unterschrift', 'Unterschrift', ['text']),
         abschnitt('zeitstrahl', 'Meilensteine: Titel und Bild', ['titel', 'bild', 'bildAlt', 'fokus']),
         abschnitt('cta', 'Aufruf unten', ['titel', 'text']),
       ] },
       { name: 'listen', label: 'Listen', widget: 'object', fields: [
-        liste('meilensteine', 'Meilensteine', [opt(str('jahr', 'Jahr')), txt('text', 'Was geschah')], { summary: '{{fields.jahr}}: {{fields.text}}' }),
+        liste('meilensteine', 'Meilensteine', [opt(str('jahr', 'Jahr', { hint: '«[OFFEN]» oder leer = auf der Seite als «Jahr?» markiert' })), txt('text', 'Was geschah')], { summary: '{{fields.jahr}}: {{fields.text}}' }),
         liste('werte', 'Drei Grundsätze', [str('titel', 'Titel'), txt('text', 'Text')], { summary: '{{fields.titel}}' }),
       ] },
     ]),
@@ -195,6 +203,7 @@ const bikes: F = {
     str('coverAlt', 'Bildbeschreibung', { hint: ALT_HINWEIS }),
     liste('highlights', 'Stichworte', [], { field: str('punkt', 'Stichwort'), fields: undefined, hint: '2 bis 4 kurze Stichworte, z. B. «Motor revidiert».', max: 6 }),
     body('Beschreibung'),
+    ergaenzungen,
     bool('platzhalter', 'Beispiel-Eintrag', { hint: 'Zeigt den Stempel «Beispiel». Bei echten Bikes aus.' }),
     bool('draft', 'Entwurf (noch nicht anzeigen)'),
   ],
@@ -227,6 +236,7 @@ const projekte: F = {
     technik,
     opt(str('stempel', 'Stempel auf dem Bauzettel', { hint: 'Kurz, z. B. «MFK OK»' })),
     body('Geschichte zum Projekt'),
+    ergaenzungen,
     bool('featured', 'Hervorheben (zuerst zeigen)'),
     bool('platzhalter', 'Platzhalter («Foto folgt»)'),
     bool('draft', 'Entwurf (noch nicht anzeigen)'),
@@ -252,6 +262,7 @@ const blog: F = {
     img('cover', 'Titelbild'),
     str('coverAlt', 'Bildbeschreibung', { hint: ALT_HINWEIS }),
     body('Beitrag'),
+    ergaenzungen,
     liste('tags', 'Stichworte', [], { field: str('tag', 'Stichwort'), fields: undefined }),
     liste('faq', 'Fragen und Antworten (für Google)', [str('frage', 'Frage'), txt('antwort', 'Antwort')], { summary: '{{fields.frage}}' }),
     opt({ name: 'projekt', label: 'Passendes Projekt', widget: 'relation', collection: 'projekte', value_field: '{{slug}}', search_fields: ['title'], display_fields: ['title'] }),
@@ -334,6 +345,7 @@ const firma: F = {
       opt(str('facebook', 'Facebook-Link')),
       opt(str('googleBusiness', 'Google-Unternehmensprofil (Link)')),
       opt(str('fussText', 'Text in der Fusszeile')),
+      opt(str('uid', 'UID-Nummer (Impressum)', { hint: 'z. B. CHE-123.456.789. Leer = gelber Hinweis im Impressum.' })),
       liste('formularThemen', 'Themen im Anfrageformular', [], { field: str('thema', 'Thema'), fields: undefined, hint: '«For Sale / Occasion» und «Sixnineteen / Bekleidung» bitte nicht umbenennen, darauf verlinken Buttons.' }),
     ],
   }],
@@ -361,7 +373,7 @@ export function GET() {
       },
     },
     app_title: `${site.name} · Redaktion`,
-    logo_url: site.logo.dunkel,
+    logo: { src: site.logo.dunkel },
     site_url: isPreview ? site.previewUrl : site.url,
     media_folder: 'src/assets/fotos/uploads',
     public_folder: '/src/assets/fotos/uploads',

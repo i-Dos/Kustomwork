@@ -4,6 +4,8 @@ import { z } from 'astro/zod';
 
 const bild = (image: any) => z.object({ src: image(), alt: z.string() });
 /** Build Log / Technik: bereich + notiz; offen = Frage an Andy, bis er die Details liefert */
+/** Offene Fragen an Andy: ohne Antwort gelbe Box auf der Seite, mit Antwort normaler Text an derselben Stelle */
+const ergaenzungen = z.array(z.object({ frage: z.string(), antwort: z.string().optional(), nach: z.string().optional() })).default([]);
 const technik = z.array(z.object({ bereich: z.string(), notiz: z.string().optional(), offen: z.string().optional() })).default([]);
 
 /** Projekte: ein Markdown-File pro Bike */
@@ -22,6 +24,7 @@ const projekte = defineCollection({
       galerie: z.array(bild(image)).default([]),
       datenblatt: z.array(z.object({ label: z.string(), wert: z.string() })).default([]),
       technik,
+      ergaenzungen,
       stempel: z.string().optional(), // Text für den Stempel auf dem Bauzettel
       quelle: z.string().optional(),
       featured: z.boolean().default(false),
@@ -46,6 +49,7 @@ const blog = defineCollection({
       faq: z.array(z.object({ frage: z.string(), antwort: z.string() })).default([]),
       projekt: z.string().optional(), // id eines verwandten Projekts
       technik,
+      ergaenzungen,
       draft: z.boolean().default(false),
     }),
 });
@@ -74,6 +78,7 @@ const bikes = defineCollection({
       cover: image(),
       coverAlt: z.string(),
       galerie: z.array(bild(image)).default([]),
+      ergaenzungen,
       order: z.number().default(0),
       platzhalter: z.boolean().default(false), // Beispiel-Eintrag, erscheint nicht im Schema für Google
       draft: z.boolean().default(false), // true = nicht veröffentlichen
@@ -131,6 +136,7 @@ const seiten = defineCollection({
       abschnitte: z.record(z.string(), abschnitt).default({}),
       listen: z.record(z.string(), z.array(eintrag)).default({}),
       woerter: z.record(z.string(), z.array(z.string())).default({}),
+      ergaenzungen,
     });
   },
 });

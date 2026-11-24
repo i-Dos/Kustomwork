@@ -3,13 +3,12 @@
 // Der ganze Look (Klebeband, Stempel, Datenzettel, Button) kommt von hier,
 // ein neuer Eintrag in src/content/bikes/ liefert nur die Angaben.
 import { Image } from 'astro:assets';
-import { render } from 'astro:content';
 import type { CollectionEntry } from 'astro:content';
 import { formatCHF } from '../lib/fotos';
+import { mitErgaenzungen } from '../lib/text';
 
 interface Props { bike: CollectionEntry<'bikes'>; erstes?: boolean }
 const { bike: b, erstes = false } = Astro.props;
-const { Content } = await render(b);
 ---
 <article class="bike" id={b.id}>
   <div class="getaped getaped--eins">
@@ -30,7 +29,7 @@ const { Content } = await render(b);
       {b.data.kommission && (<><dt>Verkauf</dt><dd>in Kommission</dd></>)}
     </dl>
     {b.data.highlights.length > 0 && <ul>{b.data.highlights.map((h) => <li>{h}</li>)}</ul>}
-    <Content />
+    <Fragment set:html={mitErgaenzungen(b.rendered?.html ?? '', b.data.ergaenzungen)} />
     <a class="btn" href={`/kontakt/?thema=For%20Sale%20%2F%20Occasion&bike=${encodeURIComponent(b.data.title + ' ' + b.data.jahrgang)}`}>Anfragen</a>
   </div>
 </article>

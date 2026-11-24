@@ -58,3 +58,31 @@ export const klartext = (s = '', extra?: Record<string, string>) => platzhalter(
 /** Anker aus einem Titel: «Motor- und Getrieberevisionen» → «motor-und-getrieberevisionen» */
 export const slug = (s = '') =>
   s.toLowerCase().replace(/ä/g, 'ae').replace(/ö/g, 'oe').replace(/ü/g, 'ue').normalize('NFKD').replace(/[^\w\s-]/g, '').trim().replace(/[\s_-]+/g, '-');
+
+/**
+ * Setzt die offenen Fragen (ergaenzungen) in den Text ein: am Ende des Abschnitts «nach»
+ * (Zwischentitel), am Anfang oder am Ende. Ohne Antwort: gelbe Box mit der Frage.
+ * Mit Antwort: Andys Text als normale Absätze, die Box verschwindet.
+ */
+export function mitErgaenzungen(html: string, liste: { frage: string; antwort?: string; nach?: string }[] = []) {
+  let out = html;
+  for (const e of liste) {
+    const block = e.antwort?.trim()
+      ? textAbsaetze(e.antwort)
+      : `<p class="offen-block"><strong>Offen, Andy ergänzt:</strong> ${inline(e.frage)} <em>(Antwort im Redaktions-Tool unter «Offene Fragen an Andy»)</em></p>`;
+    const nach = (e.nach ?? 'ende').trim();
+    if (nach === 'ende' || !nach) { out += '\n' + block; continue; }
+    const h2 = [...out.matchAll(/<h2[^>]*>([\s\S]*?)<\/h2>/g)];
+    if (nach === 'anfang') {
+      const i = h2[0]?.index ?? out.length;
+      out = out.slice(0, i) + block + '\n' + out.slice(i);
+      continue;
+    }
+    const plain = (x: string) => x.replace(/<[^>]+>/g, '').replace(/&[^;]+;/g, '').replace(/\s+/g, ' ').trim().toLowerCase();
+    const k = h2.findIndex((m) => plain(m[1]) === plain(nach));
+    if (k === -1) { out += '\n' + block; continue; }
+    const i = h2[k + 1]?.index ?? out.length;
+    out = out.slice(0, i) + block + '\n' + out.slice(i);
+  }
+  return out;
+}
