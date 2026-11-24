@@ -1,0 +1,22 @@
+---
+/**
+ * Illustration der Meilemer Seefront als Band direkt über der Fusszeile.
+ * Himmel = --oliv, Wasser = --leder-tief: geht nahtlos in Cta (oben) und Fusszeile (unten) über.
+ * Quelle: brand/seefront-meilen-original.png, Farben angeglichen in src/assets/grafik/.
+ */
+import { Picture } from 'astro:assets';
+import band from '../assets/grafik/seefront-meilen-band.png';
+---
+<div class="seefront">
+  <Picture src={band} alt="Seefront Meilen mit reformierter Kirche" widths={[640, 1000, 1400, 2000]} sizes="100vw" formats={['avif', 'webp']} quality={70} loading="lazy" decoding="async" />
+</div>
+
+<style>
+  /* Oben Oliv, unten Fusszeilen-Braun; Bildränder weich ausgeblendet, damit keine Kante entsteht */
+  .seefront { position: relative; line-height: 0; background: var(--grain), linear-gradient(var(--oliv) 50%, var(--leder-tief) 50%); }
+  .seefront :global(img) {
+    display: block; width: 100%; height: auto; min-height: 9rem; object-fit: cover; object-position: 50% 100%;
+    -webkit-mask-image: linear-gradient(transparent, #000 18%, #000 88%, transparent);
+            mask-image: linear-gradient(transparent, #000 18%, #000 88%, transparent);
+  }
+</style>

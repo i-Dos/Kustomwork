@@ -10,6 +10,7 @@ import { site, isPreview } from '../config/site';
 import { businessSchema, websiteSchema } from '../lib/schema';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
+import Seefront from '../components/Seefront.astro';
 
 interface Props {
   title: string;
@@ -74,6 +75,7 @@ const graph = { '@context': 'https://schema.org', '@graph': [websiteSchema(), bu
     <main id="inhalt">
       <slot />
     </main>
+    <Seefront />
     <Footer />
     <script>
       // Erste Herkunft der Sitzung merken (für die Auswertung der Anfragen)
