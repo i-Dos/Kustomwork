@@ -78,8 +78,8 @@ Für eine geschützte Vorschau: `npm run build:vorschau` und Verzeichnisschutz i
 Konfiguration: `wrangler.jsonc` (Worker `kustomwork`, statische Dateien aus `dist/`) und `worker/index.js` (Passwortschutz).
 
 Im Cloudflare-Dashboard unter Workers & Pages → `kustomwork` → Settings:
-1. **Build:** Build command `npm run build:vorschau`, Deploy command `npx wrangler deploy`, Root directory leer, Branch `main`.
-2. **Variables and Secrets:** Secret `VORSCHAU_PASSWORT` setzen, optional Text-Variable `VORSCHAU_BENUTZER` (Standard `kustom`).
+1. **Build:** Build command `npm run build:vorschau`, Deploy command `npm run deploy:vorschau`, Root directory leer, Branch `main`.
+2. **Variables and Secrets:** Secret `VORSCHAU_PASSWORT` setzen (zur Laufzeit oder als Build-Geheimnis, das Deploy-Skript überträgt es), optional Text-Variable `VORSCHAU_BENUTZER` (Standard `kustom`).
 3. Jeder Push auf `main` baut und veröffentlicht die Vorschau neu.
 
 Die Vorschau ist dreifach gegen Suchmaschinen gesperrt: meta robots, robots.txt und X-Robots-Tag. `.htaccess` und `anfrage.php` werden dort nicht hochgeladen (`public/.assetsignore`), das Formular funktioniert also erst auf Infomaniak.

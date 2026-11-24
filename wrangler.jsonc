@@ -1,5 +1,5 @@
 // Cloudflare Workers: Vorschau bis zum Livegang (nicht für Infomaniak nötig)
-// Dashboard: Build command `npm run build:vorschau`, Deploy command `npx wrangler deploy`
+// Dashboard: Build command `npm run build:vorschau`, Deploy command `npm run deploy:vorschau`
 {
   "$schema": "node_modules/wrangler/config-schema.json",
   "name": "kustomwork",
