@@ -2,15 +2,17 @@
 import Base from '../../layouts/Base.astro';
 import Seitenkopf from '../../components/Seitenkopf.astro';
 import Karte from '../../components/Karte.astro';
-import { beitraege } from '../../lib/inhalte';
+import { beitraege, seite } from '../../lib/inhalte';
+import { klartext } from '../../lib/text';
 import { datum } from '../../lib/fotos';
 import { breadcrumbSchema } from '../../lib/schema';
 const posts = await beitraege();
+const t = await seite('blog');
 const [erster, ...rest] = posts;
 ---
-<Base title="Blog" description="Geschichten, Technik und Kultur aus der Kustom-Werkstatt in Meilen: Harley-Motoren, Chopper, Bobber, Umbauten und die Menschen dahinter."
+<Base title={t.seoTitel ?? 'Blog'} description={klartext(t.seoBeschreibung)}
   schema={[breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'Blog', path: '/blog/' }])]}>
-  <Seitenkopf eyebrow="Blog" title="Aus der Werkstatt" lead="Geschichten hinter den Bikes, Technik der alten Schule und alles, was wir über Kustom wissen." />
+  <Seitenkopf eyebrow={t.kopf.eyebrow} title={t.kopf.titel ?? ''} lead={t.kopf.lead} image={t.kopf.bild} imageAlt={t.kopf.bildAlt} focus={t.kopf.fokus} />
   <section class="section">
     <div class="wrap">
       {erster && (

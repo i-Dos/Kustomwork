@@ -1,17 +1,18 @@
 ---
 import Base from '../../layouts/Base.astro';
 import { site } from '../../config/site';
+import { render } from 'astro:content';
+import { seite } from '../../lib/inhalte';
+const t = await seite('impressum');
+const { Content } = await render(t.eintrag);
 ---
 <Base title="Impressum" noindex>
   <section class="section"><div class="narrow prose">
-    <h1>Impressum</h1>
+    <h1>{t.kopf.titel ?? 'Impressum'}</h1>
     <h2>Betreiber</h2>
     <p>{site.name}<br />{site.legal.responsible}<br />{site.address.street}<br />{site.address.zip} {site.address.city}<br />Schweiz</p>
     <p>Telefon: <a href={`tel:${site.phoneHref}`}>{site.phone}</a><br />E-Mail: <a href={`mailto:${site.email}`}>{site.email}</a></p>
     {site.legal.uid ? <p>UID: {site.legal.uid}</p> : <p class="offen-block">Offen: Rechtsform und UID-Nummer (falls vorhanden) ergänzen.</p>}
-    <h2>Haftung</h2>
-    <p>Die Inhalte dieser Website werden mit Sorgfalt erstellt. Für Richtigkeit, Vollständigkeit und Aktualität übernehmen wir keine Gewähr. Für Inhalte verlinkter Websites sind ausschliesslich deren Betreiber verantwortlich.</p>
-    <h2>Urheberrechte</h2>
-    <p>Texte, Fotos und Gestaltung gehören {site.name} oder den genannten Urhebern. {site.photoCredit}. Verwendung nur mit schriftlicher Zustimmung.</p>
+    <Content />
   </div></section>
 </Base>

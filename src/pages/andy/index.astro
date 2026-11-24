@@ -3,82 +3,58 @@ import Base from '../../layouts/Base.astro';
 import Seitenkopf from '../../components/Seitenkopf.astro';
 import Cta from '../../components/Cta.astro';
 import { Image } from 'astro:assets';
-import { foto } from '../../lib/fotos';
-import { site } from '../../config/site';
+import { render } from 'astro:content';
+import { seite } from '../../lib/inhalte';
+import { text, klartext } from '../../lib/text';
 import { breadcrumbSchema, personSchema } from '../../lib/schema';
 
-const meilensteine = [
-  { jahr: '[OFFEN]', text: 'Erste alte Harley gekauft. Die betagte Technik lässt Andy nicht mehr los.' },
-  { jahr: '2004', text: 'Indian Larry im «Biker Build-Off». Im August stirbt Larry, Andy beschliesst, ihm ein Bike zu bauen.' },
-  { jahr: '[OFFEN]', text: 'Nach neun Monaten Bauzeit rollt das Indian-Larry-Tribute auf Panhead-Basis auf die Strasse.' },
-  { jahr: '[OFFEN]', text: 'Das Magazin Chrom & Flammen bringt die Geschichte als «Memory Machine».' },
-  { jahr: '2018', text: 'Aus dem Hobby wird ein Beruf: Gemperle\'s KustomWork in Oetwil am See.' },
-  { jahr: '[OFFEN]', text: 'Übernahme des Kundenstamms von P. J. Cycles.' },
-  { jahr: '[OFFEN]', text: 'Umzug an die Seestrasse 619 in Meilen.' },
-  { jahr: '2027', text: 'Neue Website, neuer Fokus: Kustom. Und das eigene Label Sixnineteen.' },
-];
+const t = await seite('andy');
+const { Content } = await render(t.eintrag);
+const zs = t.a('zeitstrahl');
+const cta = t.a('cta');
+const meilensteine = t.l('meilensteine');
 ---
-<Base title="Andys Geschichte" description="Andy Gemperle, Kustom-Bike-Builder aus Meilen: vom ersten Harley-Oldie über sein Indian-Larry-Tribute-Bike bis zur eigenen Werkstatt am Zürichsee."
-  image={foto('andy-fahrt.jpg')} imageAlt="Andy Gemperle auf seinem Chopper"
+<Base title={t.seoTitel ?? t.kopf.titel ?? 'Andy'} description={klartext(t.seoBeschreibung)}
+  image={t.kopf.bild} imageAlt={t.kopf.bildAlt}
   schema={[breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'Andy', path: '/andy/' }]), personSchema()]}>
-  <Seitenkopf eyebrow="Über mich" title="Alles begann mit einer alten Harley" image={foto('andy-fahrt.jpg')} imageAlt="Andy Gemperle fährt seinen Panhead-Chopper" focus="60% 35%" />
+  <Seitenkopf eyebrow={t.kopf.eyebrow} title={t.kopf.titel ?? ''} lead={t.kopf.lead} image={t.kopf.bild} imageAlt={t.kopf.bildAlt} focus={t.kopf.fokus} />
 
   <section class="section">
     <div class="wrap andy">
-      <div class="prose">
-        <p class="lead">Ich bin Andy Gemperle. Seit ich denken kann, faszinieren mich alte Harley-Davidsons. Schon früh habe ich davon geträumt, mit so einer Maschine über die Strasse zu rollen.</p>
-
-        <p>Aber das Fahren allein war mir nie genug. Noch spannender war für mich immer das Kustomizen: zerlegen, umbauen, revidieren, ein Bike komplett neu aufbauen. Genau das hat mich dahin gebracht, wo ich heute stehe.</p>
-
-        <h2>Old School im Blut</h2>
-        <p>Angefangen hat es mit dem Kauf eines Harley-Oldies. Mich hat die betagte Technik gepackt, und von da an hat mich vor allem interessiert, was «Old School» war und ist. Die klassischen Chopper. Die Kunst von Ed «Big Daddy» Roth und Von Dutch. Pinstriping, Hot Rods, die ganze Kultur dahinter.</p>
-        <p class="offen-block"><strong>Offen, Andy ergänzt:</strong> Aufgewachsen in Oetwil am See? Welches Bike war das erste, in welchem Jahr? Was hast du gelernt, bevor du Schrauber wurdest?</p>
-
-        <blockquote>Mit einem Chopper durch die Strassen zu cruisen, ist ein Gefühl von Freiheit, das man nicht beschreiben kann.</blockquote>
-
-        <h2>Indian Larry</h2>
-        <p>2004 habe ich im Fernsehen Indian Larry gesehen, einen Bike-Builder aus New York. Für mich war sofort klar: Das ist der König unter den Motorradbauern. Ich habe alles über ihn gelesen, was ich finden konnte. Und dann, im August 2004, kam die Nachricht von seinem tödlichen Unfall.</p>
-        <p>Ich wollte ihm ein Bike bauen. Kein Show-Bike, sondern eines, das mich beim Fahren mit Larry verbindet. Mit einer Panhead aus den 1950ern als Basis und möglichst vielen Teilen aus eigener Hand. Drehen, Fräsen und Schweissen habe ich mir dafür selbst beigebracht, in einer Werkstatt von zwölf Quadratmetern. Neun Monate später war das Bike fertig.</p>
-        <p><a href="/blog/riding-with-larry-in-my-mind/">Die ganze Geschichte im Blog →</a></p>
-
-        <h2>Vom Hobby zur Werkstatt</h2>
-        <p>Aus dem Tribute-Bike wurden weitere Projekte, und aus dem Hobby wurde mein Beruf. Mit Gemperle's KustomWork habe ich mich selbständig gemacht, zuerst in Oetwil am See, heute an der Seestrasse 619 in Meilen. Hier baue ich Harleys um, baue Klassiker neu auf und verkaufe Bikes, hinter denen ich stehe.</p>
-        <p class="offen-block"><strong>Offen, Andy ergänzt:</strong> Seit wann genau gibt es KustomWork? Warum der Umzug nach Meilen? Was war dein wichtigstes Projekt seither? Wer ist Fabienne (Fotos im Magazin), und darf sie genannt werden?</p>
-
-        <h2>Warum nur noch Kustom</h2>
-        <p>Ich konzentriere mich auf das, was ich am liebsten mache und am besten kann: Kustom-Umbauten und Neuaufbauten. Jedes Bike ist ein Einzelstück. Ich will verstehen, wie du fährst und was dir gefällt, und dann ein Motorrad bauen, das genau zu dir passt. Und das durch die MFK kommt.</p>
-        <p>Wer mehr erfahren möchte, schaut am besten persönlich bei mir in der Werkstatt vorbei.</p>
-        <p class="unterschrift">Andy</p>
+      <div class="prose andy__text">
+        <Content />
+        {t.a('unterschrift').text && <p class="unterschrift">{t.a('unterschrift').text}</p>}
       </div>
 
       <aside class="zeitstrahl" aria-labelledby="zs-titel">
-        <h2 id="zs-titel">Meilensteine</h2>
+        <h2 id="zs-titel">{zs.titel ?? 'Meilensteine'}</h2>
         <ol>
           {meilensteine.map((m) => (
-            <li><span class:list={['jahr', { offen: m.jahr === '[OFFEN]' }]}>{m.jahr === '[OFFEN]' ? 'Jahr?' : m.jahr}</span><span>{m.text}</span></li>
+            <li><span class:list={['jahr', { offen: !m.jahr || m.jahr === '[OFFEN]' }]}>{!m.jahr || m.jahr === '[OFFEN]' ? 'Jahr?' : m.jahr}</span><span set:html={text(m.text)} /></li>
           ))}
         </ol>
-        <div class="getaped getaped--eins zeitstrahl__band">
-          <div class="foto zeitstrahl__foto">
-            <Image src={foto('jimdo/andy-ueber.jpg')} alt="Andy Gemperle in seiner Werkstatt" widths={[400, 700]} sizes="22rem" quality={72} />
+        {zs.bild && (
+          <div class="getaped getaped--eins zeitstrahl__band">
+            <div class="foto zeitstrahl__foto">
+              <Image src={zs.bild} alt={zs.bildAlt ?? ''} widths={[400, 700]} sizes="22rem" quality={72} style={zs.fokus ? `object-position:${zs.fokus}` : undefined} />
+            </div>
           </div>
-        </div>
+        )}
       </aside>
     </div>
   </section>
 
   <section class="section section--dark werte">
     <div class="wrap grid grid--3">
-      <div><h3>Selbst gebaut</h3><p>Was ich selbst fertigen kann, fertige ich selbst. Tank, Schutzblech, Halter, Griffe.</p></div>
-      <div><h3>Zum Fahren gemacht</h3><p>Ein Bike gehört auf die Strasse. Darum plane ich jeden Umbau so, dass er in der Schweiz eingelöst werden kann.</p></div>
-      <div><h3>Respekt vor der Technik</h3><p>Flathead, Knuckle, Pan, Shovel: Die alte Technik verdient es, verstanden statt versteckt zu werden.</p></div>
+      {t.l('werte').map((w) => <div><h3>{w.titel}</h3><p set:html={text(w.text)} /></div>)}
     </div>
   </section>
 
-  <Cta title="Komm vorbei" text={`${site.address.street}, ${site.address.zip} ${site.address.city}. Dienstag bis Freitag 10 bis 18 Uhr, Samstag 10 bis 15 Uhr.`} />
+  <Cta title={cta.titel} text={cta.text} />
 </Base>
 
 <style>
+  .andy__text > :global(p:first-child) { font-size: var(--step-1); line-height: 1.5; color: var(--leder-tief); }
   .andy { display: grid; gap: 3rem; grid-template-columns: minmax(0, 1fr); }
   @media (min-width: 62rem) { .andy { grid-template-columns: minmax(0, 1fr) 22rem; align-items: start; } }
   .zeitstrahl h2 { font-size: var(--step-1); letter-spacing: .1em; }

@@ -4,7 +4,8 @@ import Seitenkopf from '../../components/Seitenkopf.astro';
 import FaqListe from '../../components/FaqListe.astro';
 import { Image, getImage } from 'astro:assets';
 import BikeEintrag from '../../components/BikeEintrag.astro';
-import { bikes, faqs } from '../../lib/inhalte';
+import { bikes, faqs, seite } from '../../lib/inhalte';
+import { text, klartext } from '../../lib/text';
 import { breadcrumbSchema, motorcycleOfferSchema } from '../../lib/schema';
 import { site } from '../../config/site';
 
@@ -12,6 +13,8 @@ const liste = await bikes();
 const verfuegbar = liste.filter((b) => b.data.status !== 'verkauft');
 const verkauft = liste.filter((b) => b.data.status === 'verkauft');
 const fragen = await faqs('forsale');
+const t = await seite('for-sale');
+const [vk, anb] = ['verkauft', 'anbieten'].map(t.a);
 const schema = [
   breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'For Sale', path: '/for-sale/' }]),
   ...(await Promise.all(verfuegbar.filter((b) => !b.data.platzhalter).map(async (b) => {
@@ -20,8 +23,8 @@ const schema = [
   }))),
 ];
 ---
-<Base title="For Sale" description="Harley-Davidson, Triumph und andere Klassiker zu verkaufen: Kustom-Bikes und Occasionen aus der Werkstatt Gemperle's KustomWork in Meilen, auch in Kommission." schema={schema}>
-  <Seitenkopf eyebrow="For Sale" title="Bikes mit Geschichte" lead="Aus der eigenen Werkstatt oder in Kommission. Jedes Bike, das hier steht, kennen wir bis zur letzten Schraube." />
+<Base title={t.seoTitel ?? 'For Sale'} description={klartext(t.seoBeschreibung)} schema={schema}>
+  <Seitenkopf eyebrow={t.kopf.eyebrow} title={t.kopf.titel ?? ''} lead={t.kopf.lead} image={t.kopf.bild} imageAlt={t.kopf.bildAlt} focus={t.kopf.fokus} />
 
   <section class="section">
     <div class="wrap liste">
@@ -32,8 +35,8 @@ const schema = [
   {verkauft.length > 0 && (
     <section class="section section--dark">
       <div class="wrap">
-        <span class="eyebrow">Bereits verkauft</span>
-        <h2>Neue Besitzer gefunden</h2>
+        <span class="eyebrow">{vk.eyebrow}</span>
+        <h2>{vk.titel}</h2>
         <div class="grid grid--3 verkauft">
           {verkauft.map((b) => (
             <figure id={b.id}>
@@ -48,10 +51,10 @@ const schema = [
 
   <section class="section section--paper">
     <div class="wrap narrow">
-      <h2>Deine Harley verkaufen?</h2>
-      <p class="lead">Wir verkaufen ausgewählte Bikes in Kommission. Schick uns Fotos und ein paar Angaben, wir melden uns.</p>
+      <h2>{anb.titel}</h2>
+      {anb.lead && <p class="lead" set:html={text(anb.lead)} />}
       <FaqListe faqs={fragen} />
-      <p style="margin-top:2rem"><a class="btn" href="/kontakt/?thema=For%20Sale%20%2F%20Occasion">Bike anbieten</a></p>
+      <p style="margin-top:2rem"><a class="btn" href="/kontakt/?thema=For%20Sale%20%2F%20Occasion">{anb.button ?? 'Bike anbieten'}</a></p>
     </div>
   </section>
 </Base>

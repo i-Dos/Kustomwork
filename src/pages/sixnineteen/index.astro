@@ -2,29 +2,32 @@
 import Base from '../../layouts/Base.astro';
 import FaqListe from '../../components/FaqListe.astro';
 import { Image } from 'astro:assets';
-import { lookbook, faqs } from '../../lib/inhalte';
+import { lookbook, faqs, seite } from '../../lib/inhalte';
+import { text, klartext } from '../../lib/text';
 import { site } from '../../config/site';
 import { breadcrumbSchema } from '../../lib/schema';
 const teile = await lookbook();
 const fragen = await faqs('sixnineteen');
-const marken = ['Rokker', 'Iron & Resin', 'ROEG', '7EYE', 'Biltwell', 'Ondura', 'Mooneyes'];
+const t = await seite('sixnineteen');
+const marken = (await seite('bekleidung')).w('marken');
+const [offen, lb, anfrage, ausserdem] = ['offen', 'lookbook', 'anfrage', 'ausserdem'].map(t.a);
 ---
-<Base title="Sixnineteen" description="Sixnineteen ist das Kleiderlabel von Gemperle's KustomWork, benannt nach der Seestrasse 619 in Meilen. Lookbook, erhältlich in der Werkstatt."
+<Base title={t.seoTitel ?? t.kopf.titel ?? ''} description={klartext(t.seoBeschreibung)}
   schema={[breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'Sixnineteen', path: '/sixnineteen/' }])]}>
   <section class="six-kopf">
     <div class="wrap">
       <p class="six-zahl" aria-hidden="true">619</p>
-      <p class="eyebrow">Das Label von Gemperle's KustomWork</p>
-      <h1>Sixnineteen</h1>
-      <p class="lead">Benannt nach der Hausnummer unserer Werkstatt an der Seestrasse. Kleider für Leute, die lieber schrauben als posieren. Kein Onlineshop, nur bei uns in Meilen.</p>
-      <p class="offen-block" style="max-width:40rem">Offen: Name und Geschichte des Labels mit Andy bestätigen, erste Teile, Farben, Grössen und Preise. Fotos folgen.</p>
+      {t.kopf.eyebrow && <p class="eyebrow">{t.kopf.eyebrow}</p>}
+      <h1>{t.kopf.titel}</h1>
+      {t.kopf.lead && <p class="lead" set:html={text(t.kopf.lead)} />}
+      {offen.text && <p class="offen-block" style="max-width:40rem" set:html={text(offen.text)} />}
     </div>
   </section>
 
   <section class="section">
     <div class="wrap">
-      <span class="eyebrow">Lookbook</span>
-      <h2>Die Kollektion</h2>
+      <span class="eyebrow">{lb.eyebrow}</span>
+      <h2>{lb.titel}</h2>
       <div class="lookbook">
         {teile.map((t, i) => (
           <figure class:list={['look', { 'look--gross': i === 0 }]}>
@@ -34,16 +37,16 @@ const marken = ['Rokker', 'Iron & Resin', 'ROEG', '7EYE', 'Biltwell', 'Ondura', 
         ))}
       </div>
       <div class="six-cta">
-        <p class="lead">Gefällt dir ein Teil? Komm vorbei oder reserviere es per Nachricht.</p>
-        <a class="btn" href="/kontakt/?thema=Sixnineteen%20%2F%20Bekleidung">Teil anfragen</a>
+        {anfrage.lead && <p class="lead" set:html={text(anfrage.lead)} />}
+        <a class="btn" href="/kontakt/?thema=Sixnineteen%20%2F%20Bekleidung">{anfrage.button ?? 'Teil anfragen'}</a>
       </div>
     </div>
   </section>
 
   <section class="section section--paper">
     <div class="wrap narrow">
-      <h2>Ausserdem in der Werkstatt</h2>
-      <p>Neben Sixnineteen führen wir Bekleidung und Teile von Marken, hinter denen wir stehen: {marken.join(', ')}. <a href="/bekleidung/">Mehr zum Laden →</a></p>
+      <h2>{ausserdem.titel}</h2>
+      {ausserdem.text && <p set:html={text(ausserdem.text, { marken: marken.join(', ') })} />}
       <FaqListe faqs={fragen} />
     </div>
   </section>

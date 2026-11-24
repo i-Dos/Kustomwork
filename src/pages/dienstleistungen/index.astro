@@ -3,48 +3,55 @@ import Base from '../../layouts/Base.astro';
 import Seitenkopf from '../../components/Seitenkopf.astro';
 import Cta from '../../components/Cta.astro';
 import { Image } from 'astro:assets';
-import { kern, rund } from '../../config/leistungen';
-import { foto } from '../../lib/fotos';
+import { seite } from '../../lib/inhalte';
+import { text, textAbsaetze, klartext, slug } from '../../lib/text';
 import { breadcrumbSchema, serviceSchema } from '../../lib/schema';
+
+// Leistungen und Texte aus src/content/seiten/dienstleistungen.md (Redaktions-Tool)
+const t = await seite('dienstleistungen');
+const norm = (l: ReturnType<typeof t.l>[number]) => ({ ...l, id: l.id || slug(l.titel), titel: l.titel ?? '', text: l.text ?? '', serviceType: l.serviceType || l.titel || '' });
+const kern = t.l('kern').map(norm);
+const rund = t.l('rund').map(norm);
+const [k, r, offen, cta] = ['kern', 'rund', 'offen', 'cta'].map(t.a);
 
 const schema = [
   breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'Dienstleistungen', path: '/dienstleistungen/' }]),
   ...[...kern, ...rund].map((l) => serviceSchema(l)),
 ];
 ---
-<Base title="Dienstleistungen" description="Custom Bikes, Oldtimer-Restaurationen, Motor- und Getrieberevisionen und Tuning für Harley-Davidson. Dazu Service, MFK, Reifen und Teile in Meilen am Zürichsee."
+<Base title={t.seoTitel ?? 'Dienstleistungen'} description={klartext(t.seoBeschreibung)}
   schema={schema}>
-  <Seitenkopf eyebrow="Was wir dir bieten" title="Dienstleistungen" lead="Unser Herz schlägt für Kustom: Einzelstücke, alte Harleys und Motoren, die wieder richtig laufen. Und weil ein Bike mehr braucht als einen schönen Umbau, kümmern wir uns auch um alles rundherum." />
+  <Seitenkopf eyebrow={t.kopf.eyebrow} title={t.kopf.titel ?? ''} lead={t.kopf.lead} image={t.kopf.bild} imageAlt={t.kopf.bildAlt} focus={t.kopf.fokus} />
 
   <nav class="wrap sprung" aria-label="Leistungen auf dieser Seite">
     <ul>
       {kern.map((l) => <li><a href={`#${l.id}`}>{l.titel}</a></li>)}
-      <li><a href="#rund-ums-bike">Rund ums Bike</a></li>
+      <li><a href="#rund-ums-bike">{r.titel}</a></li>
     </ul>
   </nav>
 
   <section class="section kern" aria-labelledby="kern-titel">
     <div class="wrap">
-      <span class="eyebrow">Unser Schwerpunkt</span>
-      <h2 id="kern-titel">Kustom ist unser <span class="script">Handwerk.</span></h2>
+      <span class="eyebrow">{k.eyebrow}</span>
+      <h2 id="kern-titel">{k.titel} {k.script && <span class="script">{k.script}</span>}</h2>
       {kern.map((l, i) => (
         <article class:list={['leistung', { 'leistung--rechts': i % 2 === 1 }]} id={l.id}>
           {l.bild && (
             <div class:list={['getaped', 'getaped--eins']}>
               <div class="foto leistung__foto">
-                <Image src={foto(l.bild)} alt={l.bildAlt ?? ''} widths={[500, 900, 1200]} sizes="(min-width: 56rem) 45vw, 100vw" quality={70} loading={i === 0 ? 'eager' : 'lazy'} />
+                <Image src={l.bild} alt={l.bildAlt ?? ''} style={l.fokus ? `object-position:${l.fokus}` : undefined} widths={[500, 900, 1200]} sizes="(min-width: 56rem) 45vw, 100vw" quality={70} loading={i === 0 ? 'eager' : 'lazy'} />
               </div>
             </div>
           )}
           <div class="leistung__text">
             <p class="leistung__nr" aria-hidden="true">{String(i + 1).padStart(2, '0')}</p>
             <h3>{l.titel}</h3>
-            <p class="lead">{l.kurz}</p>
-            <p>{l.text}</p>
+            {l.kurz && <p class="lead" set:html={text(l.kurz)} />}
+            <Fragment set:html={textAbsaetze(l.text)} />
             {l.punkte && <ul class="leistung__punkte">{l.punkte.map((p) => <li>{p}</li>)}</ul>}
             <div class="leistung__links">
               <a class="btn" href={`/kontakt/?thema=${encodeURIComponent(l.thema ?? 'Etwas anderes')}`}>Anfragen</a>
-              {l.link && <a class="btn btn--ghost" href={l.link.href}>{l.link.text}</a>}
+              {l.linkText && l.linkZiel && <a class="btn btn--ghost" href={l.linkZiel}>{l.linkText}</a>}
             </div>
           </div>
         </article>
@@ -54,28 +61,30 @@ const schema = [
 
   <section class="section section--dark" id="rund-ums-bike" aria-labelledby="rund-titel">
     <div class="wrap">
-      <span class="eyebrow">Und sonst?</span>
-      <h2 id="rund-titel">Rund ums Bike</h2>
-      <p class="lead rund__lead">Service, MFK, Reifen oder Teile: Auch dafür bist du bei uns richtig, für Harleys und, wo es passt, auch für andere Marken.</p>
+      <span class="eyebrow">{r.eyebrow}</span>
+      <h2 id="rund-titel">{r.titel}</h2>
+      {r.lead && <p class="lead rund__lead" set:html={text(r.lead)} />}
       <ul class="rund">
         {rund.map((l) => (
           <li id={l.id}>
             <h3>{l.titel}</h3>
-            <p>{l.kurz}</p>
-            {l.link && <a href={l.link.href}>{l.link.text} →</a>}
+            {l.kurz && <p set:html={text(l.kurz)} />}
+            {l.linkText && l.linkZiel && <a href={l.linkZiel}>{l.linkText} →</a>}
           </li>
         ))}
       </ul>
     </div>
   </section>
 
-  <section class="section section--paper">
-    <div class="wrap narrow">
-      <p class="offen-block"><strong>Offen, mit Andy abstimmen:</strong> Gewichtung der Leistungen, Texte und Beispiele pro Leistung, passende Fotos (Werkstatt, Motor offen, Tuning). Reifenservice wirklich für alle Marken? Welche Arbeiten macht Andy an anderen Marken als Harley?</p>
-    </div>
-  </section>
+  {offen.text && (
+    <section class="section section--paper">
+      <div class="wrap narrow">
+        <p class="offen-block" set:html={text(offen.text)} />
+      </div>
+    </section>
+  )}
 
-  <Cta title="Was dürfen wir für dich bauen?" />
+  <Cta title={cta.titel} text={cta.text} />
 </Base>
 
 <style>

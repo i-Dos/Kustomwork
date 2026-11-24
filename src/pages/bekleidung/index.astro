@@ -3,61 +3,54 @@ import Base from '../../layouts/Base.astro';
 import Seitenkopf from '../../components/Seitenkopf.astro';
 import Cta from '../../components/Cta.astro';
 import { Image } from 'astro:assets';
-import { foto } from '../../lib/fotos';
+import { seite } from '../../lib/inhalte';
+import { text, klartext } from '../../lib/text';
 import { breadcrumbSchema } from '../../lib/schema';
 
-const marken = ['Rokker', 'Iron & Resin', 'ROEG', '7EYE', 'Biltwell', 'Ondura', 'Mooneyes'];
-const bilder = [
-  { src: 'jimdo/laden-1.jpg', alt: 'Der Laden in der Werkstatt: Helme, Jacken und Hemden an der Kleiderstange', gross: true },
-  { src: 'jimdo/laden-2.jpg', alt: 'Gestreifter Strickpullover mit Motorcycles-Schriftzug' },
-  { src: 'jimdo/laden-3.jpg', alt: 'Rokker-Jeans und gelbe Lederhandschuhe' },
-  { src: 'jimdo/laden-4.jpg', alt: 'Biltwell-Moto-Goggles und Lederzubehör im Regal', gross: true },
-  { src: 'jimdo/laden-5.jpg', alt: 'Ständer mit Motorradbrillen und Rokker-Socken' },
-  { src: 'jimdo/laden-6.jpg', alt: 'Jethelm mit Metalflake-Lack und Pinstriping' },
-  { src: 'jimdo/laden-7.jpg', alt: 'Regal mit Harley-Davidson-Teilen, Griffen und Spiegeln', gross: true },
-  { src: 'jimdo/laden-8.jpg', alt: 'Biltwell-Teile, Fussrasten und Auspuffzubehör' },
-  { src: 'jimdo/laden-9.jpg', alt: 'Rot lackierter Tank mit Flammen im Regal' },
-];
+// Texte, Marken und Fotos aus src/content/seiten/bekleidung.md (Redaktions-Tool)
+const t = await seite('bekleidung');
+const marken = t.w('marken');
+const bilder = t.l('bilder').filter((b) => b.bild);
+const [m, credit, label, cta] = ['marken', 'credit', 'label', 'cta'].map(t.a);
 ---
-<Base title="Bekleidung und Teile" description="Motorradbekleidung, Helme, Brillen und Teile von Rokker, Iron & Resin, ROEG, 7EYE, Biltwell, Ondura und Mooneyes im Laden von Gemperle's KustomWork in Meilen."
-  image={foto('jimdo/laden-1.jpg')} imageAlt={bilder[0].alt}
+<Base title={t.seoTitel ?? t.kopf.titel ?? ''} description={klartext(t.seoBeschreibung)}
+  image={t.kopf.bild} imageAlt={t.kopf.bildAlt}
   schema={[breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'Bekleidung und Teile', path: '/bekleidung/' }])]}>
-  <Seitenkopf eyebrow="Der Laden in der Werkstatt" title="Bekleidung und Teile" lead="Jacken, Jeans, Helme, Brillen, Handschuhe und Teile von Marken, hinter denen wir stehen. Qualität steht im Mittelpunkt, und wir helfen dir gerne bei der Auswahl."
-    image={foto('jimdo/laden-1.jpg')} imageAlt={bilder[0].alt} focus="50% 45%" />
+  <Seitenkopf eyebrow={t.kopf.eyebrow} title={t.kopf.titel ?? ''} lead={t.kopf.lead} image={t.kopf.bild} imageAlt={t.kopf.bildAlt} focus={t.kopf.fokus} />
 
   <section class="section">
     <div class="wrap">
-      <span class="eyebrow">Im Regal</span>
-      <h2>Marken, die wir <span class="script">selber tragen.</span></h2>
+      <span class="eyebrow">{m.eyebrow}</span>
+      <h2>{m.titel} {m.script && <span class="script">{m.script}</span>}</h2>
       <ul class="marken">{marken.map((m) => <li>{m}</li>)}</ul>
-      <p class="lead marken__text">Und mehr. Kein Onlineshop: Komm vorbei, probier an und lass dich beraten. Wenn du etwas Bestimmtes suchst, frag uns, wir bestellen es für dich.</p>
+      {m.lead && <p class="lead marken__text" set:html={text(m.lead)} />}
 
       <div class="laden">
-        {bilder.slice(1).map((b, i) => (
+        {bilder.map((b, i) => (
           <div class:list={[{ 'getaped getaped--eins': i % 4 === 0 }, { 'laden--quer': b.gross }]}>
             <figure class="foto laden__bild">
-              <Image src={foto(b.src)} alt={b.alt} widths={[400, 700, 1100]} sizes="(min-width: 64rem) 33vw, (min-width: 40rem) 50vw, 100vw" quality={68} />
+              <Image src={b.bild!} alt={b.bildAlt ?? ''} widths={[400, 700, 1100]} sizes="(min-width: 64rem) 33vw, (min-width: 40rem) 50vw, 100vw" quality={68} />
             </figure>
           </div>
         ))}
       </div>
-      <p class="credit">Fotos: bisherige Website, Platzhalter bis zu neuen Aufnahmen.</p>
+      {credit.text && <p class="credit" set:html={text(credit.text)} />}
     </div>
   </section>
 
   <section class="section section--dark">
     <div class="wrap six">
       <div>
-        <span class="eyebrow">Das eigene Label</span>
-        <h2>Sixnineteen</h2>
-        <p class="lead">Benannt nach der Hausnummer unserer Werkstatt an der Seestrasse 619. Kleider für Leute, die lieber schrauben als posieren.</p>
-        <a class="btn btn--ghost" href="/sixnineteen/">Zum Lookbook</a>
+        <span class="eyebrow">{label.eyebrow}</span>
+        <h2>{label.titel}</h2>
+        {label.lead && <p class="lead" set:html={text(label.lead)} />}
+        <a class="btn btn--ghost" href="/sixnineteen/">{label.button ?? 'Zum Lookbook'}</a>
       </div>
       <p class="six__zahl" aria-hidden="true">619</p>
     </div>
   </section>
 
-  <Cta title="Etwas Bestimmtes gesucht?" />
+  <Cta title={cta.titel} text={cta.text} />
 </Base>
 
 <style>

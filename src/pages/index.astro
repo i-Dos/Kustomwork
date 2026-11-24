@@ -6,14 +6,17 @@ import FaqListe from '../components/FaqListe.astro';
 import Cta from '../components/Cta.astro';
 import { Image } from 'astro:assets';
 import { site } from '../config/site';
-import { foto, formatCHF, datum } from '../lib/fotos';
-import { projekte, beitraege, bikes, faqs } from '../lib/inhalte';
+import { formatCHF, datum } from '../lib/fotos';
+import { projekte, beitraege, bikes, faqs, seite } from '../lib/inhalte';
+import { text, textAbsaetze, klartext } from '../lib/text';
 import { faqSchema } from '../lib/schema';
 
 const alleProjekte = await projekte();
 const posts = await beitraege();
 const verkauf = (await bikes()).filter((b) => b.data.status !== 'verkauft').slice(0, 2);
 const fragen = await faqs('start');
+const t = await seite('start');
+const [intro, pro, story, fs, label, blog, faq] = ['intro', 'projekte', 'story', 'forsale', 'label', 'blog', 'faq'].map(t.a);
 
 // Hinweis im Hero: das Neuste aus Blog oder Projekten (Platzhalter ausgenommen)
 const kandidaten = [
@@ -22,19 +25,19 @@ const kandidaten = [
 ].sort((a, b) => b.date.getTime() - a.date.getTime());
 const neu = kandidaten[0];
 ---
-<Base title={site.name} schema={[faqSchema(fragen.map((f) => ({ frage: f.frage, antwort: f.text })))]}>
-  <Hero neu={neu} />
+<Base title={site.name} description={t.seoBeschreibung ? klartext(t.seoBeschreibung) : undefined} schema={[faqSchema(fragen.map((f) => ({ frage: f.frage, antwort: f.text })))]}>
+  <Hero neu={neu} bilder={t.l('heroBilder')} eyebrow={t.kopf.eyebrow} titel={t.kopf.titel} script={t.kopf.script} lead={t.kopf.lead} />
 
   <section class="section">
     <div class="wrap intro">
       <div>
-        <span class="eyebrow">Die etwas andere Werkstatt</span>
-        <h2>Wir bauen Bikes, die man fährt.</h2>
+        <span class="eyebrow">{intro.eyebrow}</span>
+        <h2>{intro.titel}</h2>
       </div>
       <div>
-        <p class="lead">Gemperle's KustomWork ist eine kleine Werkstatt in Meilen am Zürichsee, spezialisiert auf Kustom-Umbauten und Neuaufbauten auf Harley-Davidson-Basis.</p>
-        <p>Vom Flathead aus den 1940ern bis zur Twin Cam: Andy Gemperle baut jedes Bike als Einzelstück. Tank, Schutzblech, Halter und Schaltknauf entstehen oft direkt an der Drehbank und am Schweissgerät. Was nicht selbst gebaut wird, kommt von Partnern, denen wir vertrauen. Und am Ende steht ein Motorrad, das durch die MFK kommt und auf die Strasse gehört.</p>
-        <a href="/andy/">Andys Geschichte lesen →</a>
+        {intro.lead && <p class="lead" set:html={text(intro.lead)} />}
+        <Fragment set:html={textAbsaetze(intro.text)} />
+        {intro.button && <a href={intro.buttonLink}>{intro.button}</a>}
       </div>
     </div>
   </section>
@@ -43,10 +46,10 @@ const neu = kandidaten[0];
     <div class="wrap">
       <div class="kopfzeile">
         <div>
-          <span class="eyebrow">Projekte</span>
-          <h2>Aus der Werkstatt</h2>
+          <span class="eyebrow">{pro.eyebrow}</span>
+          <h2>{pro.titel}</h2>
         </div>
-        <a class="btn btn--ghost" href="/projekte/">Alle Projekte</a>
+        <a class="btn btn--ghost" href="/projekte/">{pro.button ?? 'Alle Projekte'}</a>
       </div>
       <div class="grid grid--3">
         {alleProjekte.slice(0, 3).map((p) => (
@@ -60,16 +63,16 @@ const neu = kandidaten[0];
     <div class="wrap story__grid">
       <div class="getaped">
         <div class="foto story__foto">
-          <Image src={foto('andy-fahrt-hoch.jpg')} alt="Andy Gemperle auf seinem Panhead-Chopper" widths={[500, 800, 1100]} sizes="(min-width: 56rem) 45vw, 100vw" quality={72} />
+          {story.bild && <Image src={story.bild} alt={story.bildAlt ?? ''} widths={[500, 800, 1100]} sizes="(min-width: 56rem) 45vw, 100vw" quality={72} style={story.fokus ? `object-position:${story.fokus}` : undefined} />}
         </div>
       </div>
       <div>
-        <span class="eyebrow">Andy Gemperle</span>
-        <h2>Riding with Larry <span class="script">in my mind.</span></h2>
-        <p class="lead">2004 sieht Andy im Fernsehen Indian Larry, den New Yorker Chopper-Bauer. Wenige Monate später ist Larry tot, und Andy baut ihm zu Ehren sein eigenes Bike.</p>
-        <p>Eine Panhead aus den 1950ern, fast alle Teile selbst gefertigt, das Schweissen selbst beigebracht in einer Werkstatt von zwölf Quadratmetern. Aus diesem Bike wurde eine Leidenschaft, aus der Leidenschaft eine Werkstatt.</p>
+        <span class="eyebrow">{story.eyebrow}</span>
+        <h2>{story.titel} {story.script && <span class="script">{story.script}</span>}</h2>
+        {story.lead && <p class="lead" set:html={text(story.lead)} />}
+        <Fragment set:html={textAbsaetze(story.text)} />
         <div class="story__links">
-          <a class="btn" href="/blog/riding-with-larry-in-my-mind/">Die ganze Geschichte</a>
+          {story.button && <a class="btn" href={story.buttonLink}>{story.button}</a>}
           <a class="btn btn--ghost" href="/projekte/indian-larry-tribute-panhead/">Das Bike</a>
         </div>
       </div>
@@ -80,10 +83,10 @@ const neu = kandidaten[0];
     <div class="wrap">
       <div class="kopfzeile">
         <div>
-          <span class="eyebrow">For Sale</span>
-          <h2>Bereit für die Strasse</h2>
+          <span class="eyebrow">{fs.eyebrow}</span>
+          <h2>{fs.titel}</h2>
         </div>
-        <a class="btn btn--ghost" href="/for-sale/">Alle Bikes</a>
+        <a class="btn btn--ghost" href="/for-sale/">{fs.button ?? 'Alle Bikes'}</a>
       </div>
       <div class="grid grid--2">
         {verkauf.map((b) => (
@@ -98,10 +101,10 @@ const neu = kandidaten[0];
     <div class="wrap sixnineteen__inner">
       <p class="sixnineteen__zahl" aria-hidden="true">619</p>
       <div>
-        <span class="eyebrow">Das Label</span>
-        <h2>Sixnineteen</h2>
-        <p class="lead">Kleider aus der Werkstatt, benannt nach der Hausnummer an der Seestrasse. Erhältlich nur bei uns in Meilen.</p>
-        <a class="btn btn--ghost" href="/sixnineteen/">Zum Lookbook</a>
+        <span class="eyebrow">{label.eyebrow}</span>
+        <h2>{label.titel}</h2>
+        {label.lead && <p class="lead" set:html={text(label.lead)} />}
+        <a class="btn btn--ghost" href="/sixnineteen/">{label.button ?? 'Zum Lookbook'}</a>
       </div>
     </div>
   </section>
@@ -110,10 +113,10 @@ const neu = kandidaten[0];
     <div class="wrap">
       <div class="kopfzeile">
         <div>
-          <span class="eyebrow">Blog</span>
-          <h2>Geschichten & Technik</h2>
+          <span class="eyebrow">{blog.eyebrow}</span>
+          <h2>{blog.titel}</h2>
         </div>
-        <a class="btn btn--ghost" href="/blog/">Alle Beiträge</a>
+        <a class="btn btn--ghost" href="/blog/">{blog.button ?? 'Alle Beiträge'}</a>
       </div>
       <div class="grid grid--3">
         {posts.slice(0, 3).map((p) => (
@@ -126,9 +129,9 @@ const neu = kandidaten[0];
   <section class="section section--paper">
     <div class="wrap faq-grid">
       <div>
-        <span class="eyebrow">Häufige Fragen</span>
-        <h2>Gut zu wissen</h2>
-        <p>Noch etwas offen? Ruf an unter <a href={`tel:${site.phoneHref}`}>{site.phone}</a> oder komm vorbei.</p>
+        <span class="eyebrow">{faq.eyebrow}</span>
+        <h2>{faq.titel}</h2>
+        <Fragment set:html={textAbsaetze(faq.text)} />
       </div>
       <FaqListe faqs={fragen} />
     </div>

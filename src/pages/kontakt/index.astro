@@ -1,18 +1,21 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Seitenkopf from '../../components/Seitenkopf.astro';
-import seefront from '../../assets/grafik/seefront-meilen.png';
 import { site } from '../../config/site';
+import { seite } from '../../lib/inhalte';
+import { text, klartext } from '../../lib/text';
+const t = await seite('kontakt');
+const f = t.a('formular');
 import { breadcrumbSchema } from '../../lib/schema';
 ---
-<Base title="Kontakt" description={`Gemperle's KustomWork, ${site.address.street}, ${site.address.zip} ${site.address.city}. Telefon ${site.phone}. Dienstag bis Freitag 10 bis 18 Uhr, Samstag 10 bis 15 Uhr.`}
+<Base title={t.seoTitel ?? 'Kontakt'} description={klartext(t.seoBeschreibung)}
   schema={[breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'Kontakt', path: '/kontakt/' }])]}>
-  <Seitenkopf eyebrow="Seestrasse 619, Meilen" image={seefront} imageAlt="Seefront Meilen mit reformierter Kirche" focus="20% 65%" title="Lass uns über dein Bike reden" lead="Am besten in der Werkstatt, bei einem Kaffee neben der Hebebühne. Oder schreib uns vorab, was du vorhast." />
+  <Seitenkopf eyebrow={t.kopf.eyebrow} image={t.kopf.bild} imageAlt={t.kopf.bildAlt} focus={t.kopf.fokus} title={t.kopf.titel ?? ''} lead={t.kopf.lead} />
 
   <section class="section">
     <div class="wrap kontakt">
       <form class="formular" method="post" action={site.form.action} id="anfrage">
-        <h2>Anfrage</h2>
+        <h2>{f.titel ?? 'Anfrage'}</h2>
         <div class="feld">
           <label for="thema">Worum geht es?</label>
           <select id="thema" name="thema">
@@ -34,8 +37,8 @@ import { breadcrumbSchema } from '../../lib/schema';
           <input type="checkbox" id="ds" name="datenschutz" required />
           <label for="ds">Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Anfrage verwendet werden. <a href={site.legal.datenschutzPath}>Datenschutz</a> *</label>
         </div>
-        <button class="btn" type="submit">Anfrage senden</button>
-        <p class="hinweis">Lieber direkt? <a href={`mailto:${site.email}`}>{site.email}</a> oder <a href={`tel:${site.phoneHref}`}>{site.phone}</a>. Fotos deines Bikes kannst du nach der ersten Antwort per E-Mail schicken.</p>
+        <button class="btn" type="submit">{f.button ?? 'Anfrage senden'}</button>
+        {f.text && <p class="hinweis" set:html={text(f.text)} />}
       </form>
 
       <aside class="infos">

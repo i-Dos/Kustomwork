@@ -21,6 +21,7 @@ const { Content } = await render(p);
 const path = `/projekte/${p.id}/`;
 const nummer = teilenummer(p.id, p.data.date);
 const og = await getImage({ src: p.data.cover, width: 1200, format: 'jpg' });
+const cta = (await (await import('../../lib/inhalte')).seite('projekte')).a('cta');
 ---
 <Base title={p.data.title} description={p.data.description} image={p.data.cover} imageAlt={p.data.coverAlt}
   schema={[
@@ -68,7 +69,7 @@ const og = await getImage({ src: p.data.cover, width: 1200, format: 'jpg' });
       </div>
     </div>
   </section>
-  <Cta title="Auch so ein Bike?" />
+  <Cta title={cta.titel} text={cta.text} />
 </Base>
 
 <style>

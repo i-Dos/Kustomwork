@@ -5,9 +5,13 @@
  * optional eingebacken über grainOpacity > 0.
  * Aufruf: npm run fotos   (neue Fotos einfach in fotos-original/ legen)
  * Parameter pro Kunde: src/config/look.json
+ *
+ * Uploads aus dem Redaktions-Tool (/admin) landen ungefiltert in src/assets/fotos/uploads/.
+ * Beim Build filtert dieses Skript sie an Ort und Stelle (gleicher Dateiname, als JPEG-Inhalt)
+ * und markiert sie im EXIF-Feld, damit kein Bild zweimal gefiltert wird.
  */
 import sharp from 'sharp';
-import { readdir, mkdir, readFile, stat } from 'node:fs/promises';
+import { readdir, mkdir, readFile, stat, writeFile } from 'node:fs/promises';
 import path from 'node:path';
 
 const SRC = 'fotos-original';
@@ -18,31 +22,7 @@ const force = process.argv.includes('--force');
 // sind die Datei-Zeiten zufällig, der Zeitvergleich würde sonst alles neu rechnen (ca. 1 Min.).
 const nurFehlende = process.argv.includes('--fehlende');
 
-await mkdir(OUT, { recursive: true });
-
-async function walk(dir) {
-  const out = [];
-  for (const e of await readdir(dir, { withFileTypes: true })) {
-    const p = path.join(dir, e.name);
-    if (e.isDirectory()) out.push(...(await walk(p)));
-    else if (/\.(jpe?g|png|webp|heic|tiff?)$/i.test(e.name)) out.push(p);
-  }
-  return out;
-}
-
-const files = await walk(SRC);
-let done = 0;
-for (const file of files) {
-  const rel = path.relative(SRC, file).replace(/\.(png|webp|heic|tiff?)$/i, '.jpg');
-  const target = path.join(OUT, rel);
-  if (!force) {
-    try {
-      const t = await stat(target);
-      if (nurFehlende || t.mtimeMs > (await stat(file)).mtimeMs) continue;
-    } catch {}
-  }
-  await mkdir(path.dirname(target), { recursive: true });
-
+async function looken(file) {
   const base = sharp(file).rotate().resize({ width: look.maxWidth, withoutEnlargement: true });
   const { width, height } = await base.clone().metadata().then(async () => {
     const b = await base.clone().toBuffer({ resolveWithObject: true });
@@ -81,10 +61,57 @@ for (const file of files) {
     .toBuffer();
 
   // Korn nur einbacken, wenn gewünscht. Standard: Korn per CSS-Overlay (spart viele KB pro Bild)
-  await sharp(graded)
+  return sharp(graded)
     .composite(look.grainOpacity > 0 ? [{ input: grain, blend: 'overlay' }] : [])
     .jpeg({ quality: 86, mozjpeg: true })
-    .toFile(target);
+    .toBuffer();
+}
+
+await mkdir(OUT, { recursive: true });
+
+async function walk(dir) {
+  const out = [];
+  for (const e of await readdir(dir, { withFileTypes: true })) {
+    const p = path.join(dir, e.name);
+    if (e.isDirectory()) out.push(...(await walk(p)));
+    else if (/\.(jpe?g|png|webp|avif|heic|tiff?)$/i.test(e.name)) out.push(p);
+  }
+  return out;
+}
+
+const files = await walk(SRC);
+let done = 0;
+for (const file of files) {
+  const rel = path.relative(SRC, file).replace(/\.(png|webp|heic|tiff?)$/i, '.jpg');
+  const target = path.join(OUT, rel);
+  if (!force) {
+    try {
+      const t = await stat(target);
+      if (nurFehlende || t.mtimeMs > (await stat(file)).mtimeMs) continue;
+    } catch {}
+  }
+  await mkdir(path.dirname(target), { recursive: true });
+
+  await writeFile(target, await looken(file));
   done++;
 }
 console.log(`Foto-Look: ${done} von ${files.length} Bildern bearbeitet.`);
+
+// --- Uploads aus dem Redaktions-Tool ------------------------------------
+const UPLOADS = 'src/assets/fotos/uploads';
+const MARKE = 'KustomWork-Look';
+let neu = 0;
+let uploads = [];
+try { uploads = await walk(UPLOADS); } catch {}
+for (const file of uploads) {
+  const meta = await sharp(file).metadata();
+  if (meta.exif && meta.exif.includes(MARKE)) continue; // schon gefiltert
+  const jpg = await looken(file);
+  // Format beibehalten, damit der Dateiname im Inhalt stimmt (Astro liest den Inhalt, nicht die Endung)
+  const ext = path.extname(file).toLowerCase();
+  let out = sharp(jpg).withExif({ IFD0: { ImageDescription: MARKE } });
+  out = ext === '.png' ? out.png() : ext === '.webp' ? out.webp({ quality: 86 }) : ext === '.avif' ? out.avif({ quality: 60 }) : out.jpeg({ quality: 86, mozjpeg: true });
+  await writeFile(file, await out.toBuffer());
+  neu++;
+}
+if (uploads.length) console.log(`Foto-Look Uploads: ${neu} neu gefiltert, ${uploads.length - neu} schon im Look.`);

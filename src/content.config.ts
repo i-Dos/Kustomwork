@@ -103,4 +103,36 @@ const faq = defineCollection({
   schema: z.object({ frage: z.string(), order: z.number().default(0), seiten: z.array(z.string()).default(['start']) }),
 });
 
-export const collections = { projekte, blog, bikes, lookbook, faq };
+/**
+ * Seiten-Texte: ein Markdown-File pro Seite (src/content/seiten/<seite>.md), gepflegt über /admin.
+ * kopf = Seitenkopf, abschnitte = benannte Textblöcke, listen = wiederholbare Einträge,
+ * woerter = einfache Wortlisten. Das Aussehen bestimmen die Vorlagen in src/pages.
+ */
+const seiten = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/seiten' }),
+  schema: ({ image }) => {
+    const abschnitt = z
+      .object({
+        eyebrow: z.string(), titel: z.string(), script: z.string(), lead: z.string(), text: z.string(),
+        bild: image(), bildAlt: z.string(), fokus: z.string(), button: z.string(), buttonLink: z.string(),
+      })
+      .partial();
+    const eintrag = z
+      .object({
+        id: z.string(), titel: z.string(), jahr: z.string(), kurz: z.string(), text: z.string(),
+        punkte: z.array(z.string()), bild: image(), bildAlt: z.string(), fokus: z.string(), dunkel: z.number(), gross: z.boolean(),
+        linkText: z.string(), linkZiel: z.string(), thema: z.string(), serviceType: z.string(),
+      })
+      .partial();
+    return z.object({
+      seoTitel: z.string().optional(),
+      seoBeschreibung: z.string().optional(),
+      kopf: abschnitt.default({}),
+      abschnitte: z.record(z.string(), abschnitt).default({}),
+      listen: z.record(z.string(), z.array(eintrag)).default({}),
+      woerter: z.record(z.string(), z.array(z.string())).default({}),
+    });
+  },
+});
+
+export const collections = { projekte, blog, bikes, lookbook, faq, seiten };

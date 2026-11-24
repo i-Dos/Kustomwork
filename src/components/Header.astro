@@ -34,17 +34,16 @@ const isHome = path === '/';
 
 <style>
   .kopf { background: var(--leder-tief); color: var(--on-dark); position: relative; z-index: 20; }
-  .kopf--home { position: absolute; inset: 0 0 auto; background: linear-gradient(rgba(20,14,9,.75), rgba(20,14,9,0)); }
+  .kopf--home { position: absolute; inset: 0 0 auto; background: linear-gradient(rgba(20,14,9,.82), rgba(20,14,9,.45) 60%, rgba(20,14,9,0)); }
   .kopf__inner { display: flex; align-items: center; justify-content: space-between; padding-block: .6rem; gap: 1rem; min-height: 4.5rem; }
   .marke { color: var(--on-dark); text-decoration: none; line-height: .9; display: flex; align-items: center; gap: .8rem; }
   .marke__logo { width: 78px; height: auto; display: block; }
   .marke__text { display: grid; }
-  /* Startseite: nur das runde Logo, gross, oben links auf Höhe der Menüleiste, bündig mit «Kustom» */
+  /* Startseite: ruhige Kopfzeile, rundes Logo links bündig mit «Kustom», mittig zur Menüzeile */
   .kopf--home .marke__text { display: none; }
-  .kopf--home .kopf__inner { align-items: flex-start; padding-top: 1.1rem; }
-  .kopf--home .marke__logo { width: clamp(5.5rem, 10vw, 8.5rem); filter: drop-shadow(0 2px 3px rgba(0,0,0,.5)) drop-shadow(0 4px 18px rgba(0,0,0,.55)); }
-  .kopf--home nav { padding-top: .6rem; }
-  @media (max-width: 30rem) { .marke__logo { width: 60px; } .marke__text { display: none; } .kopf--home .marke__logo { width: 5.5rem; } }
+  .kopf--home .kopf__inner { padding-block: .9rem; }
+  .kopf--home .marke__logo { width: clamp(3.6rem, 5vw, 4.6rem); filter: drop-shadow(0 1px 2px rgba(0,0,0,.5)); }
+  @media (max-width: 30rem) { .marke__logo { width: 60px; } .marke__text { display: none; } .kopf--home .marke__logo { width: 3.6rem; } }
   .marke:hover { color: var(--on-dark); }
   .marke__name { font-family: var(--font-body); font-style: italic; font-size: 1.05rem; color: var(--on-dark-muted); }
   .marke__kw { font-family: var(--font-display); font-weight: 700; font-size: 1.7rem; text-transform: uppercase; letter-spacing: .04em; }

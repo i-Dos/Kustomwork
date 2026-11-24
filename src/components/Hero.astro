@@ -1,19 +1,21 @@
 ---
 /**
- * Startseiten-Hero: pro Besuch ein zufälliges Bild aus site.hero.
+ * Startseiten-Hero: pro Besuch ein zufälliges Bild aus start.md (listen.heroBilder).
  * Alle Varianten liegen als <template> im HTML; ein kleines Inline-Skript
  * wählt synchron beim Parsen eine aus. So lädt nur EIN Bild (gut für LCP),
  * ohne Slider und ohne Layout-Sprung. Ohne JavaScript erscheint das erste Bild.
  */
 import { Picture } from 'astro:assets';
-import { site } from '../config/site';
-import { foto } from '../lib/fotos';
+import type { ImageMetadata } from 'astro';
 
 interface Props {
   neu?: { label: string; title: string; href: string };
+  bilder: { bild?: ImageMetadata; bildAlt?: string; fokus?: string; dunkel?: number }[];
+  eyebrow?: string; titel?: string; script?: string; lead?: string;
 }
-const { neu } = Astro.props;
-const bilder = site.hero.map((h) => ({ dunkel: 0, ...h, img: foto(h.src) }));
+const { neu, eyebrow, titel, script, lead } = Astro.props;
+// Bilder und Texte kommen aus src/content/seiten/start.md (Redaktions-Tool)
+const bilder = Astro.props.bilder.filter((b) => b.bild).map((b) => ({ img: b.bild!, alt: b.bildAlt ?? '', focus: b.fokus ?? '50% 50%', dunkel: b.dunkel ?? 0 }));
 const pic = { widths: [640, 960, 1280, 1600, 2000], sizes: '100vw', formats: ['avif', 'webp'] as const, quality: 62 };
 ---
 <section class="hero" aria-label="Willkommen">
@@ -39,9 +41,9 @@ const pic = { widths: [640, 960, 1280, 1600, 2000], sizes: '100vw', formats: ['a
   </script>
 
   <div class="wrap hero__text">
-    <p class="eyebrow">Harley-Davidson Kustom · Meilen am Zürichsee</p>
-    <h1>Kustom<br /><span class="script">statt Katalog.</span></h1>
-    <p class="hero__lead">Harley-Davidson-Umbauten mit selbst gefertigten Teilen, gebaut zum Fahren. Von Andy Gemperle, Schrauber aus Leidenschaft.</p>
+    {eyebrow && <p class="eyebrow">{eyebrow}</p>}
+    <h1>{titel}{script && <><br /><span class="script">{script}</span></>}</h1>
+    {lead && <p class="hero__lead">{lead}</p>}
     <div class="hero__ctas">
       <a class="btn" href="/projekte/">Projekte ansehen</a>
       <a class="btn btn--ghost" href="/kontakt/">Umbau anfragen</a>

@@ -1,7 +1,12 @@
 ---
 import { site } from '../config/site';
+import { seite } from '../lib/inhalte';
+import { klartext } from '../lib/text';
 interface Props { title?: string; text?: string }
-const { title = 'Hast du ein Bike mit Potential?', text = 'Erzähl Andy, was dir vorschwebt. Am besten mit ein paar Fotos deiner Maschine. Oder komm direkt in der Werkstatt in Meilen vorbei.' } = Astro.props;
+// Standardtexte aus start.md (abschnitte.cta), pro Seite überschreibbar
+const std = (await seite('start')).a('cta');
+const title = Astro.props.title || std.titel || '';
+const text = klartext(Astro.props.text || std.text || '');
 ---
 <section class="section section--oliv cta">
   <div class="wrap cta__inner">

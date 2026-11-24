@@ -1,4 +1,4 @@
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 
 const live = (e: { data: { draft?: boolean } }) => import.meta.env.DEV || !e.data.draft;
 
@@ -23,4 +23,14 @@ export async function faqs(seite: string) {
     html: f.rendered?.html ?? f.body ?? '',
     text: (f.body ?? '').replace(/\s+/g, ' ').trim(),
   }));
+}
+
+/** Texte einer Seite aus src/content/seiten/<id>.md (gepflegt über /admin) */
+export async function seite(id: string) {
+  const e = await getEntry('seiten', id);
+  if (!e) throw new Error(`Seiten-Text fehlt: src/content/seiten/${id}.md`);
+  const a = (k: string) => e.data.abschnitte[k] ?? {};
+  const l = (k: string) => e.data.listen[k] ?? [];
+  const w = (k: string) => e.data.woerter[k] ?? [];
+  return { ...e.data, eintrag: e, a, l, w };
 }
