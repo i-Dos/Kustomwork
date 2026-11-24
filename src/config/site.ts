@@ -75,13 +75,14 @@ export const site = {
   ],
 
   // --- Hero: Zufallsbild pro Besuch (Dateien in src/assets/fotos) ---
+  // dunkel = zusätzliche Abdunklung 0 bis 0.5 für helle Bilder, damit der Text lesbar bleibt
   hero: [
-    { src: 'larry-seite.jpg', alt: 'Indian-Larry-Tribute-Bike auf Panhead-Basis am Zürichsee', focus: '50% 60%' },
-    { src: 'andy-fahrt.jpg', alt: 'Andy Gemperle fährt seinen Panhead-Chopper', focus: '60% 40%' },
-    { src: 'larry-heck.jpg', alt: 'Heckansicht des Panhead-Choppers mit Sissybar und Weisswandreifen', focus: '50% 55%' },
+    { src: 'larry-seite.jpg', alt: 'Indian-Larry-Tribute-Bike auf Panhead-Basis am Zürichsee', focus: '50% 60%', dunkel: 0.1 },
+    { src: 'andy-fahrt.jpg', alt: 'Andy Gemperle fährt seinen Panhead-Chopper', focus: '60% 40%', dunkel: 0.1 },
+    { src: 'larry-heck.jpg', alt: 'Heckansicht des Panhead-Choppers mit Sissybar und Weisswandreifen', focus: '50% 55%', dunkel: 0.2 },
     { src: 'jimdo/start.jpg', alt: 'Kustom-Bike mit Flammenlackierung in der Werkstatt', focus: '50% 50%' },
-    { src: 'jimdo/59-racer-1.jpg', alt: '59 Racer vor Backsteinwand', focus: '50% 65%' },
-    { src: 'jimdo/akoni-1.jpg', alt: 'Akoni Panhead mit Sunburst-Tank', focus: '50% 65%' },
+    { src: 'jimdo/59-racer-1.jpg', alt: '59 Racer vor Backsteinwand', focus: '50% 65%', dunkel: 0.3 },
+    { src: 'jimdo/akoni-1.jpg', alt: 'Akoni Panhead mit Sunburst-Tank', focus: '50% 65%', dunkel: 0.35 },
   ],
 
   // --- Anfrageformular ---------------------------------------

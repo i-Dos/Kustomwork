@@ -13,13 +13,13 @@ interface Props {
   neu?: { label: string; title: string; href: string };
 }
 const { neu } = Astro.props;
-const bilder = site.hero.map((h) => ({ ...h, img: foto(h.src) }));
+const bilder = site.hero.map((h) => ({ dunkel: 0, ...h, img: foto(h.src) }));
 const pic = { widths: [640, 960, 1280, 1600, 2000], sizes: '100vw', formats: ['avif', 'webp'] as const, quality: 62 };
 ---
 <section class="hero" aria-label="Willkommen">
   <div class="hero__bild korn" id="hero-bild">
     {bilder.map((b, i) => (
-      <template data-hero={i}>
+      <template data-hero={i} data-dunkel={b.dunkel}>
         <Picture src={b.img} alt={b.alt} {...pic} formats={[...pic.formats]} loading="eager" fetchpriority="high" style={`object-position:${b.focus}`} />
       </template>
     ))}
@@ -32,7 +32,9 @@ const pic = { widths: [640, 960, 1280, 1600, 2000], sizes: '100vw', formats: ['a
       var t = document.querySelectorAll('#hero-bild template');
       var i = Math.floor(Math.random() * t.length);
       try { var last = sessionStorage.getItem('hero'); if (t.length > 1 && String(i) === last) i = (i + 1) % t.length; sessionStorage.setItem('hero', i); } catch (e) {}
-      document.getElementById('hero-bild').appendChild(t[i].content.cloneNode(true));
+      var el = document.getElementById('hero-bild');
+      el.style.setProperty('--hero-dunkel', t[i].getAttribute('data-dunkel') || 0);
+      el.appendChild(t[i].content.cloneNode(true));
     })();
   </script>
 
@@ -65,14 +67,19 @@ const pic = { widths: [640, 960, 1280, 1600, 2000], sizes: '100vw', formats: ['a
   .hero__bild :global(picture), .hero__bild :global(img) { width: 100%; height: 100%; object-fit: cover; display: block; }
   .hero__bild::after {
     content: ''; position: absolute; inset: 0;
+    /* Scrim: unten und links dunkel (dort steht der Text), plus Abdunklung pro Bild */
     background:
-      linear-gradient(to top, rgba(26,18,11,.92) 0%, rgba(26,18,11,.55) 38%, rgba(26,18,11,.1) 70%),
+      linear-gradient(to top, rgba(26,18,11,.92) 0%, rgba(26,18,11,.6) 40%, rgba(26,18,11,.15) 75%),
+      linear-gradient(to right, rgba(26,18,11,.78) 0%, rgba(26,18,11,.55) 35%, rgba(26,18,11,.12) 65%, transparent 85%),
+      linear-gradient(rgba(26,18,11,var(--hero-dunkel, .15)), rgba(26,18,11,var(--hero-dunkel, .15))),
       radial-gradient(ellipse at center, transparent 55%, rgba(26,18,11,.45));
   }
   .hero__text { padding-block: 6rem 6.5rem; position: relative; z-index: 2; }
+  .hero__text > :not(.hero__ctas):not(.hero__stempel) { text-shadow: 0 1px 2px rgba(20,13,8,.55), 0 2px 18px rgba(20,13,8,.45); }
+  .hero__text .eyebrow { color: var(--sand); }
   .hero__stempel {
     width: clamp(9.5rem, 30vw, 17rem); height: auto; display: block; margin-bottom: 1.5rem;
-    transform: rotate(-6deg); filter: drop-shadow(0 4px 18px rgba(0,0,0,.45));
+    transform: rotate(-6deg); filter: drop-shadow(0 2px 3px rgba(0,0,0,.5)) drop-shadow(0 4px 22px rgba(0,0,0,.6));
   }
   @media (min-width: 60rem) {
     .hero__stempel { position: absolute; right: var(--gutter); top: 5.5rem; width: clamp(15rem, 24vw, 21rem); margin: 0; opacity: .95; }
