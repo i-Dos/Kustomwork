@@ -18,6 +18,8 @@
 
   --font-display: 'Oswald Variable', 'Arial Narrow', sans-serif;
   --font-body: 'Source Serif 4 Variable', Georgia, serif;
+  /* Schreibschrift im Stil von Sign-Painting und Pinstriping, nur für Akzente */
+  --font-script: 'Yellowtail', 'Brush Script MT', cursive;
 
   --wrap: 72rem;
   --gutter: clamp(1rem, 4vw, 2.5rem);
@@ -74,15 +76,43 @@ p { margin: 0 0 1em; }
 .section--paper { background: var(--paper) var(--grain); }
 
 .eyebrow {
-  font-family: var(--font-display);
-  text-transform: uppercase;
-  letter-spacing: 0.22em;
-  font-size: var(--step--1);
-  color: var(--oliv);
-  margin-bottom: 0.8rem;
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-synthesis: none;
+  text-transform: none;
+  letter-spacing: 0;
+  font-size: var(--step-1);
+  line-height: 1.1;
+  color: var(--leder);
+  margin-bottom: 0.25rem;
   display: block;
+  transform: rotate(-2deg);
+  transform-origin: left bottom;
 }
-.section--dark .eyebrow, .section--oliv .eyebrow { color: var(--on-dark-muted); }
+.section--dark .eyebrow, .section--oliv .eyebrow { color: var(--sand-tief); }
+.eyebrow a { color: inherit; }
+
+/* Script-Akzent in Überschriften: <h1>Kustom <span class="script">statt Katalog.</span></h1> */
+.script {
+  font-family: var(--font-script);
+  font-weight: 400;
+  font-synthesis: none;
+  text-transform: none;
+  letter-spacing: 0;
+}
+h1 .script, h2 .script {
+  display: inline-block;
+  font-size: 0.82em;
+  line-height: 1;
+  transform: rotate(-4deg);
+  transform-origin: left center;
+  margin-top: 0.05em;
+  padding-right: 0.15em; /* Schwung der letzten Buchstaben nicht abschneiden */
+}
+.unterschrift {
+  font-family: var(--font-script); font-size: var(--step-3); line-height: 1; color: var(--leder);
+  transform: rotate(-5deg); transform-origin: left center; margin: 0.4em 0 0; display: inline-block;
+}
 
 .btn {
   display: inline-flex; align-items: center; gap: 0.6em;
@@ -119,7 +149,7 @@ p { margin: 0 0 1em; }
 .prose h3 { margin-top: 1.8em; }
 .prose blockquote {
   margin: 2em 0; padding: 0.2em 0 0.2em 1.2em; border-left: 4px solid var(--oliv);
-  font-size: var(--step-1); font-style: italic; color: var(--leder);
+  font-family: var(--font-script); font-size: var(--step-2); line-height: 1.25; color: var(--leder);
 }
 .prose ul { padding-left: 1.2em; }
 .prose li { margin-bottom: 0.35em; }
