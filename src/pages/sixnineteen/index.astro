@@ -1,0 +1,69 @@
+---
+import Base from '../../layouts/Base.astro';
+import FaqListe from '../../components/FaqListe.astro';
+import { Image } from 'astro:assets';
+import { lookbook, faqs } from '../../lib/inhalte';
+import { site } from '../../config/site';
+import { breadcrumbSchema } from '../../lib/schema';
+const teile = await lookbook();
+const fragen = await faqs('sixnineteen');
+const marken = ['Rokker', 'Iron & Resin', 'ROEG', '7EYE', 'Biltwell', 'Ondura', 'Mooneyes'];
+---
+<Base title="Sixnineteen" description="Sixnineteen ist das Kleiderlabel von Gemperle's KustomWork, benannt nach der Seestrasse 619 in Meilen. Lookbook, erhältlich in der Werkstatt."
+  schema={[breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'Sixnineteen', path: '/sixnineteen/' }])]}>
+  <section class="six-kopf">
+    <div class="wrap">
+      <p class="six-zahl" aria-hidden="true">619</p>
+      <p class="eyebrow">Das Label von Gemperle's KustomWork</p>
+      <h1>Sixnineteen</h1>
+      <p class="lead">Benannt nach der Hausnummer unserer Werkstatt an der Seestrasse. Kleider für Leute, die lieber schrauben als posieren. Kein Onlineshop, nur bei uns in Meilen.</p>
+      <p class="offen-block" style="max-width:40rem">Offen: Name und Geschichte des Labels mit Andy bestätigen, erste Teile, Farben, Grössen und Preise. Fotos folgen.</p>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <span class="eyebrow">Lookbook</span>
+      <h2>Die Kollektion</h2>
+      <div class="lookbook">
+        {teile.map((t, i) => (
+          <figure class:list={['look', { 'look--gross': i === 0 }]}>
+            <div class="foto"><Image src={t.data.bild} alt={t.data.bildAlt} widths={[500, 900]} sizes="(min-width: 48rem) 40vw, 100vw" quality={70} /></div>
+            <figcaption><strong>{t.data.title}</strong> · {t.data.art}</figcaption>
+          </figure>
+        ))}
+      </div>
+      <div class="six-cta">
+        <p class="lead">Gefällt dir ein Teil? Komm vorbei oder reserviere es per Nachricht.</p>
+        <a class="btn" href="/kontakt/?thema=Sixnineteen%20%2F%20Bekleidung">Teil anfragen</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper">
+    <div class="wrap narrow">
+      <h2>Ausserdem in der Werkstatt</h2>
+      <p>Neben Sixnineteen führen wir Bekleidung und Teile von Marken, hinter denen wir stehen: {marken.join(', ')}. Wir beraten dich gerne vor Ort.</p>
+      <FaqListe faqs={fragen} />
+    </div>
+  </section>
+</Base>
+<style>
+  .six-kopf { background: var(--oliv) var(--grain); color: var(--on-dark); padding: clamp(3rem, 8vw, 6rem) 0; position: relative; overflow: hidden; }
+  .six-kopf .eyebrow { color: var(--on-dark-muted); }
+  .six-kopf .lead { color: var(--on-dark); max-width: 40rem; }
+  .six-kopf .offen-block { color: var(--ink); }
+  .six-zahl {
+    position: absolute; right: -2rem; bottom: -3rem; margin: 0; font-family: var(--font-display); font-weight: 700;
+    font-size: clamp(10rem, 34vw, 26rem); line-height: .8; color: transparent; -webkit-text-stroke: 2px rgba(239,229,209,.25); pointer-events: none;
+  }
+  .six-kopf h1 { font-size: var(--step-4); position: relative; }
+  .lookbook { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr)); margin-top: 2rem; }
+  @media (min-width: 48rem) { .look--gross { grid-column: span 2; grid-row: span 2; } }
+  .look { margin: 0; }
+  .look .foto { aspect-ratio: 4 / 5; }
+  .look--gross .foto { aspect-ratio: auto; height: calc(100% - 2rem); }
+  figcaption { margin-top: .5rem; font-size: var(--step--1); }
+  .six-cta { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem; margin-top: 3rem; border-top: 1px solid var(--line); padding-top: 2rem; }
+  .six-cta .lead { margin: 0; }
+</style>

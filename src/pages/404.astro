@@ -1,0 +1,9 @@
+---
+import Base from '../layouts/Base.astro';
+import Seitenkopf from '../components/Seitenkopf.astro';
+---
+<Base title="Seite nicht gefunden" noindex>
+  <Seitenkopf eyebrow="404" title="Falsch abgebogen." lead="Diese Seite gibt es nicht (mehr). Vielleicht findest du hier, was du suchst:">
+    <p style="display:flex;gap:.8rem;flex-wrap:wrap"><a class="btn" href="/">Startseite</a><a class="btn btn--ghost" href="/projekte/">Projekte</a><a class="btn btn--ghost" href="/kontakt/">Kontakt</a></p>
+  </Seitenkopf>
+</Base>

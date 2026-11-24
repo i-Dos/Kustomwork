@@ -1,0 +1,13 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Seitenkopf from '../../../components/Seitenkopf.astro';
+---
+<Base title="Danke" noindex>
+  <Seitenkopf eyebrow="Anfrage gesendet" title="Danke, wir melden uns." lead="Andy schaut sich deine Nachricht an und meldet sich in der Regel innert zwei Arbeitstagen. Ist es dringend, ruf einfach an.">
+    <p><a class="btn btn--ghost" href="/projekte/">Projekte ansehen</a></p>
+  </Seitenkopf>
+</Base>
+<script>
+  // Messpunkt: Anfrage erfolgreich (für Plausible, falls aktiviert)
+  (window as any).plausible?.('Anfrage');
+</script>

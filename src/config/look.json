@@ -1,0 +1,15 @@
+{
+  "maxWidth": 2000,
+  "warmth": 0.18,
+  "saturation": 0.8,
+  "brightness": 1.03,
+  "contrast": 0.93,
+  "lift": 12,
+  "grain": 26,
+  "grainOpacity": 0,
+  "balance": [
+    1.04,
+    1.01,
+    0.9
+  ]
+}

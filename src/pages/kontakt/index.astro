@@ -1,0 +1,109 @@
+---
+import Base from '../../layouts/Base.astro';
+import Seitenkopf from '../../components/Seitenkopf.astro';
+import { site } from '../../config/site';
+import { breadcrumbSchema } from '../../lib/schema';
+---
+<Base title="Kontakt" description={`Gemperle's KustomWork, ${site.address.street}, ${site.address.zip} ${site.address.city}. Telefon ${site.phone}. Dienstag bis Freitag 10 bis 18 Uhr, Samstag 10 bis 14 Uhr.`}
+  schema={[breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'Kontakt', path: '/kontakt/' }])]}>
+  <Seitenkopf eyebrow="Kontakt" title="Lass uns über dein Bike reden" lead="Am besten in der Werkstatt, bei einem Kaffee neben der Hebebühne. Oder schreib uns vorab, was du vorhast." />
+
+  <section class="section">
+    <div class="wrap kontakt">
+      <form class="formular" method="post" action={site.form.action} id="anfrage">
+        <h2>Anfrage</h2>
+        <div class="feld">
+          <label for="thema">Worum geht es?</label>
+          <select id="thema" name="thema">
+            {site.form.topics.map((t) => <option>{t}</option>)}
+          </select>
+        </div>
+        <div class="zwei">
+          <div class="feld"><label for="name">Name *</label><input id="name" name="name" required autocomplete="name" /></div>
+          <div class="feld"><label for="email">E-Mail *</label><input id="email" name="email" type="email" required autocomplete="email" /></div>
+        </div>
+        <div class="zwei">
+          <div class="feld"><label for="telefon">Telefon</label><input id="telefon" name="telefon" type="tel" autocomplete="tel" /></div>
+          <div class="feld"><label for="bike">Dein Bike (Marke, Modell, Jahrgang)</label><input id="bike" name="bike" /></div>
+        </div>
+        <div class="feld"><label for="nachricht">Was schwebt dir vor? *</label><textarea id="nachricht" name="nachricht" rows="6" required></textarea></div>
+        <div class="feld honig" aria-hidden="true"><label for="website">Website</label><input id="website" name="website" tabindex="-1" autocomplete="off" /></div>
+        <input type="hidden" name="quelle" id="quelle" />
+        <div class="feld feld--check">
+          <input type="checkbox" id="ds" name="datenschutz" required />
+          <label for="ds">Ich bin einverstanden, dass meine Angaben zur Bearbeitung der Anfrage verwendet werden. <a href={site.legal.datenschutzPath}>Datenschutz</a> *</label>
+        </div>
+        <button class="btn" type="submit">Anfrage senden</button>
+        <p class="hinweis">Lieber direkt? <a href={`mailto:${site.email}`}>{site.email}</a> oder <a href={`tel:${site.phoneHref}`}>{site.phone}</a>. Fotos deines Bikes kannst du nach der ersten Antwort per E-Mail schicken.</p>
+      </form>
+
+      <aside class="infos">
+        <div class="info">
+          <h2>Werkstatt</h2>
+          <address>
+            <strong>{site.name}</strong><br />
+            {site.address.street}<br />{site.address.zip} {site.address.city}
+          </address>
+          <p>{site.parking}</p>
+          <a class="btn btn--ghost" href={site.mapsUrl} target="_blank" rel="noopener">Route planen</a>
+        </div>
+        <div class="info">
+          <h2>Öffnungszeiten</h2>
+          <dl>
+            {site.openingHours.map((o) => (<><dt>{o.label}</dt><dd>{o.opens}–{o.closes} Uhr</dd></>))}
+          </dl>
+          <p>{site.openingNote}</p>
+        </div>
+        <div class="info">
+          <h2>Direkt</h2>
+          <p><a href={`tel:${site.phoneHref}`}>{site.phone}</a><br /><a href={`mailto:${site.email}`}>{site.email}</a></p>
+          {site.social.instagram && <p><a href={site.social.instagram} target="_blank" rel="noopener">Instagram</a></p>}
+        </div>
+      </aside>
+    </div>
+  </section>
+</Base>
+
+<script>
+  // Vorbelegung aus der URL (z. B. von For Sale) und Herkunft der Anfrage für die Auswertung
+  const q = new URLSearchParams(location.search);
+  const thema = q.get('thema');
+  const bike = q.get('bike');
+  const sel = document.querySelector<HTMLSelectElement>('#thema');
+  if (thema && sel) [...sel.options].forEach((o) => { if (o.text === thema) o.selected = true; });
+  if (bike) {
+    const n = document.querySelector<HTMLTextAreaElement>('#nachricht');
+    if (n && !n.value) n.value = `Ich interessiere mich für: ${bike}\n\n`;
+  }
+  let quelle = '';
+  try {
+    quelle = sessionStorage.getItem('quelle') || '';
+  } catch {}
+  const feld = document.querySelector<HTMLInputElement>('#quelle');
+  if (feld) feld.value = [quelle, q.get('utm_source'), document.referrer].filter(Boolean).join(' | ');
+</script>
+
+<style>
+  .kontakt { display: grid; gap: 3rem; grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 60rem) { .kontakt { grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); } }
+  .formular { background: var(--paper) var(--grain); padding: clamp(1.25rem, 4vw, 2.5rem); border-top: 5px solid var(--oliv); }
+  .formular h2, .info h2 { font-size: var(--step-2); }
+  .zwei { display: grid; gap: 0 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 14rem), 1fr)); }
+  .feld { display: grid; gap: .35rem; margin-bottom: 1.1rem; }
+  label { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .1em; font-size: .82rem; }
+  input, select, textarea {
+    font: inherit; font-size: 1rem; padding: .75em .85em; border: 1px solid var(--line); border-radius: var(--radius);
+    background: #fffaf1; color: var(--ink); width: 100%;
+  }
+  input:focus, select:focus, textarea:focus { border-color: var(--oliv); outline: 2px solid var(--oliv-hell); outline-offset: 0; }
+  .feld--check { grid-template-columns: auto 1fr; align-items: start; gap: .7rem; }
+  .feld--check input { width: 1.2rem; height: 1.2rem; margin-top: .2rem; }
+  .feld--check label { font-family: var(--font-body); text-transform: none; letter-spacing: 0; font-size: var(--step--1); }
+  .honig { position: absolute; left: -9999px; }
+  .hinweis { font-size: var(--step--1); color: var(--muted); margin-top: 1.2rem; }
+  .info { padding-bottom: 2rem; margin-bottom: 2rem; border-bottom: 1px solid var(--line); }
+  address { font-style: normal; margin-bottom: 1rem; }
+  dl { display: grid; grid-template-columns: auto 1fr; gap: .3rem 1rem; margin: 0 0 .8rem; }
+  dt { font-weight: 600; }
+  dd { margin: 0; }
+</style>

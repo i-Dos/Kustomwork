@@ -1,0 +1,22 @@
+{
+  "name": "kustomwork-website",
+  "type": "module",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "astro dev",
+    "fotos": "node scripts/look.mjs",
+    "build": "node scripts/look.mjs && astro build",
+    "build:vorschau": "node scripts/look.mjs && PREVIEW=true astro build",
+    "preview": "astro preview",
+    "check": "astro check"
+  },
+  "dependencies": {
+    "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.6",
+    "@fontsource-variable/oswald": "^5.3.0",
+    "@fontsource-variable/source-serif-4": "^5.3.1",
+    "astro": "7.4.13",
+    "sharp": "^0.35.5"
+  }
+}

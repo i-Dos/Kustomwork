@@ -1,0 +1,81 @@
+---
+import Base from '../../layouts/Base.astro';
+import FaqListe from '../../components/FaqListe.astro';
+import Karte from '../../components/Karte.astro';
+import Cta from '../../components/Cta.astro';
+import { Picture, getImage } from 'astro:assets';
+import { render } from 'astro:content';
+import { beitraege } from '../../lib/inhalte';
+import { datum } from '../../lib/fotos';
+import { articleSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
+import { site } from '../../config/site';
+
+export async function getStaticPaths() {
+  const posts = await beitraege();
+  return posts.map((p) => ({ params: { id: p.id }, props: { p, weitere: posts.filter((x) => x.id !== p.id).slice(0, 2) } }));
+}
+const { p, weitere } = Astro.props;
+const { Content, headings } = await render(p);
+const path = `/blog/${p.id}/`;
+const og = await getImage({ src: p.data.cover, width: 1200, format: 'jpg' });
+const schema: object[] = [
+  breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'Blog', path: '/blog/' }, { name: p.data.title, path }]),
+  articleSchema({ title: p.data.title, description: p.data.description, path, date: p.data.date, updated: p.data.updated, image: new URL(og.src, site.url).href, autor: p.data.autor }),
+];
+if (p.data.faq.length) schema.push(faqSchema(p.data.faq));
+const lesezeit = Math.max(1, Math.round((p.body ?? '').split(/\s+/).length / 200));
+---
+<Base title={p.data.title} description={p.data.description} image={p.data.cover} imageAlt={p.data.coverAlt} type="article" schema={schema}>
+  <article>
+    <header class="artikel-kopf section--dark">
+      <div class="narrow">
+        <p class="eyebrow"><a href="/blog/">Blog</a> · {p.data.tags.slice(0, 2).join(' · ')}</p>
+        <h1>{p.data.title}</h1>
+        <p class="meta">{p.data.autor} · <time datetime={p.data.date.toISOString()}>{datum(p.data.date)}</time> · {lesezeit} Min. Lesezeit</p>
+      </div>
+    </header>
+    <div class="wrap artikel-bild foto">
+      <Picture src={p.data.cover} alt={p.data.coverAlt} widths={[640, 1000, 1400, 1800]} sizes="(min-width: 72rem) 72rem, 100vw" formats={['avif', 'webp']} quality={72} loading="eager" fetchpriority="high" />
+    </div>
+    <div class="section">
+      <div class="narrow">
+        {headings.filter((h) => h.depth === 2).length > 2 && (
+          <nav class="toc" aria-label="Inhalt">
+            <p class="eyebrow">Inhalt</p>
+            <ol>{headings.filter((h) => h.depth === 2).map((h) => <li><a href={`#${h.slug}`}>{h.text}</a></li>)}</ol>
+          </nav>
+        )}
+        <div class="prose"><Content /></div>
+        {p.data.faq.length > 0 && (
+          <section class="artikel-faq">
+            <h2>Kurz gefragt</h2>
+            <FaqListe faqs={p.data.faq.map((f) => ({ frage: f.frage, html: `<p>${f.antwort}</p>` }))} />
+          </section>
+        )}
+      </div>
+    </div>
+  </article>
+  {weitere.length > 0 && (
+    <section class="section section--paper">
+      <div class="wrap">
+        <h2>Weiterlesen</h2>
+        <div class="grid grid--2">
+          {weitere.map((w) => <Karte href={`/blog/${w.id}/`} image={w.data.cover} alt={w.data.coverAlt} kicker={datum(w.data.date)} title={w.data.title} ratio="3 / 2" />)}
+        </div>
+      </div>
+    </section>
+  )}
+  <Cta />
+</Base>
+<style>
+  .artikel-kopf { background: var(--leder-tief) var(--grain); color: var(--on-dark); padding: clamp(3rem, 8vw, 6rem) 0 clamp(6rem, 14vw, 10rem); }
+  .artikel-kopf h1 { font-size: var(--step-3); }
+  .artikel-kopf a { color: var(--on-dark-muted); }
+  .meta { color: var(--on-dark-muted); font-size: var(--step--1); margin: 0; }
+  .artikel-bild { margin-top: clamp(-8rem, -12vw, -4rem); aspect-ratio: 16 / 9; padding: 0; }
+  .artikel-bild :global(img) { width: 100%; height: 100%; object-fit: cover; }
+  .toc { border: 1px solid var(--line); padding: 1rem 1.3rem; margin-bottom: 2.5rem; font-size: var(--step--1); }
+  .toc ol { margin: 0; padding-left: 1.2em; }
+  .artikel-faq { margin-top: 3rem; }
+  .artikel-faq h2 { font-size: var(--step-2); }
+</style>

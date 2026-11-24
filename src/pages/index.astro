@@ -1,0 +1,154 @@
+---
+import Base from '../layouts/Base.astro';
+import Hero from '../components/Hero.astro';
+import Karte from '../components/Karte.astro';
+import FaqListe from '../components/FaqListe.astro';
+import Cta from '../components/Cta.astro';
+import { Image } from 'astro:assets';
+import { site } from '../config/site';
+import { foto, formatCHF, datum } from '../lib/fotos';
+import { projekte, beitraege, bikes, faqs } from '../lib/inhalte';
+import { faqSchema } from '../lib/schema';
+
+const alleProjekte = await projekte();
+const posts = await beitraege();
+const verkauf = (await bikes()).filter((b) => b.data.status !== 'verkauft').slice(0, 2);
+const fragen = await faqs('start');
+
+// Hinweis im Hero: das Neuste aus Blog oder Projekten (Platzhalter ausgenommen)
+const kandidaten = [
+  ...posts.map((p) => ({ date: p.data.date, label: 'Neu im Blog', title: p.data.title, href: `/blog/${p.id}/` })),
+  ...alleProjekte.filter((p) => !p.data.platzhalter).map((p) => ({ date: p.data.date, label: 'Neues Projekt', title: p.data.title, href: `/projekte/${p.id}/` })),
+].sort((a, b) => b.date.getTime() - a.date.getTime());
+const neu = kandidaten[0];
+---
+<Base title={site.name} schema={[faqSchema(fragen.map((f) => ({ frage: f.frage, antwort: f.text })))]}>
+  <Hero neu={neu} />
+
+  <section class="section">
+    <div class="wrap intro">
+      <div>
+        <span class="eyebrow">Die etwas andere Werkstatt</span>
+        <h2>Wir bauen Bikes, die man fährt.</h2>
+      </div>
+      <div>
+        <p class="lead">Gemperle's KustomWork ist eine kleine Werkstatt in Meilen am Zürichsee, spezialisiert auf Kustom-Umbauten und Neuaufbauten auf Harley-Davidson-Basis.</p>
+        <p>Vom Flathead aus den 1940ern bis zur Twin Cam: Andy Gemperle baut jedes Bike als Einzelstück. Tank, Schutzblech, Halter und Schaltknauf entstehen oft direkt an der Drehbank und am Schweissgerät. Was nicht selbst gebaut wird, kommt von Partnern, denen wir vertrauen. Und am Ende steht ein Motorrad, das durch die MFK kommt und auf die Strasse gehört.</p>
+        <a href="/andy/">Andys Geschichte lesen →</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="wrap">
+      <div class="kopfzeile">
+        <div>
+          <span class="eyebrow">Projekte</span>
+          <h2>Aus der Werkstatt</h2>
+        </div>
+        <a class="btn btn--ghost" href="/projekte/">Alle Projekte</a>
+      </div>
+      <div class="grid grid--3">
+        {alleProjekte.slice(0, 3).map((p) => (
+          <Karte href={`/projekte/${p.id}/`} image={p.data.cover} alt={p.data.coverAlt} kicker={p.data.basis.startsWith('[') ? p.data.stil : p.data.basis} title={p.data.title} text={p.data.untertitel} badge={p.data.platzhalter ? 'Foto folgt' : undefined} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section story">
+    <div class="wrap story__grid">
+      <div class="foto story__foto">
+        <Image src={foto('andy-fahrt-hoch.jpg')} alt="Andy Gemperle auf seinem Panhead-Chopper" widths={[500, 800, 1100]} sizes="(min-width: 56rem) 45vw, 100vw" quality={72} />
+      </div>
+      <div>
+        <span class="eyebrow">Andy Gemperle</span>
+        <h2>Riding with Larry in my mind.</h2>
+        <p class="lead">2004 sieht Andy im Fernsehen Indian Larry, den New Yorker Chopper-Bauer. Wenige Monate später ist Larry tot, und Andy baut ihm zu Ehren sein eigenes Bike.</p>
+        <p>Eine Panhead aus den 1950ern, fast alle Teile selbst gefertigt, das Schweissen selbst beigebracht in einer Werkstatt von zwölf Quadratmetern. Aus diesem Bike wurde eine Leidenschaft, aus der Leidenschaft eine Werkstatt.</p>
+        <div class="story__links">
+          <a class="btn" href="/blog/riding-with-larry-in-my-mind/">Die ganze Geschichte</a>
+          <a class="btn btn--ghost" href="/projekte/indian-larry-tribute-panhead/">Das Bike</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper">
+    <div class="wrap">
+      <div class="kopfzeile">
+        <div>
+          <span class="eyebrow">For Sale</span>
+          <h2>Bereit für die Strasse</h2>
+        </div>
+        <a class="btn btn--ghost" href="/for-sale/">Alle Bikes</a>
+      </div>
+      <div class="grid grid--2">
+        {verkauf.map((b) => (
+          <Karte href={`/for-sale/#${b.id}`} image={b.data.cover} alt={b.data.coverAlt} kicker={`Jahrgang ${b.data.jahrgang}`} title={b.data.title}
+            text={b.data.preis ? formatCHF(b.data.preis) : 'Preis auf Anfrage'} badge={b.data.status === 'reserviert' ? 'Reserviert' : undefined} ratio="3 / 2" />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--dark sixnineteen">
+    <div class="wrap sixnineteen__inner">
+      <p class="sixnineteen__zahl" aria-hidden="true">619</p>
+      <div>
+        <span class="eyebrow">Das Label</span>
+        <h2>Sixnineteen</h2>
+        <p class="lead">Kleider aus der Werkstatt, benannt nach der Hausnummer an der Seestrasse. Erhältlich nur bei uns in Meilen.</p>
+        <a class="btn btn--ghost" href="/sixnineteen/">Zum Lookbook</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section">
+    <div class="wrap">
+      <div class="kopfzeile">
+        <div>
+          <span class="eyebrow">Blog</span>
+          <h2>Geschichten & Technik</h2>
+        </div>
+        <a class="btn btn--ghost" href="/blog/">Alle Beiträge</a>
+      </div>
+      <div class="grid grid--3">
+        {posts.slice(0, 3).map((p) => (
+          <Karte href={`/blog/${p.id}/`} image={p.data.cover} alt={p.data.coverAlt} kicker={datum(p.data.date)} title={p.data.title} ratio="3 / 2" />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <section class="section section--paper">
+    <div class="wrap faq-grid">
+      <div>
+        <span class="eyebrow">Häufige Fragen</span>
+        <h2>Gut zu wissen</h2>
+        <p>Noch etwas offen? Ruf an unter <a href={`tel:${site.phoneHref}`}>{site.phone}</a> oder komm vorbei.</p>
+      </div>
+      <FaqListe faqs={fragen} />
+    </div>
+  </section>
+
+  <Cta />
+</Base>
+
+<style>
+  .intro { display: grid; gap: 2rem 4rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); }
+  .intro h2 { font-size: var(--step-3); }
+  .kopfzeile { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: end; gap: 1rem 2rem; margin-bottom: 2.5rem; }
+  .kopfzeile h2 { margin: 0; }
+  .story__grid { display: grid; gap: 3rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); align-items: center; }
+  .story__foto { aspect-ratio: 4 / 5; }
+  .story__links { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.5rem; }
+  .sixnineteen { overflow: hidden; }
+  .sixnineteen__inner { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); align-items: center; gap: 2rem; }
+  .sixnineteen__zahl {
+    font-family: var(--font-display); font-weight: 700; font-size: clamp(8rem, 28vw, 20rem); line-height: .8; margin: 0;
+    color: transparent; -webkit-text-stroke: 2px var(--oliv-hell); letter-spacing: -.02em;
+  }
+  .faq-grid { display: grid; gap: 2rem 4rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); }
+  .faq-grid > :first-child { max-width: 24rem; }
+</style>

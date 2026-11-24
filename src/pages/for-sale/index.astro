@@ -1,0 +1,100 @@
+---
+import Base from '../../layouts/Base.astro';
+import Seitenkopf from '../../components/Seitenkopf.astro';
+import FaqListe from '../../components/FaqListe.astro';
+import { Image, getImage } from 'astro:assets';
+import { render } from 'astro:content';
+import { bikes, faqs } from '../../lib/inhalte';
+import { formatCHF } from '../../lib/fotos';
+import { breadcrumbSchema, motorcycleOfferSchema } from '../../lib/schema';
+import { site } from '../../config/site';
+
+const liste = await bikes();
+const verfuegbar = liste.filter((b) => b.data.status !== 'verkauft');
+const verkauft = liste.filter((b) => b.data.status === 'verkauft');
+const rendered = Object.fromEntries(await Promise.all(liste.map(async (b) => [b.id, (await render(b)).Content])));
+const fragen = await faqs('forsale');
+const schema = [
+  breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'For Sale', path: '/for-sale/' }]),
+  ...(await Promise.all(verfuegbar.map(async (b) => {
+    const img = await getImage({ src: b.data.cover, width: 1200, format: 'jpg' });
+    return motorcycleOfferSchema({ ...b.data, image: new URL(img.src, site.url).href, path: `/for-sale/#${b.id}` });
+  }))),
+];
+---
+<Base title="For Sale" description="Harley-Davidson, Triumph und andere Klassiker zu verkaufen: Kustom-Bikes und Occasionen aus der Werkstatt Gemperle's KustomWork in Meilen, auch in Kommission." schema={schema}>
+  <Seitenkopf eyebrow="For Sale" title="Bikes mit Geschichte" lead="Aus der eigenen Werkstatt oder in Kommission. Jedes Bike, das hier steht, kennen wir bis zur letzten Schraube." />
+
+  <section class="section">
+    <div class="wrap liste">
+      {verfuegbar.map((b) => {
+        const Content = rendered[b.id];
+        return (
+          <article class="bike" id={b.id}>
+            <div class="foto bike__foto">
+              <Image src={b.data.cover} alt={b.data.coverAlt} widths={[500, 900, 1300]} sizes="(min-width: 56rem) 50vw, 100vw" quality={72} />
+              {b.data.status === 'reserviert' && <span class="bike__status">Reserviert</span>}
+            </div>
+            <div class="bike__text">
+              <p class="eyebrow">{b.data.marke} · Jahrgang {b.data.jahrgang}</p>
+              <h2>{b.data.title}</h2>
+              <p class="bike__preis">{b.data.preis ? formatCHF(b.data.preis) : 'Preis auf Anfrage'}</p>
+              <dl class="bike__daten">
+                <dt>Jahrgang</dt><dd>{b.data.jahrgang}</dd>
+                {b.data.km && (<><dt>Kilometer</dt><dd>{b.data.km}</dd></>)}
+                {b.data.mfk && (<><dt>MFK</dt><dd>{b.data.mfk}</dd></>)}
+              </dl>
+              {b.data.highlights.length > 0 && <ul>{b.data.highlights.map((h) => <li>{h}</li>)}</ul>}
+              <Content />
+              <a class="btn" href={`/kontakt/?thema=For%20Sale%20%2F%20Occasion&bike=${encodeURIComponent(b.data.title + ' ' + b.data.jahrgang)}`}>Anfragen</a>
+            </div>
+          </article>
+        );
+      })}
+    </div>
+  </section>
+
+  {verkauft.length > 0 && (
+    <section class="section section--dark">
+      <div class="wrap">
+        <span class="eyebrow">Bereits verkauft</span>
+        <h2>Neue Besitzer gefunden</h2>
+        <div class="grid grid--3 verkauft">
+          {verkauft.map((b) => (
+            <figure id={b.id}>
+              <div class="foto"><Image src={b.data.cover} alt={b.data.coverAlt} widths={[400, 700]} sizes="(min-width: 48rem) 33vw, 100vw" quality={65} /><span class="bike__status">Verkauft</span></div>
+              <figcaption>{b.data.title} · {b.data.jahrgang}</figcaption>
+            </figure>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section section--paper">
+    <div class="wrap narrow">
+      <h2>Deine Harley verkaufen?</h2>
+      <p class="lead">Wir verkaufen ausgewählte Bikes in Kommission. Schick uns Fotos und ein paar Angaben, wir melden uns.</p>
+      <FaqListe faqs={fragen} />
+      <p style="margin-top:2rem"><a class="btn" href="/kontakt/?thema=For%20Sale%20%2F%20Occasion">Bike anbieten</a></p>
+    </div>
+  </section>
+</Base>
+<style>
+  .liste { display: grid; gap: clamp(3rem, 7vw, 5rem); }
+  .bike { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); align-items: start; scroll-margin-top: 2rem; }
+  .bike__foto { aspect-ratio: 4 / 3; }
+  .bike h2 { font-size: var(--step-3); margin-bottom: .2em; }
+  .bike__preis { font-family: var(--font-display); font-size: var(--step-2); color: var(--oliv); margin-bottom: .6em; }
+  .bike__daten { display: grid; grid-template-columns: auto 1fr; gap: .3rem 1.2rem; margin: 0 0 1rem; font-size: var(--step--1); }
+  .bike__daten dt { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .12em; color: var(--muted); }
+  .bike__daten dd { margin: 0; }
+  .bike__status {
+    position: absolute; top: 1rem; left: 1rem; z-index: 2; background: var(--leder); color: var(--on-dark);
+    font-family: var(--font-display); text-transform: uppercase; letter-spacing: .16em; font-size: .8rem; padding: .35em .8em;
+  }
+  .verkauft figure { margin: 0; }
+  .verkauft .foto { aspect-ratio: 4 / 3; }
+  .verkauft img { filter: grayscale(.6); }
+  figcaption { margin-top: .6rem; font-family: var(--font-display); text-transform: uppercase; letter-spacing: .06em; }
+</style>

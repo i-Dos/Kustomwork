@@ -1,0 +1,85 @@
+---
+import Base from '../../layouts/Base.astro';
+import Seitenkopf from '../../components/Seitenkopf.astro';
+import Karte from '../../components/Karte.astro';
+import Cta from '../../components/Cta.astro';
+import { Image, getImage } from 'astro:assets';
+import { render } from 'astro:content';
+import { projekte } from '../../lib/inhalte';
+import { breadcrumbSchema, projectSchema } from '../../lib/schema';
+import { site } from '../../config/site';
+
+export async function getStaticPaths() {
+  const liste = await projekte();
+  return liste.map((p) => ({ params: { id: p.id }, props: { p, andere: liste.filter((x) => x.id !== p.id).slice(0, 2) } }));
+}
+const { p, andere } = Astro.props;
+const { Content } = await render(p);
+const path = `/projekte/${p.id}/`;
+const og = await getImage({ src: p.data.cover, width: 1200, format: 'jpg' });
+---
+<Base title={p.data.title} description={p.data.description} image={p.data.cover} imageAlt={p.data.coverAlt}
+  schema={[
+    breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'Projekte', path: '/projekte/' }, { name: p.data.title, path }]),
+    projectSchema({ title: p.data.title, description: p.data.description, path, date: p.data.date, image: new URL(og.src, site.url).href, basis: p.data.basis }),
+  ]}>
+  <Seitenkopf eyebrow={p.data.stil} title={p.data.title} lead={p.data.untertitel} image={p.data.cover} imageAlt={p.data.coverAlt} focus="50% 60%" />
+
+  <section class="section">
+    <div class="wrap projekt">
+      <article class="prose">
+        <Content />
+        {p.data.quelle && <p class="quelle">{p.data.quelle}</p>}
+      </article>
+      {p.data.datenblatt.length > 0 && (
+        <aside class="datenblatt" aria-labelledby="db-titel">
+          <h2 id="db-titel">Datenblatt</h2>
+          <dl>
+            <dt>Basis</dt><dd>{p.data.basis}</dd>
+            {p.data.datenblatt.map((d) => (<><dt>{d.label}</dt><dd>{d.wert}</dd></>))}
+          </dl>
+        </aside>
+      )}
+    </div>
+  </section>
+
+  {p.data.galerie.length > 0 && (
+    <section class="section section--dark">
+      <div class="wrap">
+        <h2>Galerie</h2>
+        <div class="galerie">
+          {p.data.galerie.map((g) => (
+            <figure class="foto galerie__item">
+              <Image src={g.src} alt={g.alt} widths={[500, 900, 1400]} sizes="(min-width: 48rem) 50vw, 100vw" quality={72} />
+            </figure>
+          ))}
+        </div>
+        <p class="credit">{site.photoCredit}</p>
+      </div>
+    </section>
+  )}
+
+  <section class="section">
+    <div class="wrap">
+      <h2>Weitere Projekte</h2>
+      <div class="grid grid--2">
+        {andere.map((a) => <Karte href={`/projekte/${a.id}/`} image={a.data.cover} alt={a.data.coverAlt} kicker={a.data.stil} title={a.data.title} ratio="3 / 2" badge={a.data.platzhalter ? 'Foto folgt' : undefined} />)}
+      </div>
+    </div>
+  </section>
+  <Cta title="Auch so ein Bike?" />
+</Base>
+
+<style>
+  .projekt { display: grid; gap: 3rem; grid-template-columns: minmax(0, 1fr); }
+  @media (min-width: 60rem) { .projekt { grid-template-columns: minmax(0, 1fr) 22rem; align-items: start; } .datenblatt { position: sticky; top: 1.5rem; } }
+  .datenblatt { background: var(--paper) var(--grain); border-top: 5px solid var(--oliv); padding: 1.5rem; font-size: var(--step--1); }
+  .datenblatt h2 { font-size: var(--step-1); letter-spacing: .1em; }
+  dl { margin: 0; }
+  dt { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .12em; font-size: .78rem; color: var(--oliv); margin-top: 1em; }
+  dd { margin: .15em 0 0; }
+  .quelle { font-size: var(--step--1); color: var(--muted); border-top: 1px solid var(--line); padding-top: 1em; margin-top: 2em; }
+  .galerie { display: grid; gap: 1rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); margin: 2rem 0 0; }
+  .galerie__item { margin: 0; aspect-ratio: 4 / 3; }
+  .credit { margin-top: 1rem; font-size: var(--step--1); color: var(--on-dark-muted); }
+</style>

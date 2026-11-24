@@ -1,0 +1,59 @@
+---
+import Base from '../../layouts/Base.astro';
+import Seitenkopf from '../../components/Seitenkopf.astro';
+import Karte from '../../components/Karte.astro';
+import FaqListe from '../../components/FaqListe.astro';
+import Cta from '../../components/Cta.astro';
+import { Image } from 'astro:assets';
+import { projekte, faqs } from '../../lib/inhalte';
+import { foto } from '../../lib/fotos';
+import { breadcrumbSchema, faqSchema } from '../../lib/schema';
+
+const liste = await projekte();
+const fragen = await faqs('projekte');
+// Galerie: alle Fotos aller Projekte (ohne Platzhalter)
+const galerie = liste.filter((p) => !p.data.platzhalter).flatMap((p) => [{ src: p.data.cover, alt: p.data.coverAlt, href: `/projekte/${p.id}/` }, ...p.data.galerie.map((g) => ({ ...g, href: `/projekte/${p.id}/` }))]);
+---
+<Base title="Projekte" description="Kustom-Umbauten und Neuaufbauten von Gemperle's KustomWork in Meilen: Old-School-Chopper, Panhead, Racer und moderne Harleys. Mit Fotos und Datenblättern."
+  image={foto('larry-heck.jpg')}
+  schema={[breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'Projekte', path: '/projekte/' }]), faqSchema(fragen.map((f) => ({ frage: f.frage, antwort: f.text })))]}>
+  <Seitenkopf eyebrow="Projekte" title="Jedes Bike ein Einzelstück" lead="Vom Panhead der 1950er bis zur modernen Softail. Hier zeigen wir, was in der Werkstatt in Meilen entstanden ist." image={foto('larry-heck.jpg')} imageAlt="Heck eines Panhead-Choppers" focus="50% 55%" />
+
+  <section class="section">
+    <div class="wrap grid grid--2">
+      {liste.map((p) => (
+        <Karte href={`/projekte/${p.id}/`} image={p.data.cover} alt={p.data.coverAlt} kicker={p.data.basis.startsWith('[') ? p.data.stil : p.data.basis} title={p.data.title} text={p.data.untertitel} badge={p.data.platzhalter ? 'Foto folgt' : undefined} ratio="3 / 2" />
+      ))}
+    </div>
+  </section>
+
+  {galerie.length > 0 && (
+    <section class="section section--dark">
+      <div class="wrap">
+        <span class="eyebrow">Galerie</span>
+        <h2>Details, die zählen</h2>
+        <div class="galerie">
+          {galerie.map((g) => (
+            <a href={g.href} class="foto galerie__item">
+              <Image src={g.src} alt={g.alt} widths={[400, 700]} sizes="(min-width: 48rem) 33vw, 50vw" quality={68} />
+            </a>
+          ))}
+        </div>
+      </div>
+    </section>
+  )}
+
+  <section class="section section--paper">
+    <div class="wrap narrow">
+      <span class="eyebrow">Fragen zum Umbau</span>
+      <h2>Wie läuft das?</h2>
+      <FaqListe faqs={fragen} />
+    </div>
+  </section>
+  <Cta />
+</Base>
+
+<style>
+  .galerie { columns: 3 16rem; column-gap: 1rem; margin-top: 2rem; }
+  .galerie__item { display: block; margin-bottom: 1rem; break-inside: avoid; }
+</style>

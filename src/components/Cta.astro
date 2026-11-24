@@ -1,0 +1,24 @@
+---
+import { site } from '../config/site';
+interface Props { title?: string; text?: string }
+const { title = 'Hast du ein Bike mit Potential?', text = 'Erzähl Andy, was dir vorschwebt. Am besten mit ein paar Fotos deiner Maschine. Oder komm direkt in der Werkstatt in Meilen vorbei.' } = Astro.props;
+---
+<section class="section section--oliv cta">
+  <div class="wrap cta__inner">
+    <div>
+      <h2>{title}</h2>
+      <p class="lead">{text}</p>
+    </div>
+    <div class="cta__aktionen">
+      <a class="btn btn--ghost" href="/kontakt/">Anfrage senden</a>
+      <a class="cta__tel" href={`tel:${site.phoneHref}`}>{site.phone}</a>
+    </div>
+  </div>
+</section>
+<style>
+  .cta__inner { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 20rem), 1fr)); align-items: end; }
+  .cta h2 { font-size: var(--step-3); }
+  .cta .lead { color: var(--on-dark); margin: 0; }
+  .cta__aktionen { display: flex; flex-wrap: wrap; gap: 1.2rem; align-items: center; justify-content: flex-start; }
+  .cta__tel { color: var(--on-dark); font-family: var(--font-display); font-size: var(--step-1); letter-spacing: .06em; text-decoration: none; }
+</style>

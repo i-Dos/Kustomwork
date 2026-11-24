@@ -1,0 +1,30 @@
+---
+import Base from '../../layouts/Base.astro';
+import Seitenkopf from '../../components/Seitenkopf.astro';
+import Karte from '../../components/Karte.astro';
+import { beitraege } from '../../lib/inhalte';
+import { datum } from '../../lib/fotos';
+import { breadcrumbSchema } from '../../lib/schema';
+const posts = await beitraege();
+const [erster, ...rest] = posts;
+---
+<Base title="Blog" description="Geschichten, Technik und Kultur aus der Kustom-Werkstatt in Meilen: Harley-Motoren, Chopper, Bobber, Umbauten und die Menschen dahinter."
+  schema={[breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'Blog', path: '/blog/' }])]}>
+  <Seitenkopf eyebrow="Blog" title="Aus der Werkstatt" lead="Geschichten hinter den Bikes, Technik der alten Schule und alles, was wir über Kustom wissen." />
+  <section class="section">
+    <div class="wrap">
+      {erster && (
+        <div class="erster">
+          <Karte href={`/blog/${erster.id}/`} image={erster.data.cover} alt={erster.data.coverAlt} kicker={datum(erster.data.date)} title={erster.data.title} text={erster.data.description} ratio="16 / 9" />
+        </div>
+      )}
+      <div class="grid grid--3">
+        {rest.map((p) => <Karte href={`/blog/${p.id}/`} image={p.data.cover} alt={p.data.coverAlt} kicker={datum(p.data.date)} title={p.data.title} text={p.data.description} ratio="3 / 2" />)}
+      </div>
+    </div>
+  </section>
+</Base>
+<style>
+  .erster { margin-bottom: 3rem; max-width: 56rem; }
+  .erster :global(h3) { font-size: var(--step-2); }
+</style>
