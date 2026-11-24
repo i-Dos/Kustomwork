@@ -33,8 +33,7 @@ export const site = {
   parking: 'Parkplätze direkt vor der Werkstatt.',
   openingHours: [
     { label: 'Dienstag bis Freitag', days: ['Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '10:00', closes: '18:00' },
-    // [OFFEN] Jimdo-Site sagt 14 Uhr, andere Angabe 15 Uhr. Mit Andy klären.
-    { label: 'Samstag', days: ['Saturday'], opens: '10:00', closes: '14:00' },
+    { label: 'Samstag', days: ['Saturday'], opens: '10:00', closes: '15:00' },
   ],
   openingNote: 'Montag geschlossen. Oder jederzeit nach Vereinbarung.',
   areaServed: ['Meilen', 'Zürichsee', 'Kanton Zürich', 'Schweiz'],
