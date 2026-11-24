@@ -67,10 +67,11 @@ export const site = {
   // --- Navigation --------------------------------------------
   nav: [
     { label: 'Projekte', href: '/projekte/' },
+    { label: 'Leistungen', href: '/dienstleistungen/' },
     { label: 'Andy', href: '/andy/' },
     { label: 'Blog', href: '/blog/' },
     { label: 'For Sale', href: '/for-sale/' },
-    { label: 'Sixnineteen', href: '/sixnineteen/' },
+    { label: 'Bekleidung', href: '/bekleidung/' },
     { label: 'Kontakt', href: '/kontakt/' },
   ],
 
@@ -91,7 +92,7 @@ export const site = {
     from: 'website@kustomwork.ch', // muss eine Adresse der eigenen Domain sein
     subject: 'Anfrage über kustomwork.ch',
     thanksPath: '/kontakt/danke/',
-    topics: ['Kustom-Umbau', 'Neuaufbau / Restauration', 'For Sale / Occasion', 'Sixnineteen / Bekleidung', 'Etwas anderes'],
+    topics: ['Kustom-Umbau', 'Neuaufbau / Restauration', 'Motor- / Getrieberevision', 'Tuning', 'Service / Reparatur / MFK', 'For Sale / Occasion', 'Sixnineteen / Bekleidung', 'Etwas anderes'],
   },
 
   // --- Messung (optional, cookiefrei) ------------------------

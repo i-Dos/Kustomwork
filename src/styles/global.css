@@ -76,14 +76,7 @@ p { margin: 0 0 1em; }
 .section--dark a { color: var(--on-dark); }
 .section--dark .lead { color: var(--on-dark); }
 .section--oliv { background: var(--oliv) var(--grain); color: var(--on-dark); }
-.section--paper {
-  background-color: var(--paper);
-  /* zwei dezente Ölflecken, einer mit Rand wie von einer Dose */
-  background-image:
-    radial-gradient(ellipse 9rem 6rem at 94% 12%, rgba(70,45,20,.09), rgba(70,45,20,.05) 45%, transparent 70%),
-    radial-gradient(circle at 6% 88%, transparent 3.3rem, rgba(90,60,30,.10) 3.4rem, rgba(90,60,30,.04) 3.8rem, transparent 4rem),
-    var(--grain);
-}
+.section--paper { background: var(--paper) var(--grain); }
 
 .eyebrow {
   font-family: var(--font-script);
@@ -181,18 +174,9 @@ h1 .script, h2 .script {
 .skip:focus { left: 1rem; }
 
 /* ==========================================================
-   Werkstatt-Patina: gerissene Kanten, Klebeband, Stempel.
+   Werkstatt-Details: Klebeband und Stempel.
    Alles CSS/SVG, keine Zusatzbilder. Sparsam einsetzen.
    ========================================================== */
-
-/* Gerissene Papierkante oben an dunklen Abschnitten */
-.section--dark, .section--oliv { position: relative; }
-.section--dark::before, .section--oliv::before {
-  content: ''; position: absolute; left: 0; right: 0; top: -13px; height: 14px; pointer-events: none;
-  background: inherit;
-  -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='14' preserveAspectRatio='none'%3E%3Cpolygon points='0,14 0,4.9 4,7.9 7,6.8 13,2.5 19,2.3 24,2.6 28,5.8 36,3.1 40,7.6 49,7.2 54,10.8 57,9.7 62,3.3 66,4.8 74,3.6 80,7.8 85,6.9 89,2.5 93,8.1 99,4.8 105,6.1 110,9.1 117,4.2 124,6.7 132,8.6 137,10.8 140,5.8 148,3.4 154,2.4 161,8.9 167,9.9 172,8.3 179,7.2 184,9.6 193,6.3 200,2.5 207,7.8 216,9.4 221,5.5 228,2.2 234,3.5 237,2.5 245,3.2 249,5.5 258,2.7 263,6.9 272,9.4 280,4.5 285,5.2 294,10.6 298,3.6 302,4.1 308,7.3 312,2.0 318,5.3 324,10.6 332,6.6 338,8.1 342,10.1 349,9.9 357,5.5 362,2.9 369,2.6 373,3.9 377,5.1 380,2.0 384,2.9 389,2.2 397,7.5 400,6 400,14'/%3E%3C/svg%3E") repeat-x 0 0 / 400px 14px;
-          mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='14' preserveAspectRatio='none'%3E%3Cpolygon points='0,14 0,4.9 4,7.9 7,6.8 13,2.5 19,2.3 24,2.6 28,5.8 36,3.1 40,7.6 49,7.2 54,10.8 57,9.7 62,3.3 66,4.8 74,3.6 80,7.8 85,6.9 89,2.5 93,8.1 99,4.8 105,6.1 110,9.1 117,4.2 124,6.7 132,8.6 137,10.8 140,5.8 148,3.4 154,2.4 161,8.9 167,9.9 172,8.3 179,7.2 184,9.6 193,6.3 200,2.5 207,7.8 216,9.4 221,5.5 228,2.2 234,3.5 237,2.5 245,3.2 249,5.5 258,2.7 263,6.9 272,9.4 280,4.5 285,5.2 294,10.6 298,3.6 302,4.1 308,7.3 312,2.0 318,5.3 324,10.6 332,6.6 338,8.1 342,10.1 349,9.9 357,5.5 362,2.9 369,2.6 373,3.9 377,5.1 380,2.0 384,2.9 389,2.2 397,7.5 400,6 400,14'/%3E%3C/svg%3E") repeat-x 0 0 / 400px 14px;
-}
 
 /* Klebeband: Wrapper um ein Foto, <div class="getaped">…</div> */
 .getaped { position: relative; }
@@ -221,11 +205,3 @@ h1 .script, h2 .script {
 .stempel--foto { position: absolute; z-index: 3; top: 1rem; right: 1rem; background: #efe5d1; }
 .section--dark .stempel--foto { color: var(--stempel); }
 
-/* Fettiger Daumenabdruck, z. B. auf dem Bauzettel */
-.daumen {
-  position: absolute; width: 4.2rem; height: 5.2rem; pointer-events: none; opacity: .55;
-  background: repeating-radial-gradient(ellipse 50% 60% at 50% 55%, rgba(60,40,20,.28) 0 1px, transparent 1.5px 4px);
-  -webkit-mask: radial-gradient(ellipse 50% 50% at 50% 50%, #000 40%, transparent 72%);
-          mask: radial-gradient(ellipse 50% 50% at 50% 50%, #000 40%, transparent 72%);
-  transform: rotate(24deg);
-}

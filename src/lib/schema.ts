@@ -133,3 +133,17 @@ export function motorcycleOfferSchema(b: { title: string; marke: string; modell:
     },
   };
 }
+
+/** Dienstleistung mit eigener @id (Anker auf der Leistungsseite) */
+export function serviceSchema(l: { id: string; titel: string; text: string; serviceType: string }, path = '/dienstleistungen/') {
+  return {
+    '@type': 'Service',
+    '@id': `${abs(path)}#${l.id}`,
+    name: l.titel,
+    description: l.text,
+    serviceType: l.serviceType,
+    url: `${abs(path)}#${l.id}`,
+    provider: { '@id': orgId },
+    areaServed: site.areaServed.map((a) => ({ '@type': 'Place', name: a })),
+  };
+}

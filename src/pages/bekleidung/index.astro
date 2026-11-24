@@ -1,0 +1,76 @@
+---
+import Base from '../../layouts/Base.astro';
+import Seitenkopf from '../../components/Seitenkopf.astro';
+import Cta from '../../components/Cta.astro';
+import { Image } from 'astro:assets';
+import { foto } from '../../lib/fotos';
+import { breadcrumbSchema } from '../../lib/schema';
+
+const marken = ['Rokker', 'Iron & Resin', 'ROEG', '7EYE', 'Biltwell', 'Ondura', 'Mooneyes'];
+const bilder = [
+  { src: 'jimdo/laden-1.jpg', alt: 'Der Laden in der Werkstatt: Helme, Jacken und Hemden an der Kleiderstange', gross: true },
+  { src: 'jimdo/laden-2.jpg', alt: 'Gestreifter Strickpullover mit Motorcycles-Schriftzug' },
+  { src: 'jimdo/laden-3.jpg', alt: 'Rokker-Jeans und gelbe Lederhandschuhe' },
+  { src: 'jimdo/laden-4.jpg', alt: 'Biltwell-Moto-Goggles und Lederzubehör im Regal', gross: true },
+  { src: 'jimdo/laden-5.jpg', alt: 'Ständer mit Motorradbrillen und Rokker-Socken' },
+  { src: 'jimdo/laden-6.jpg', alt: 'Jethelm mit Metalflake-Lack und Pinstriping' },
+  { src: 'jimdo/laden-7.jpg', alt: 'Regal mit Harley-Davidson-Teilen, Griffen und Spiegeln', gross: true },
+  { src: 'jimdo/laden-8.jpg', alt: 'Biltwell-Teile, Fussrasten und Auspuffzubehör' },
+  { src: 'jimdo/laden-9.jpg', alt: 'Rot lackierter Tank mit Flammen im Regal' },
+];
+---
+<Base title="Bekleidung und Teile" description="Motorradbekleidung, Helme, Brillen und Teile von Rokker, Iron & Resin, ROEG, 7EYE, Biltwell, Ondura und Mooneyes im Laden von Gemperle's KustomWork in Meilen."
+  image={foto('jimdo/laden-1.jpg')} imageAlt={bilder[0].alt}
+  schema={[breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'Bekleidung und Teile', path: '/bekleidung/' }])]}>
+  <Seitenkopf eyebrow="Der Laden in der Werkstatt" title="Bekleidung und Teile" lead="Jacken, Jeans, Helme, Brillen, Handschuhe und Teile von Marken, hinter denen wir stehen. Qualität steht im Mittelpunkt, und wir helfen dir gerne bei der Auswahl."
+    image={foto('jimdo/laden-1.jpg')} imageAlt={bilder[0].alt} focus="50% 45%" />
+
+  <section class="section">
+    <div class="wrap">
+      <span class="eyebrow">Im Regal</span>
+      <h2>Marken, die wir <span class="script">selber tragen.</span></h2>
+      <ul class="marken">{marken.map((m) => <li>{m}</li>)}</ul>
+      <p class="lead marken__text">Und mehr. Kein Onlineshop: Komm vorbei, probier an und lass dich beraten. Wenn du etwas Bestimmtes suchst, frag uns, wir bestellen es für dich.</p>
+
+      <div class="laden">
+        {bilder.slice(1).map((b, i) => (
+          <div class:list={[{ 'getaped getaped--eins': i % 4 === 0 }, { 'laden--quer': b.gross }]}>
+            <figure class="foto laden__bild">
+              <Image src={foto(b.src)} alt={b.alt} widths={[400, 700, 1100]} sizes="(min-width: 64rem) 33vw, (min-width: 40rem) 50vw, 100vw" quality={68} />
+            </figure>
+          </div>
+        ))}
+      </div>
+      <p class="credit">Fotos: bisherige Website, Platzhalter bis zu neuen Aufnahmen.</p>
+    </div>
+  </section>
+
+  <section class="section section--dark">
+    <div class="wrap six">
+      <div>
+        <span class="eyebrow">Das eigene Label</span>
+        <h2>Sixnineteen</h2>
+        <p class="lead">Benannt nach der Hausnummer unserer Werkstatt an der Seestrasse 619. Kleider für Leute, die lieber schrauben als posieren.</p>
+        <a class="btn btn--ghost" href="/sixnineteen/">Zum Lookbook</a>
+      </div>
+      <p class="six__zahl" aria-hidden="true">619</p>
+    </div>
+  </section>
+
+  <Cta title="Etwas Bestimmtes gesucht?" />
+</Base>
+
+<style>
+  .marken { list-style: none; padding: 0; margin: 1.5rem 0; display: flex; flex-wrap: wrap; gap: .6rem; }
+  .marken li { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .12em; font-size: 1rem; padding: .5em 1em; border: 2px solid var(--ink); border-radius: 3px; background: var(--paper); }
+  .marken__text { max-width: 44rem; }
+  .laden { display: grid; gap: 1.2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); margin-top: 2.5rem; grid-auto-flow: dense; }
+  .laden__bild { margin: 0; aspect-ratio: 2 / 3; height: 100%; }
+  .laden--quer { grid-column: span 2; }
+  .laden--quer .laden__bild { aspect-ratio: auto; }
+  @media (max-width: 40rem) { .laden--quer { grid-column: auto; } .laden--quer .laden__bild { aspect-ratio: 3 / 2; } }
+  .credit { margin-top: 1rem; font-size: var(--step--1); color: var(--muted); }
+  .six { display: flex; align-items: center; justify-content: space-between; gap: 2rem; flex-wrap: wrap; }
+  .six .lead { max-width: 34rem; }
+  .six__zahl { font-family: var(--font-display); font-weight: 700; font-size: clamp(6rem, 18vw, 12rem); line-height: .8; margin: 0; color: rgba(239,229,209,.12); }
+</style>

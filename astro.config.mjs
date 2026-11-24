@@ -75,6 +75,10 @@ export default defineConfig({
   // bei jedem Build neu rechnen muss (sonst über 10 Minuten). Aufräumen: npm run bildcache:neu
   cacheDir: './.bildcache',
   site: SITE_URL,
+  // Alte Jimdo-Adressen auf die neuen Seiten umleiten (SEO, alte Links)
+  redirects: {
+    '/bekleidung-teile': '/bekleidung/',
+  },
   trailingSlash: 'always',
   output: 'static',
   build: { format: 'directory' },

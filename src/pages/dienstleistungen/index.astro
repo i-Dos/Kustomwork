@@ -1,0 +1,103 @@
+---
+import Base from '../../layouts/Base.astro';
+import Seitenkopf from '../../components/Seitenkopf.astro';
+import Cta from '../../components/Cta.astro';
+import { Image } from 'astro:assets';
+import { kern, rund } from '../../config/leistungen';
+import { foto } from '../../lib/fotos';
+import { breadcrumbSchema, serviceSchema } from '../../lib/schema';
+
+const schema = [
+  breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'Dienstleistungen', path: '/dienstleistungen/' }]),
+  ...[...kern, ...rund].map((l) => serviceSchema(l)),
+];
+---
+<Base title="Dienstleistungen" description="Custom Bikes, Oldtimer-Restaurationen, Motor- und Getrieberevisionen und Tuning für Harley-Davidson. Dazu Service, MFK, Reifen und Teile in Meilen am Zürichsee."
+  schema={schema}>
+  <Seitenkopf eyebrow="Was wir dir bieten" title="Dienstleistungen" lead="Unser Herz schlägt für Kustom: Einzelstücke, alte Harleys und Motoren, die wieder richtig laufen. Und weil ein Bike mehr braucht als einen schönen Umbau, kümmern wir uns auch um alles rundherum." />
+
+  <nav class="wrap sprung" aria-label="Leistungen auf dieser Seite">
+    <ul>
+      {kern.map((l) => <li><a href={`#${l.id}`}>{l.titel}</a></li>)}
+      <li><a href="#rund-ums-bike">Rund ums Bike</a></li>
+    </ul>
+  </nav>
+
+  <section class="section kern" aria-labelledby="kern-titel">
+    <div class="wrap">
+      <span class="eyebrow">Unser Schwerpunkt</span>
+      <h2 id="kern-titel">Kustom ist unser <span class="script">Handwerk.</span></h2>
+      {kern.map((l, i) => (
+        <article class:list={['leistung', { 'leistung--rechts': i % 2 === 1 }]} id={l.id}>
+          {l.bild && (
+            <div class:list={['getaped', 'getaped--eins']}>
+              <div class="foto leistung__foto">
+                <Image src={foto(l.bild)} alt={l.bildAlt ?? ''} widths={[500, 900, 1200]} sizes="(min-width: 56rem) 45vw, 100vw" quality={70} loading={i === 0 ? 'eager' : 'lazy'} />
+              </div>
+            </div>
+          )}
+          <div class="leistung__text">
+            <p class="leistung__nr" aria-hidden="true">{String(i + 1).padStart(2, '0')}</p>
+            <h3>{l.titel}</h3>
+            <p class="lead">{l.kurz}</p>
+            <p>{l.text}</p>
+            {l.punkte && <ul class="leistung__punkte">{l.punkte.map((p) => <li>{p}</li>)}</ul>}
+            <div class="leistung__links">
+              <a class="btn" href={`/kontakt/?thema=${encodeURIComponent(l.thema ?? 'Etwas anderes')}`}>Anfragen</a>
+              {l.link && <a class="btn btn--ghost" href={l.link.href}>{l.link.text}</a>}
+            </div>
+          </div>
+        </article>
+      ))}
+    </div>
+  </section>
+
+  <section class="section section--dark" id="rund-ums-bike" aria-labelledby="rund-titel">
+    <div class="wrap">
+      <span class="eyebrow">Und sonst?</span>
+      <h2 id="rund-titel">Rund ums Bike</h2>
+      <p class="lead rund__lead">Service, MFK, Reifen oder Teile: Auch dafür bist du bei uns richtig, für Harleys und, wo es passt, auch für andere Marken.</p>
+      <ul class="rund">
+        {rund.map((l) => (
+          <li id={l.id}>
+            <h3>{l.titel}</h3>
+            <p>{l.kurz}</p>
+            {l.link && <a href={l.link.href}>{l.link.text} →</a>}
+          </li>
+        ))}
+      </ul>
+    </div>
+  </section>
+
+  <section class="section section--paper">
+    <div class="wrap narrow">
+      <p class="offen-block"><strong>Offen, mit Andy abstimmen:</strong> Gewichtung der Leistungen, Texte und Beispiele pro Leistung, passende Fotos (Werkstatt, Motor offen, Tuning). Reifenservice wirklich für alle Marken? Welche Arbeiten macht Andy an anderen Marken als Harley?</p>
+    </div>
+  </section>
+
+  <Cta title="Was dürfen wir für dich bauen?" />
+</Base>
+
+<style>
+  .sprung { padding-block: 1.2rem 0; }
+  .sprung ul { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+  .sprung a { display: inline-block; font-family: var(--font-display); text-transform: uppercase; letter-spacing: .1em; font-size: .8rem; padding: .4em .9em; border: 1px solid var(--line); border-radius: 99px; text-decoration: none; color: var(--ink); }
+  .sprung a:hover { border-color: var(--oliv); color: var(--oliv); }
+  .leistung { display: grid; gap: clamp(1.5rem, 4vw, 3.5rem); grid-template-columns: repeat(auto-fit, minmax(min(100%, 22rem), 1fr)); align-items: center; padding-block: clamp(2rem, 5vw, 3.5rem); scroll-margin-top: 1rem; }
+  .leistung + .leistung { border-top: 1px dashed var(--line); }
+  @media (min-width: 56rem) { .leistung--rechts > :first-child { order: 2; } }
+  .leistung__foto { aspect-ratio: 4 / 3; }
+  .leistung__nr { font-family: var(--font-typo); color: var(--stempel); margin: 0 0 .2rem; font-size: 1.1rem; }
+  .leistung h3 { font-size: var(--step-2); margin-bottom: .3em; }
+  .leistung .lead { font-size: var(--step-0); font-style: italic; color: var(--leder); margin-bottom: .6em; }
+  .leistung__punkte { padding-left: 1.1em; margin: 0 0 1.4rem; }
+  .leistung__punkte li { margin-bottom: .3em; }
+  .leistung__links { display: flex; flex-wrap: wrap; gap: .7rem; }
+  .rund__lead { max-width: 44rem; }
+  .rund { list-style: none; padding: 0; margin: 2rem 0 0; display: grid; gap: 1px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 16rem), 1fr)); background: rgba(239,229,209,.14); border: 1px solid rgba(239,229,209,.14); }
+  .rund li { background: var(--leder-tief); padding: 1.3rem 1.2rem 1.4rem; scroll-margin-top: 1rem; }
+  .rund h3 { font-size: 1.05rem; letter-spacing: .06em; color: var(--sand-tief); margin-bottom: .4em; }
+  .rund p { font-size: var(--step--1); margin-bottom: .6em; color: var(--on-dark); }
+  .rund a { font-size: var(--step--1); }
+  .leistung:target, .rund li:target { outline: 2px dashed var(--stempel); outline-offset: 6px; }
+</style>
