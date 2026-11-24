@@ -12,5 +12,7 @@
     "html_handling": "auto-trailing-slash",
     "not_found_handling": "404-page"
   },
-  "observability": { "enabled": true }
+  "observability": { "enabled": true },
+  // Im Dashboard gesetzte Variablen bei jedem Build behalten
+  "keep_vars": true
 }
