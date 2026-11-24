@@ -79,7 +79,7 @@ Konfiguration: `wrangler.jsonc` (Worker `kustomwork`, statische Dateien aus `dis
 
 Im Cloudflare-Dashboard unter Workers & Pages → `kustomwork` → Settings:
 1. **Build:** Build command `npm run build:vorschau`, Deploy command `npm run deploy:vorschau`, Root directory leer, Branch `main`.
-2. **Variables and Secrets:** Secret `VORSCHAU_PASSWORT` setzen (zur Laufzeit oder als Build-Geheimnis, das Deploy-Skript überträgt es), optional Text-Variable `VORSCHAU_BENUTZER` (Standard `kustom`).
+2. **Passwort:** Standardmässig gilt das Passwort, dessen SHA-256-Hash in `wrangler.jsonc` unter `VORSCHAU_PASSWORT_SHA256` steht. Alternativ ein Laufzeit-Geheimnis `VORSCHAU_PASSWORT` im Dashboard setzen. Neues Passwort: `printf "%s" "passwort" | sha256sum` und Hash eintragen.
 3. Jeder Push auf `main` baut und veröffentlicht die Vorschau neu.
 
 Die Vorschau ist dreifach gegen Suchmaschinen gesperrt: meta robots, robots.txt und X-Robots-Tag. `.htaccess` und `anfrage.php` werden dort nicht hochgeladen (`public/.assetsignore`), das Formular funktioniert also erst auf Infomaniak.

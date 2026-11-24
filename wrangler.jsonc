@@ -13,6 +13,8 @@
     "not_found_handling": "404-page"
   },
   "observability": { "enabled": true },
+  // Vorschau-Passwort: nur der SHA-256-Hash. Ändern: printf '%s' 'neuesPasswort' | sha256sum
+  "vars": { "VORSCHAU_PASSWORT_SHA256": "1e0f486d6c4326f7794039429418284e10a04a6d749ca93d796771a253c4421a" },
   // Im Dashboard gesetzte Variablen bei jedem Build behalten
   "keep_vars": true
 }
