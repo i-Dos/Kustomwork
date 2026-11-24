@@ -12,6 +12,15 @@ galerie:
     alt: Sitz der Softail Slim S
   - src: ../../assets/fotos/jimdo/softail-3.jpg
     alt: Heckfender der Softail Slim S
+technik:
+  - bereich: Motor
+    offen: Motortyp, Hubraum, was revidiert oder getunt wurde.
+  - bereich: Vergaser und Zündung
+    offen: Welcher Vergaser, welche Zündung, Abstimmung.
+  - bereich: Rahmenarbeit
+    offen: Was am Rahmen geändert, gekürzt oder neu gebaut wurde.
+  - bereich: Eigenbau-Teile
+    offen: Welche Teile Andy selbst gefertigt hat.
 ---
 
 <p class="offen-block"><strong>Offen:</strong> Fotos stammen von der bisherigen Website. Die Geschichte erzählt Andy beim nächsten Werkstattbesuch: Basis, Wunsch des Kunden, was selbst gefertigt wurde, Bauzeit, Besonderheiten.</p>

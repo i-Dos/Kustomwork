@@ -51,6 +51,28 @@ datenblatt:
     wert: Djoce
   - label: Bauzeit
     wert: rund neun Monate
+stempel: Eigenbau
+technik:
+  - bereich: Motor
+    notiz: Panhead aus den 1950er Jahren, komplett zerlegt, neue Dichtungen und Köpfe.
+    offen: Hubraum und Jahrgang des Motors genau? Welche Nockenwelle, welche Verdichtung? Was wurde bei der Revision sonst gemacht?
+  - bereich: Vergaser
+    notiz: Keihin/Harley-Davidson mit Goodson-Luftfilter.
+    offen: Bedüsung und Abstimmung, besonders im Zusammenspiel mit der Magnetzündung.
+  - bereich: Zündung
+    notiz: Morris Magneto MM74L. Keine Batterie, das Bike wird gekickt.
+    offen: Zündzeitpunkt, Tipps zum Anlassen ohne Batterie, Erfahrungen nach vielen Kilometern.
+  - bereich: Getriebe und Kupplung
+    notiz: 4-Gang mit Handschaltung, umgebaut auf Suicide-Kupplung. Schaltknauf und Gestänge selbst gefertigt.
+    offen: Welcher Kupplungsfuss (Rocker Clutch?), welche Federn, wie fährt es sich im Stadtverkehr?
+  - bereich: Rahmenarbeit
+    notiz: Harley-Davidson-Starrrahmen, alle überflüssigen Halter entfernt, pulverbeschichtet. Motorhalter und Nummernschildhalter selbst gebaut.
+    offen: Welche Halter kamen weg, wurde an der Geometrie etwas geändert?
+  - bereich: Eigenbau-Teile
+    notiz: Tank, Schutzblech, Griffe und Schaltknauf, gedreht, gefräst und WIG-geschweisst in der 12-m²-Werkstatt.
+    offen: Material und Blechstärke, ungefähre Stunden pro Teil.
+  - bereich: Drehmomente
+    offen: Andys Werte und Reihenfolge für Zylinderköpfe, Kipphebelböcke und Achsmuttern.
 ---
 
 Dieses Bike ist der Anfang von allem. Andy hat es für einen Mann gebaut, den er nie getroffen hat: Indian Larry, Motorradbauer aus New York, der im August 2004 bei einer Show tödlich verunglückte. Kein Show-Bike sollte es werden, sondern eine Maschine zum Fahren.

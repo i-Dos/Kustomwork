@@ -12,6 +12,15 @@ faq:
     antwort: "Der Knucklehead (1936 bis 1947) war Harleys erster grosser OHV-V2. Der Panhead folgte 1948 mit Aluminiumköpfen, hydraulischen Stösseln und den typischen pfannenförmigen Deckeln."
   - frage: "Eignet sich ein Shovelhead für einen Chopper-Umbau?"
     antwort: "Ja. Der Shovelhead (1966 bis 1984) ist einer der beliebtesten Motoren für Old-School-Chopper. Ersatzteile sind gut erhältlich, und der Motor hat den klassischen Look."
+technik:
+  - bereich: Ventilspiel und Stössel
+    offen: Wie Andy das Ventilspiel bei Flathead, Panhead und Shovelhead prüft und einstellt.
+  - bereich: Zündzeitpunkt
+    offen: Andys Vorgehen mit Stroboskop oder Prüflampe, typische Fehler.
+  - bereich: Öl
+    offen: Welches Öl Andy für alte Motoren empfiehlt und warum.
+  - bereich: Drehmomente
+    offen: Andys Tabelle für Zylinderkopfschrauben der klassischen Motoren.
 ---
 
 Wer sich mit alten Harleys beschäftigt, hört schnell Namen wie Knucklehead oder Shovelhead. Gemeint sind die Motoren, genauer: ihre Zylinderköpfe. Jede Generation hat einen Spitznamen, der beschreibt, wie die Ventildeckel aussehen. Hier ein Überblick über die Motoren, mit denen wir in der Werkstatt am liebsten arbeiten.

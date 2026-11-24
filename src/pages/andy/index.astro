@@ -58,8 +58,10 @@ const meilensteine = [
             <li><span class:list={['jahr', { offen: m.jahr === '[OFFEN]' }]}>{m.jahr === '[OFFEN]' ? 'Jahr?' : m.jahr}</span><span>{m.text}</span></li>
           ))}
         </ol>
-        <div class="foto zeitstrahl__foto">
-          <Image src={foto('jimdo/andy-ueber.jpg')} alt="Andy Gemperle in seiner Werkstatt" widths={[400, 700]} sizes="22rem" quality={72} />
+        <div class="getaped getaped--eins zeitstrahl__band">
+          <div class="foto zeitstrahl__foto">
+            <Image src={foto('jimdo/andy-ueber.jpg')} alt="Andy Gemperle in seiner Werkstatt" widths={[400, 700]} sizes="22rem" quality={72} />
+          </div>
         </div>
       </aside>
     </div>

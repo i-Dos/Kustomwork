@@ -83,6 +83,12 @@ const graph = { '@context': 'https://schema.org', '@graph': [websiteSchema(), bu
           sessionStorage.setItem('quelle', `${u || document.referrer || 'direkt'} → ${location.pathname}`);
         }
       } catch {}
+      // Schreibmaschinen-Schrift (Special Elite, SIL OFL) erst nach dem Laden holen:
+      // sie ist Dekoration und soll das erste Bild nicht bremsen. Bis dahin Courier.
+      window.addEventListener('load', () => {
+        if (!('FontFace' in window) || !document.querySelector('.bauzettel, .buildlog, .bike__daten')) return;
+        new FontFace('Special Elite', "url(/fonts/special-elite-subset.woff2) format('woff2')").load().then((f) => document.fonts.add(f)).catch(() => {});
+      });
       if ('serviceWorker' in navigator && location.hostname !== 'localhost') {
         window.addEventListener('load', () => navigator.serviceWorker.register('/sw.js'));
       }

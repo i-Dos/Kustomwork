@@ -3,8 +3,9 @@ import Base from '../../layouts/Base.astro';
 import FaqListe from '../../components/FaqListe.astro';
 import Karte from '../../components/Karte.astro';
 import Cta from '../../components/Cta.astro';
+import BuildLog from '../../components/BuildLog.astro';
 import { Picture, getImage } from 'astro:assets';
-import { render } from 'astro:content';
+import { render, getEntry } from 'astro:content';
 import { beitraege } from '../../lib/inhalte';
 import { datum } from '../../lib/fotos';
 import { articleSchema, breadcrumbSchema, faqSchema } from '../../lib/schema';
@@ -23,6 +24,10 @@ const schema: object[] = [
   articleSchema({ title: p.data.title, description: p.data.description, path, date: p.data.date, updated: p.data.updated, image: new URL(og.src, site.url).href, autor: p.data.autor }),
 ];
 if (p.data.faq.length) schema.push(faqSchema(p.data.faq));
+// Build Log: eigene Technik-Notizen des Beitrags, sonst die des verknüpften Projekts
+const projekt = p.data.projekt ? await getEntry('projekte', p.data.projekt) : undefined;
+const technik = p.data.technik.length ? p.data.technik : (projekt?.data.technik ?? []);
+const technikLink = !p.data.technik.length && projekt ? { href: `/projekte/${projekt.id}/`, text: `Datenblatt und Galerie: ${projekt.data.title} →` } : undefined;
 const lesezeit = Math.max(1, Math.round((p.body ?? '').split(/\s+/).length / 200));
 ---
 <Base title={p.data.title} description={p.data.description} image={p.data.cover} imageAlt={p.data.coverAlt} type="article" schema={schema}>
@@ -46,6 +51,7 @@ const lesezeit = Math.max(1, Math.round((p.body ?? '').split(/\s+/).length / 200
           </nav>
         )}
         <div class="prose"><Content /></div>
+        <BuildLog eintraege={technik} link={technikLink} />
         {p.data.faq.length > 0 && (
           <section class="artikel-faq">
             <h2>Kurz gefragt</h2>

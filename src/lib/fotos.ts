@@ -11,3 +11,10 @@ export function foto(name: string): ImageMetadata {
 
 export const formatCHF = (n: number) => `CHF ${n.toLocaleString('de-CH').replace(/,/g, "'")}.–`;
 export const datum = (d: Date) => d.toLocaleDateString('de-CH', { day: 'numeric', month: 'long', year: 'numeric' });
+
+/** Teilenummer-Optik für Bauzettel: KW-<Jahr>-<3 Ziffern aus der id>, stabil pro Eintrag */
+export function teilenummer(id: string, date?: Date) {
+  let h = 0;
+  for (const c of id) h = (h * 31 + c.charCodeAt(0)) >>> 0;
+  return `KW-${date ? date.getFullYear() : '0000'}-${String(h % 1000).padStart(3, '0')}`;
+}

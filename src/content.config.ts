@@ -3,6 +3,8 @@ import { glob } from 'astro/loaders';
 import { z } from 'astro/zod';
 
 const bild = (image: any) => z.object({ src: image(), alt: z.string() });
+/** Build Log / Technik: bereich + notiz; offen = Frage an Andy, bis er die Details liefert */
+const technik = z.array(z.object({ bereich: z.string(), notiz: z.string().optional(), offen: z.string().optional() })).default([]);
 
 /** Projekte: ein Markdown-File pro Bike */
 const projekte = defineCollection({
@@ -19,6 +21,8 @@ const projekte = defineCollection({
       coverAlt: z.string(),
       galerie: z.array(bild(image)).default([]),
       datenblatt: z.array(z.object({ label: z.string(), wert: z.string() })).default([]),
+      technik,
+      stempel: z.string().optional(), // Text für den Stempel auf dem Bauzettel
       quelle: z.string().optional(),
       featured: z.boolean().default(false),
       platzhalter: z.boolean().default(false),
@@ -41,6 +45,7 @@ const blog = defineCollection({
       tags: z.array(z.string()).default([]),
       faq: z.array(z.object({ frage: z.string(), antwort: z.string() })).default([]),
       projekt: z.string().optional(), // id eines verwandten Projekts
+      technik,
       draft: z.boolean().default(false),
     }),
 });

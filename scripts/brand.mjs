@@ -7,6 +7,8 @@
 import sharp from 'sharp';
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 
+import { optimize } from 'svgo';
+
 const FARBEN = { sand: '#ebe0ca', braun: '#2e2118' };
 const DUNKEL = '#2e2118';
 const OG_FOTO = 'src/assets/fotos/jimdo/start.jpg';
@@ -16,7 +18,8 @@ const farbig = (c) => Buffer.from(master.replaceAll('currentColor', c));
 await mkdir('public/logo', { recursive: true });
 await mkdir('public/icons', { recursive: true });
 
-for (const [name, c] of Object.entries(FARBEN)) await writeFile(`public/logo/logo-${name}.svg`, farbig(c));
+// Web-Versionen mit SVGO verkleinert (halbe Dateigrösse, schnelleres Laden)
+for (const [name, c] of Object.entries(FARBEN)) await writeFile(`public/logo/logo-${name}.svg`, optimize(farbig(c).toString(), { multipass: true }).data);
 await sharp(farbig(FARBEN.braun)).resize(512).png().toFile('public/logo/logo-512.png');
 
 // Icons: Logo in Sand auf dunklem Grund, mit Rand (maskable braucht mehr Rand)
