@@ -5,7 +5,7 @@ const year = new Date().getFullYear();
 <footer class="fuss section--dark">
   <div class="wrap fuss__grid">
     <div>
-      <p class="fuss__marke">Gemperle's <strong>KustomWork</strong></p>
+      <img src={site.logo.hell} alt={`Logo ${site.name}`} width="170" height="153" class="fuss__logo" loading="lazy" />
       <p>{site.tagline}.<br />Kustom-Umbauten, Occasionen und das Label Sixnineteen.</p>
     </div>
     <div>
@@ -44,6 +44,7 @@ const year = new Date().getFullYear();
   .fuss { padding-block: 4rem 2rem; font-size: var(--step--1); background: var(--leder-tief) var(--grain); color: var(--on-dark); }
   .fuss a { color: var(--on-dark); }
   .fuss__grid { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 13rem), 1fr)); }
+  .fuss__logo { width: 170px; height: auto; margin-bottom: 1rem; }
   .fuss__marke { font-family: var(--font-display); text-transform: uppercase; font-size: 1.5rem; letter-spacing: .04em; margin-bottom: .4em; }
   .fuss__h { font-size: .9rem; letter-spacing: .2em; color: var(--on-dark-muted); margin-bottom: .6em; }
   address { font-style: normal; }

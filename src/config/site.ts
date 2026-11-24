@@ -21,7 +21,7 @@ export const site = {
   url: 'https://kustomwork.ch',
   lang: 'de-CH',
   ogLocale: 'de_CH',
-  foundingYear: '', // [OFFEN] ca. 2018 laut Dominique, von Andy bestätigen lassen
+  foundingYear: '2018', // laut Logo «Est. 2018»
 
   // --- Kontakt -----------------------------------------------
   email: 'gemperles@kustomwork.ch',
@@ -104,6 +104,8 @@ export const site = {
     responsible: 'Andy Gemperle',
     uid: '', // [OFFEN] UID, falls im Handelsregister eingetragen
   },
+
+  logo: { hell: '/logo/logo-sand.svg', dunkel: '/logo/logo-braun.svg', ratio: 2142 / 1923 },
 
   photoCredit: 'Fotos: Andy und Fabienne Gemperle',
 } as const;

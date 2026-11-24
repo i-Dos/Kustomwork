@@ -6,8 +6,8 @@ const isHome = path === '/';
 <header class:list={['kopf', { 'kopf--home': isHome }]}>
   <div class="wrap kopf__inner">
     <a href="/" class="marke" aria-label={`${site.name}, Startseite`}>
-      <span class="marke__name">Gemperle's</span>
-      <span class="marke__kw">KustomWork</span>
+      <img src={site.logo.hell} alt="" width="78" height="70" class="marke__logo" />
+      <span class="marke__text"><span class="marke__name">Gemperle's</span><span class="marke__kw">KustomWork</span></span>
     </a>
     <nav aria-label="Hauptnavigation">
       <button class="menu-btn" aria-expanded="false" aria-controls="menu">
@@ -35,8 +35,12 @@ const isHome = path === '/';
 <style>
   .kopf { background: var(--leder-tief); color: var(--on-dark); position: relative; z-index: 20; }
   .kopf--home { position: absolute; inset: 0 0 auto; background: linear-gradient(rgba(20,14,9,.75), rgba(20,14,9,0)); }
-  .kopf__inner { display: flex; align-items: center; justify-content: space-between; padding-block: 1rem; gap: 1rem; }
-  .marke { color: var(--on-dark); text-decoration: none; line-height: .9; display: grid; }
+  .kopf__inner { display: flex; align-items: center; justify-content: space-between; padding-block: .6rem; gap: 1rem; min-height: 4.5rem; }
+  .marke { color: var(--on-dark); text-decoration: none; line-height: .9; display: flex; align-items: center; gap: .8rem; }
+  .marke__logo { width: 78px; height: auto; display: block; }
+  .marke__text { display: grid; }
+  .kopf--home .marke__logo, .kopf--home .marke__text { display: none; }
+  @media (max-width: 30rem) { .marke__logo { width: 60px; } .marke__text { display: none; } }
   .marke:hover { color: var(--on-dark); }
   .marke__name { font-family: var(--font-body); font-style: italic; font-size: 1.05rem; color: var(--on-dark-muted); }
   .marke__kw { font-family: var(--font-display); font-weight: 700; font-size: 1.7rem; text-transform: uppercase; letter-spacing: .04em; }

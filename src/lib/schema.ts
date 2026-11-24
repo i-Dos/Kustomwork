@@ -15,7 +15,7 @@ export function businessSchema(image?: string) {
     email: site.email,
     telephone: site.phone,
     ...(image ? { image } : {}),
-    logo: abs('/icons/icon-512.png'),
+    logo: { '@type': 'ImageObject', url: abs('/logo/logo-512.png'), width: 512, height: 460 },
     founder: { '@type': 'Person', '@id': `${site.url}/andy/#person`, name: site.owner },
     ...(site.foundingYear ? { foundingDate: site.foundingYear } : {}),
     address: {

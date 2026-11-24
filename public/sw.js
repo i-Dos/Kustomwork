@@ -1,6 +1,6 @@
 // Service Worker: Offline-Grundfunktion für die PWA.
 // Seiten: zuerst Netz, dann Cache. Bilder, Schriften, CSS, JS: zuerst Cache.
-const VERSION = 'kw-v1';
+const VERSION = 'kw-v2';
 const OFFLINE = ['/', '/kontakt/', '/offline/'];
 
 self.addEventListener('install', (e) => {

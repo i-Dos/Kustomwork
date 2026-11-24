@@ -6,11 +6,12 @@
   "scripts": {
     "dev": "astro dev",
     "fotos": "node scripts/look.mjs",
-    "build": "node scripts/look.mjs && astro build",
-    "build:vorschau": "node scripts/look.mjs && PREVIEW=true astro build",
+    "build": "node scripts/look.mjs && node scripts/brand.mjs && astro build",
+    "build:vorschau": "node scripts/look.mjs && node scripts/brand.mjs && PREVIEW=true astro build",
     "preview": "astro preview",
     "check": "astro check",
-    "deploy:vorschau": "sh scripts/deploy-vorschau.sh"
+    "deploy:vorschau": "sh scripts/deploy-vorschau.sh",
+    "brand": "node scripts/brand.mjs"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",

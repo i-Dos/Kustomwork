@@ -84,6 +84,10 @@ Im Cloudflare-Dashboard unter Workers & Pages → `kustomwork` → Settings:
 
 Die Vorschau ist dreifach gegen Suchmaschinen gesperrt: meta robots, robots.txt und X-Robots-Tag. `.htaccess` und `anfrage.php` werden dort nicht hochgeladen (`public/.assetsignore`), das Formular funktioniert also erst auf Infomaniak.
 
+## Logo
+
+`brand/logo.svg` ist der Master (Vektor, nachgezeichnet aus dem PNG der bisherigen Website, Farbe `currentColor`). `npm run brand` erzeugt daraus Farbvarianten (`public/logo/`), App-Icons, Favicons, das Schema.org-Logo und `public/og-default.jpg`. Liefert der Kunde ein Original-SVG, einfach `brand/logo.svg` ersetzen (Füllfarbe auf `currentColor` setzen).
+
 ## PWA
 
 `manifest.webmanifest`, Icons in `public/icons/`, Service Worker `public/sw.js` (Seiten Netz-zuerst, Bilder Cache-zuerst, Offline-Seite). Bei grösseren Änderungen `VERSION` in `sw.js` erhöhen.

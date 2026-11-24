@@ -7,7 +7,6 @@ import type { ImageMetadata } from 'astro';
 import { getImage } from 'astro:assets';
 import { site, isPreview } from '../config/site';
 import { businessSchema, websiteSchema } from '../lib/schema';
-import { foto } from '../lib/fotos';
 import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 
@@ -24,8 +23,10 @@ const { title, description = site.description, image, imageAlt, schema = [], noi
 
 const canonical = new URL(Astro.url.pathname, site.url).href;
 const fullTitle = Astro.url.pathname === '/' ? `${site.name} | ${site.tagline}` : `${title} | ${site.name}`;
-const og = await getImage({ src: image ?? foto(site.hero[0].src), width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 80 });
-const ogUrl = new URL(og.src, site.url).href;
+// Ohne eigenes Bild: Standard-Teilen-Bild mit Logo (public/og-default.jpg, erzeugt von scripts/brand.mjs)
+const ogUrl = image
+  ? new URL((await getImage({ src: image, width: 1200, height: 630, fit: 'cover', format: 'jpg', quality: 80 })).src, site.url).href
+  : new URL('/og-default.jpg', site.url).href;
 const robots = isPreview || noindex ? 'noindex, nofollow' : 'index, follow, max-image-preview:large';
 
 const graph = { '@context': 'https://schema.org', '@graph': [websiteSchema(), businessSchema(ogUrl), ...schema] };
@@ -41,7 +42,8 @@ const graph = { '@context': 'https://schema.org', '@graph': [websiteSchema(), bu
     <link rel="canonical" href={canonical} />
     <meta name="theme-color" content="#2e2118" />
     <link rel="manifest" href="/manifest.webmanifest" />
-    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="icon" href="/favicon-32.png" sizes="32x32" type="image/png" />
+    <link rel="icon" href="/favicon-48.png" sizes="48x48" type="image/png" />
     <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png" />
     <link rel="sitemap" href="/sitemap-index.xml" />
     <link rel="alternate" type="application/rss+xml" title={`${site.name} Blog`} href="/rss.xml" />
