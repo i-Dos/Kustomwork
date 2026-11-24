@@ -17,9 +17,18 @@ export default {
         },
       });
     }
+    // Vorschau nie indexieren, unabhängig davon, wie gebaut wurde
+    if (new URL(request.url).pathname === '/robots.txt') {
+      return new Response('User-agent: *\nDisallow: /\n', { headers: { 'Content-Type': 'text/plain; charset=utf-8', 'X-Robots-Tag': 'noindex, nofollow' } });
+    }
     const res = await env.ASSETS.fetch(request);
-    const out = new Response(res.body, res);
+    let out = new Response(res.body, res);
     out.headers.set('X-Robots-Tag', 'noindex, nofollow');
+    if ((res.headers.get('Content-Type') || '').includes('text/html')) {
+      out = new HTMLRewriter()
+        .on('meta[name="robots"]', { element: (el) => el.setAttribute('content', 'noindex, nofollow') })
+        .transform(out);
+    }
     return out;
   },
 };
