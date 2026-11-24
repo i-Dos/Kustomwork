@@ -7,9 +7,11 @@ km: 1500 km seit Motorrevision
 mfk: '2023'
 status: verkauft
 order: 10
-cover: ../../assets/fotos/platzhalter/fl-panhead.jpg
+cover: ../../assets/fotos/jimdo/panhead48-1.jpg
 coverAlt: Harley-Davidson FL Panhead 1948
-platzhalter: true
+galerie:
+  - src: ../../assets/fotos/jimdo/panhead48-2.jpg
+    alt: Harley-Davidson FL Panhead 1948, andere Seite
 highlights:
   - Aufbau 2023
   - Viel Kustom, viel Original

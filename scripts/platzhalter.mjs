@@ -4,18 +4,10 @@ import { mkdir } from 'node:fs/promises';
 const dir = 'fotos-original/platzhalter';
 await mkdir(dir, { recursive: true });
 const items = [
-  ['59-racer', '59 Racer', 'Projekt'],
-  ['akoni-panhead', 'Akoni Panhead', 'Projekt'],
-  ['softail-slim-s', 'Softail Slim S', 'Projekt'],
-  ['triumph-t120', 'Triumph T120 Bonneville', 'For Sale'],
-  ['xl1200v', 'Sportster XL1200V Seventy-Two', 'For Sale'],
-  ['fl-panhead', 'FL Panhead 1948', 'For Sale'],
-  ['wla', 'WLA Flathead 1942', 'For Sale'],
   ['shirt', 'Sixnineteen T-Shirt', 'Lookbook'],
   ['hoodie', 'Sixnineteen Hoodie', 'Lookbook'],
   ['cap', 'Sixnineteen Cap', 'Lookbook'],
   ['patch', 'Sixnineteen Patch', 'Lookbook'],
-  ['werkstatt', 'Werkstatt Meilen', 'Werkstatt'],
 ];
 for (const [file, title, kind] of items) {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">

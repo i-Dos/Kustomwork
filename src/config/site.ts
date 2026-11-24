@@ -79,7 +79,9 @@ export const site = {
     { src: 'larry-seite.jpg', alt: 'Indian-Larry-Tribute-Bike auf Panhead-Basis am Zürichsee', focus: '50% 60%' },
     { src: 'andy-fahrt.jpg', alt: 'Andy Gemperle fährt seinen Panhead-Chopper', focus: '60% 40%' },
     { src: 'larry-heck.jpg', alt: 'Heckansicht des Panhead-Choppers mit Sissybar und Weisswandreifen', focus: '50% 55%' },
-    { src: 'larry-tank.jpg', alt: 'Handgemalter Tank mit Pinstriping und Indian-Larry-Schriftzug', focus: '50% 50%' },
+    { src: 'jimdo/start.jpg', alt: 'Kustom-Bike mit Flammenlackierung in der Werkstatt', focus: '50% 50%' },
+    { src: 'jimdo/59-racer-1.jpg', alt: '59 Racer vor Backsteinwand', focus: '50% 65%' },
+    { src: 'jimdo/akoni-1.jpg', alt: 'Akoni Panhead mit Sunburst-Tank', focus: '50% 65%' },
   ],
 
   // --- Anfrageformular ---------------------------------------

@@ -10,6 +10,12 @@ coverAlt: Indian-Larry-Tribute-Bike, Panhead-Chopper mit Weisswandreifen am Zür
 featured: true
 quelle: 'Erschienen als «Memory Machine» in Chrom & Flammen. Text: Michael Stein. Fotos: Andy und Fabienne Gemperle.'
 galerie:
+  - src: ../../assets/fotos/jimdo/larry-1.jpg
+    alt: Das Indian-Larry-Bike in einer späteren Ausbaustufe
+  - src: ../../assets/fotos/jimdo/larry-2.jpg
+    alt: Tank mit Indian-Larry-Schriftzug und Pinstriping, neuere Aufnahme
+  - src: ../../assets/fotos/jimdo/larry-3.jpg
+    alt: Bremsscheibe mit Fragezeichen-Muster
   - src: ../../assets/fotos/larry-tank.jpg
     alt: Tank mit Flammen, Pinstriping und dem Spruch aus Indian Larrys Halstattoo
   - src: ../../assets/fotos/andy-fahrt.jpg
@@ -66,5 +72,7 @@ Den Lack hatte Andy von Anfang an im Kopf. Umsetzen sollte ihn der Maler Djoce. 
 Nach rund neun Monaten fuhr das Bike zum ersten Mal auf die Strasse. Seither gilt Andys Devise: «Riding on my Bike with Larry in my mind.»
 
 ## Und heute?
+
+Das Bike gibt es noch, inzwischen weiter umgebaut. Die neueren Aufnahmen in der Galerie zeigen es in einer späteren Ausbaustufe.
 
 <p class="offen-block"><strong>Offen, Andy ergänzt:</strong> In welchem Jahr war das Bike fertig, und wann erschien der Artikel? Wie sieht es heute aus, und was wurde seither umgebaut? Existieren neue Fotos?</p>
