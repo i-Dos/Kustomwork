@@ -50,9 +50,13 @@ const blog = defineCollection({
     }),
 });
 
-/** For Sale: Bikes und Occasionen */
+/**
+ * For Sale: ein Markdown-File pro Bike = feste Vorlage (siehe src/content/bikes/_vorlage.md).
+ * Dateien mit _ am Anfang werden ignoriert. Flache Felder, damit später ein Editor
+ * (z. B. Sveltia/Decap CMS) die Einträge ohne Umbau pflegen kann.
+ */
 const bikes = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/bikes' }),
+  loader: glob({ pattern: '**/[!_]*.md', base: './src/content/bikes' }),
   schema: ({ image }) =>
     z.object({
       title: z.string(),
@@ -63,12 +67,16 @@ const bikes = defineCollection({
       mfk: z.string().optional(),
       preis: z.number().optional(), // CHF, leer = auf Anfrage
       status: z.enum(['verfügbar', 'reserviert', 'verkauft']),
+      kommission: z.boolean().default(false), // Verkauf in Kommission
       highlights: z.array(z.string()).default([]),
+      details: z.array(z.object({ label: z.string(), wert: z.string() })).default([]), // Bauzettel: Motor, Getriebe, Farbe ...
+      eingetragen: z.coerce.date().optional(),
       cover: image(),
       coverAlt: z.string(),
       galerie: z.array(bild(image)).default([]),
       order: z.number().default(0),
-      platzhalter: z.boolean().default(false),
+      platzhalter: z.boolean().default(false), // Beispiel-Eintrag, erscheint nicht im Schema für Google
+      draft: z.boolean().default(false), // true = nicht veröffentlichen
     }),
 });
 

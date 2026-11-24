@@ -11,7 +11,7 @@ export async function beitraege() {
   return (await getCollection('blog', live)).sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
 }
 export async function bikes() {
-  return (await getCollection('bikes')).sort((a, b) => a.data.order - b.data.order);
+  return (await getCollection('bikes', (b) => !b.data.draft)).sort((a, b) => a.data.order - b.data.order);
 }
 export async function lookbook() {
   return (await getCollection('lookbook')).sort((a, b) => a.data.order - b.data.order);

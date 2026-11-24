@@ -3,20 +3,18 @@ import Base from '../../layouts/Base.astro';
 import Seitenkopf from '../../components/Seitenkopf.astro';
 import FaqListe from '../../components/FaqListe.astro';
 import { Image, getImage } from 'astro:assets';
-import { render } from 'astro:content';
+import BikeEintrag from '../../components/BikeEintrag.astro';
 import { bikes, faqs } from '../../lib/inhalte';
-import { formatCHF } from '../../lib/fotos';
 import { breadcrumbSchema, motorcycleOfferSchema } from '../../lib/schema';
 import { site } from '../../config/site';
 
 const liste = await bikes();
 const verfuegbar = liste.filter((b) => b.data.status !== 'verkauft');
 const verkauft = liste.filter((b) => b.data.status === 'verkauft');
-const rendered = Object.fromEntries(await Promise.all(liste.map(async (b) => [b.id, (await render(b)).Content])));
 const fragen = await faqs('forsale');
 const schema = [
   breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'For Sale', path: '/for-sale/' }]),
-  ...(await Promise.all(verfuegbar.map(async (b) => {
+  ...(await Promise.all(verfuegbar.filter((b) => !b.data.platzhalter).map(async (b) => {
     const img = await getImage({ src: b.data.cover, width: 1200, format: 'jpg' });
     return motorcycleOfferSchema({ ...b.data, image: new URL(img.src, site.url).href, path: `/for-sale/#${b.id}` });
   }))),
@@ -27,32 +25,7 @@ const schema = [
 
   <section class="section">
     <div class="wrap liste">
-      {verfuegbar.map((b, i) => {
-        const Content = rendered[b.id];
-        return (
-          <article class="bike" id={b.id}>
-            <div class="getaped getaped--eins">
-              <div class="foto bike__foto">
-                <Image src={b.data.cover} alt={b.data.coverAlt} widths={[500, 900, 1300]} sizes="(min-width: 56rem) 50vw, 100vw" quality={72} loading={i === 0 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : 'auto'} />
-                {b.data.status === 'reserviert' && <span class="stempel stempel--foto">Reserviert</span>}
-              </div>
-            </div>
-            <div class="bike__text">
-              <p class="eyebrow">{b.data.marke} · Jahrgang {b.data.jahrgang}</p>
-              <h2>{b.data.title}</h2>
-              <p class="bike__preis">{b.data.preis ? formatCHF(b.data.preis) : 'Preis auf Anfrage'}{b.data.mfk && <span class="stempel bike__mfk">MFK {b.data.mfk}</span>}</p>
-              <dl class="bike__daten">
-                <dt>Jahrgang</dt><dd>{b.data.jahrgang}</dd>
-                {b.data.km && (<><dt>Kilometer</dt><dd>{b.data.km}</dd></>)}
-                {b.data.mfk && (<><dt>MFK</dt><dd>{b.data.mfk}</dd></>)}
-              </dl>
-              {b.data.highlights.length > 0 && <ul>{b.data.highlights.map((h) => <li>{h}</li>)}</ul>}
-              <Content />
-              <a class="btn" href={`/kontakt/?thema=For%20Sale%20%2F%20Occasion&bike=${encodeURIComponent(b.data.title + ' ' + b.data.jahrgang)}`}>Anfragen</a>
-            </div>
-          </article>
-        );
-      })}
+      {verfuegbar.map((b, i) => <BikeEintrag bike={b} erstes={i === 0} />)}
     </div>
   </section>
 
@@ -84,18 +57,6 @@ const schema = [
 </Base>
 <style>
   .liste { display: grid; gap: clamp(3rem, 7vw, 5rem); }
-  .bike { display: grid; gap: 2rem; grid-template-columns: repeat(auto-fit, minmax(min(100%, 24rem), 1fr)); align-items: start; scroll-margin-top: 2rem; }
-  .bike__foto { aspect-ratio: 4 / 3; }
-  .bike h2 { font-size: var(--step-3); margin-bottom: .2em; }
-  .bike__preis { font-family: var(--font-display); font-size: var(--step-2); color: var(--oliv); margin-bottom: .6em; }
-  .bike__mfk { margin-left: 1.2rem; font-size: .8rem; vertical-align: middle; transform: rotate(-6deg) translateY(-.2em); }
-  .bike__daten {
-    display: grid; grid-template-columns: auto 1fr; gap: .3rem 1.2rem; margin: 0 0 1.2rem; padding: .8rem 1rem;
-    background: #f5eedd var(--grain); border-left: 3px solid var(--stempel); font-family: var(--font-typo); font-size: .92rem;
-    box-shadow: 0 6px 16px -10px rgba(40,25,10,.5);
-  }
-  .bike__daten dt { font-family: var(--font-display); text-transform: uppercase; letter-spacing: .12em; color: var(--oliv); font-size: .78rem; padding-top: .15em; }
-  .bike__daten dd { margin: 0; }
   .verkauft figure { margin: 0; }
   .verkauft .foto { aspect-ratio: 4 / 3; }
   .verkauft img { filter: grayscale(.6); }

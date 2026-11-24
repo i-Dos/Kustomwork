@@ -8,6 +8,9 @@ const items = [
   ['hoodie', 'Sixnineteen Hoodie', 'Lookbook'],
   ['cap', 'Sixnineteen Cap', 'Lookbook'],
   ['patch', 'Sixnineteen Patch', 'Lookbook'],
+  ['bike-a', 'Dein Bike hier', 'For Sale'],
+  ['bike-b', 'Nächstes Bike', 'For Sale'],
+  ['bike-c', 'Bald in Meilen', 'For Sale'],
 ];
 for (const [file, title, kind] of items) {
   const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1200" viewBox="0 0 1600 1200">
