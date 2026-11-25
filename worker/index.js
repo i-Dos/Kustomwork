@@ -99,7 +99,10 @@ async function oauth(request, env, pfad) {
   const url = new URL(request.url);
   const id = env.GITHUB_CLIENT_ID;
   const geheim = env.GITHUB_CLIENT_SECRET;
-  if (!id || !geheim) return antwort('error', { provider: 'github', error: 'Login ist noch nicht eingerichtet (GITHUB_CLIENT_ID / GITHUB_CLIENT_SECRET fehlen).' });
+  if (!id || !geheim) {
+    const fehlt = [!id && 'GITHUB_CLIENT_ID', !geheim && 'GITHUB_CLIENT_SECRET'].filter(Boolean).join(' und ');
+    return antwort('error', { provider: 'github', error: `Login ist noch nicht eingerichtet: ${fehlt} fehlt im Cloudflare-Worker (Einstellungen > Variablen und geheime Schlüssel).` });
+  }
 
   if (pfad === '/oauth/auth') {
     const state = [...crypto.getRandomValues(new Uint8Array(16))].map((b) => b.toString(16).padStart(2, '0')).join('');
