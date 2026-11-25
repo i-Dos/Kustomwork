@@ -18,7 +18,7 @@ const meilensteine = t.l('meilensteine');
 <Base title={t.seoTitel ?? t.kopf.titel ?? 'Andy'} description={klartext(t.seoBeschreibung)}
   image={t.kopf.bild} imageAlt={t.kopf.bildAlt}
   schema={[breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'Andy', path: '/andy/' }]), personSchema()]}>
-  <Seitenkopf eyebrow={t.kopf.eyebrow} title={t.kopf.titel ?? ''} lead={t.kopf.lead} image={t.kopf.bild} imageAlt={t.kopf.bildAlt} focus={t.kopf.fokus} />
+  <Seitenkopf eyebrow={t.kopf.eyebrow} title={t.kopf.titel ?? ''} lead={t.kopf.lead} image={t.kopf.bild} imageAlt={t.kopf.bildAlt} focus={t.kopf.fokus} focusMobile={t.kopf.fokusMobil} />
 
   <section class="section">
     <div class="wrap andy">

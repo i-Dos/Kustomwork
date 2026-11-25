@@ -5,9 +5,10 @@ kopf:
   eyebrow: Seestrasse 619, Meilen
   titel: Lass uns über dein Bike reden
   lead: Am besten in der Werkstatt, bei einem Kaffee neben der Hebebühne. Oder schreib uns vorab, was du vorhast.
-  bild: ../../assets/grafik/seefront-meilen.png
-  bildAlt: Seefront Meilen mit reformierter Kirche
-  fokus: 20% 65%
+  bild: ../../assets/grafik/werkstatt-front.png
+  bildAlt: Ladenfront von Gemperle's KustomWork an der Seestrasse 619 in Meilen, Illustration
+  fokus: 40% 50%
+  fokusMobil: 64% 50%
 abschnitte:
   formular:
     titel: Anfrage

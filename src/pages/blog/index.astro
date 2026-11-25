@@ -12,7 +12,7 @@ const [erster, ...rest] = posts;
 ---
 <Base title={t.seoTitel ?? 'Blog'} description={klartext(t.seoBeschreibung)}
   schema={[breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'Blog', path: '/blog/' }])]}>
-  <Seitenkopf eyebrow={t.kopf.eyebrow} title={t.kopf.titel ?? ''} lead={t.kopf.lead} image={t.kopf.bild} imageAlt={t.kopf.bildAlt} focus={t.kopf.fokus} />
+  <Seitenkopf eyebrow={t.kopf.eyebrow} title={t.kopf.titel ?? ''} lead={t.kopf.lead} image={t.kopf.bild} imageAlt={t.kopf.bildAlt} focus={t.kopf.fokus} focusMobile={t.kopf.fokusMobil} />
   <section class="section">
     <div class="wrap">
       {erster && (

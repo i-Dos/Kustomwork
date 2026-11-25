@@ -10,7 +10,7 @@ import { breadcrumbSchema } from '../../lib/schema';
 ---
 <Base title={t.seoTitel ?? 'Kontakt'} description={klartext(t.seoBeschreibung)}
   schema={[breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'Kontakt', path: '/kontakt/' }])]}>
-  <Seitenkopf eyebrow={t.kopf.eyebrow} image={t.kopf.bild} imageAlt={t.kopf.bildAlt} focus={t.kopf.fokus} title={t.kopf.titel ?? ''} lead={t.kopf.lead} />
+  <Seitenkopf eyebrow={t.kopf.eyebrow} image={t.kopf.bild} imageAlt={t.kopf.bildAlt} focus={t.kopf.fokus} focusMobile={t.kopf.fokusMobil} title={t.kopf.titel ?? ''} lead={t.kopf.lead} />
 
   <section class="section">
     <div class="wrap kontakt">

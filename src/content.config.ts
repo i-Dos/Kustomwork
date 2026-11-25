@@ -119,7 +119,7 @@ const seiten = defineCollection({
     const abschnitt = z
       .object({
         eyebrow: z.string(), titel: z.string(), script: z.string(), lead: z.string(), text: z.string(),
-        bild: image(), bildAlt: z.string(), fokus: z.string(), button: z.string(), buttonLink: z.string(),
+        bild: image(), bildAlt: z.string(), fokus: z.string(), fokusMobil: z.string(), button: z.string(), buttonLink: z.string(),
       })
       .partial();
     const eintrag = z

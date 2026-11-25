@@ -16,7 +16,7 @@ const [m, credit, label, cta] = ['marken', 'credit', 'label', 'cta'].map(t.a);
 <Base title={t.seoTitel ?? t.kopf.titel ?? ''} description={klartext(t.seoBeschreibung)}
   image={t.kopf.bild} imageAlt={t.kopf.bildAlt}
   schema={[breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'Bekleidung und Teile', path: '/bekleidung/' }])]}>
-  <Seitenkopf eyebrow={t.kopf.eyebrow} title={t.kopf.titel ?? ''} lead={t.kopf.lead} image={t.kopf.bild} imageAlt={t.kopf.bildAlt} focus={t.kopf.fokus} />
+  <Seitenkopf eyebrow={t.kopf.eyebrow} title={t.kopf.titel ?? ''} lead={t.kopf.lead} image={t.kopf.bild} imageAlt={t.kopf.bildAlt} focus={t.kopf.fokus} focusMobile={t.kopf.fokusMobil} />
 
   <section class="section">
     <div class="wrap">

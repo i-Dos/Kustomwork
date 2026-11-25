@@ -19,7 +19,7 @@ const galerie = liste.filter((p) => !p.data.platzhalter).flatMap((p) => [{ src: 
 <Base title={t.seoTitel ?? 'Projekte'} description={klartext(t.seoBeschreibung)}
   image={t.kopf.bild}
   schema={[breadcrumbSchema([{ name: 'Start', path: '/' }, { name: 'Projekte', path: '/projekte/' }]), faqSchema(fragen.map((f) => ({ frage: f.frage, antwort: f.text })))]}>
-  <Seitenkopf eyebrow={t.kopf.eyebrow} title={t.kopf.titel ?? ''} lead={t.kopf.lead} image={t.kopf.bild} imageAlt={t.kopf.bildAlt} focus={t.kopf.fokus} />
+  <Seitenkopf eyebrow={t.kopf.eyebrow} title={t.kopf.titel ?? ''} lead={t.kopf.lead} image={t.kopf.bild} imageAlt={t.kopf.bildAlt} focus={t.kopf.fokus} focusMobile={t.kopf.fokusMobil} />
 
   <section class="section">
     <div class="wrap grid grid--2">

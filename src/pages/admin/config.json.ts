@@ -39,13 +39,14 @@ const teile: Record<string, F> = {
   bild: opt(img('bild', 'Bild')),
   bildAlt: opt(str('bildAlt', 'Bildbeschreibung', { hint: ALT_HINWEIS })),
   fokus: opt(str('fokus', 'Bildausschnitt', { hint: FOKUS_HINWEIS })),
+  fokusMobil: opt(str('fokusMobil', 'Bildausschnitt auf dem Handy', { hint: 'Leer = wie oben. ' + FOKUS_HINWEIS })),
   button: opt(str('button', 'Button-Text')),
   buttonLink: opt(str('buttonLink', 'Button-Ziel', { hint: 'z. B. /andy/ oder /blog/titel-des-beitrags/' })),
 };
 const abschnitt = (name: string, label: string, felder: string[], x: F = {}): F => ({
   name, label, widget: 'object', collapsed: true, required: false, fields: felder.map((f) => teile[f]), ...x,
 });
-const kopf = (felder = ['eyebrow', 'titel', 'lead', 'bild', 'bildAlt', 'fokus']) => abschnitt('kopf', 'Seitenkopf', felder, { collapsed: false });
+const kopf = (felder = ['eyebrow', 'titel', 'lead', 'bild', 'bildAlt', 'fokus', 'fokusMobil']) => abschnitt('kopf', 'Seitenkopf', felder, { collapsed: false });
 const seo = [
   opt(str('seoTitel', 'Titel im Browser-Tab und bei Google')),
   opt(txt('seoBeschreibung', 'Beschreibung für Google', { hint: 'Ein bis zwei Sätze, höchstens ca. 160 Zeichen.' })),
