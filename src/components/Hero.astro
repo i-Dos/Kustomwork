@@ -83,7 +83,7 @@ const pic = { widths: [640, 960, 1280, 1600, 2000], sizes: '100vw', formats: ['a
   .hero__ctas { display: flex; flex-wrap: wrap; gap: .8rem; margin-top: 1.6rem; }
   .eyebrow { color: var(--sand-tief); }
   .hero__neu {
-    position: absolute; right: var(--gutter); bottom: 1.5rem; max-width: min(24rem, calc(100% - 2 * var(--gutter)));
+    position: absolute; z-index: 3; right: var(--gutter); bottom: 1.5rem; max-width: min(24rem, calc(100% - 2 * var(--gutter)));
     display: grid; grid-template-columns: 1fr auto; column-gap: 1rem; align-items: center;
     background: rgba(239,229,209,.94); color: var(--ink); text-decoration: none; padding: .8rem 1.1rem; border-left: 5px solid var(--oliv);
   }
