@@ -18,7 +18,6 @@ export async function GET() {
 - E-Mail: ${site.email}
 - Öffnungszeiten: ${zeiten}. ${site.openingNote}
 - Schwerpunkt: ${site.focus}
-- Nicht angeboten: reine Service- und Reparaturaufträge
 - Fachgebiete: ${site.knowsAbout.join(', ')}
 
 ## Seiten

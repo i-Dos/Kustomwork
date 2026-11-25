@@ -53,7 +53,7 @@ export const site = {
     'Triumph und Norton (Klassiker bis 1970)', 'MFK-Abnahme Schweiz', 'Indian Larry',
   ],
   focus:
-    'Kustom-Umbauten und Neuaufbauten auf Harley-Davidson-Basis, vom Flathead der 1940er bis zum Twin Cam. Viele Teile werden selbst gedreht, gefräst und geschweisst. Dazu Occasionen in Kommission und Bekleidung.',
+    'Kustom-Umbauten und Neuaufbauten auf Harley-Davidson-Basis, vom Flathead der 1940er bis zum Twin Cam. Viele Teile werden selbst gedreht, gefräst und geschweisst. Dazu Service, MFK, Reifen, Teile, Occasionen in Kommission und Bekleidung.',
 
   // --- Profile (sameAs) --------------------------------------
   social: { instagram: firma.instagram, facebook: firma.facebook, googleBusiness: firma.googleBusiness },
