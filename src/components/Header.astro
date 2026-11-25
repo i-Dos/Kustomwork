@@ -16,7 +16,7 @@ const isHome = path === '/';
       </button>
       <ul id="menu" class="menu">
         {site.nav.map((n) => (
-          <li><a href={n.href} aria-current={path.startsWith(n.href) ? 'page' : undefined}>{n.label}</a></li>
+          <li><a href={n.href} data-astro-prefetch="viewport" aria-current={path.startsWith(n.href) ? 'page' : undefined}>{n.label}</a></li>
         ))}
       </ul>
     </nav>

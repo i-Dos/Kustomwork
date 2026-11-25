@@ -32,7 +32,9 @@ export default {
     const res = await env.ASSETS.fetch(request);
     let out = new Response(res.body, res);
     out.headers.set('X-Robots-Tag', 'noindex, nofollow');
-    out.headers.set('Cache-Control', 'private, no-store');
+    // Caching wie live: Dateien mit Hash im Namen ein Jahr, Logos/Icons einen Tag, Seiten kurz.
+    // «private», weil die Vorschau passwortgeschützt ist. Vorher «no-store»: jede Seite lud alles neu (langsam auf dem Handy).
+    out.headers.set('Cache-Control', cacheRegel(pfad));
     if ((res.headers.get('Content-Type') || '').includes('text/html')) {
       out = new HTMLRewriter()
         .on('meta[name="robots"]', { element: (el) => el.setAttribute('content', 'noindex, nofollow') })
@@ -41,6 +43,13 @@ export default {
     return out;
   },
 };
+
+function cacheRegel(pfad) {
+  if (pfad.startsWith('/_astro/') || pfad.startsWith('/fonts/')) return 'private, max-age=31536000, immutable';
+  if (/\.(svg|png|jpe?g|webp|avif|ico|woff2)$/.test(pfad)) return 'private, max-age=86400';
+  if (pfad.startsWith('/admin/') || pfad === '/sw.js') return 'no-cache';
+  return 'private, max-age=120'; // Seiten: kurz, damit Änderungen aus /admin rasch sichtbar sind
+}
 
 async function sha256(text) {
   const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(text));

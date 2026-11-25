@@ -71,6 +71,8 @@ function htaccess() {
 }
 
 export default defineConfig({
+  // Seiten vorladen: Desktop beim Darüberfahren, Menü auf dem Handy sobald es sichtbar ist
+  prefetch: { prefetchAll: true, defaultStrategy: 'hover' },
   // Fertig optimierte Bilder (AVIF/WebP) liegen im Repo, damit Cloudflare sie nicht
   // bei jedem Build neu rechnen muss (sonst über 10 Minuten). Aufräumen: npm run bildcache:neu
   cacheDir: './.bildcache',
