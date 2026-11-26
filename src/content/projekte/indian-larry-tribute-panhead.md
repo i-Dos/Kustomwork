@@ -8,10 +8,10 @@ stil: Old School Chopper
 cover: ../../assets/fotos/larry-seite.jpg
 coverAlt: Indian-Larry-Tribute-Bike, Panhead-Chopper mit Weisswandreifen am Zürichsee
 featured: true
-quelle: 'Erschienen als «Memory Machine» in Chrom & Flammen. Text: Michael Stein. Fotos: Andy und Fabienne Gemperle.'
+quelle: 'Erschienen als «Memory Machine» in Chrom & Flammen. Text: Michael Stein.'
 galerie:
   - src: ../../assets/fotos/jimdo/larry-1.jpg
-    alt: Das Indian-Larry-Bike in einer späteren Ausbaustufe
+    alt: Das Indian-Larry-Bike in einer späteren Ausbaustufe, bevor es zerlegt wurde
   - src: ../../assets/fotos/jimdo/larry-2.jpg
     alt: Tank mit Indian-Larry-Schriftzug und Pinstriping, neuere Aufnahme
   - src: ../../assets/fotos/jimdo/larry-3.jpg
@@ -74,7 +74,7 @@ technik:
   - bereich: Drehmomente
     offen: Andys Werte und Reihenfolge für Zylinderköpfe, Kipphebelböcke und Achsmuttern.
 ergaenzungen:
-  - frage: In welchem Jahr war das Bike fertig, und wann erschien der Artikel? Wie sieht es heute aus, und was wurde seither umgebaut? Existieren neue Fotos?
+  - frage: In welchem Jahr war das Bike fertig, und wann erschien der Artikel? Welche Teile des Bikes gibt es heute noch, und wo stecken sie drin?
     antwort: ""
     nach: ende
 ---
@@ -99,4 +99,4 @@ Nach rund neun Monaten fuhr das Bike zum ersten Mal auf die Strasse. Seither gil
 
 ## Und heute?
 
-Das Bike gibt es noch, inzwischen weiter umgebaut. Die neueren Aufnahmen in der Galerie zeigen es in einer späteren Ausbaustufe.
+So wie auf den Fotos gibt es das Bike heute nicht mehr. Erhalten sind nur noch Teile davon. Die Geschichte aber fährt weiter mit: Ohne die Larry-Maschine gäbe es Gemperle's KustomWork nicht.

@@ -18,7 +18,7 @@ highlights:
   - Höchstens 200 km seit Revision
   - Einzelvergaser
 ergaenzungen:
-  - frage: Ist die Triumph noch verfügbar und stimmt der Preis? Die MFK 09.2026 ist abgelaufen oder läuft bald ab.
+  - frage: Die MFK 09.2026 ist abgelaufen. Wird die Triumph vor dem Verkauf neu vorgeführt?
     antwort: ""
     nach: ende
 ---

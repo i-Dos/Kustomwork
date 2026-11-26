@@ -101,7 +101,7 @@ export const site = {
 
   logo: { hell: '/logo/logo-sand.svg', dunkel: '/logo/logo-braun.svg', ratio: 2142 / 1923 },
 
-  photoCredit: 'Fotos: Andy und Fabienne Gemperle',
+  photoCredit: 'Fotos: Andy Gemperle',
 } as const;
 
 /** Vorschau: PREVIEW=true beim Build => noindex überall, robots.txt sperrt alles */

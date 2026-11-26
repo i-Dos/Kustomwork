@@ -10,4 +10,4 @@ Die Inhalte dieser Website werden mit Sorgfalt erstellt. Für Richtigkeit, Volls
 
 ## Urheberrechte
 
-Texte, Fotos und Gestaltung gehören Gemperle's KustomWork oder den genannten Urhebern. Fotos: Andy und Fabienne Gemperle. Verwendung nur mit schriftlicher Zustimmung.
+Texte, Fotos und Gestaltung gehören Gemperle's KustomWork oder den genannten Urhebern.  Verwendung nur mit schriftlicher Zustimmung.

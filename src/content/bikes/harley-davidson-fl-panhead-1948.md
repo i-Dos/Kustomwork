@@ -14,5 +14,7 @@ galerie:
     alt: Harley-Davidson FL Panhead 1948, andere Seite
 highlights:
   - Aufbau 2023
-  - Viel Kustom, viel Original
+  - Viel Kustom
+  - Viel Original
+  - Der Kenner kennt's
 ---

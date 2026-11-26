@@ -17,7 +17,7 @@ ergaenzungen:
   - frage: Welches war dein erstes Bike, und in welchem Jahr? Wer hat dir das Schrauben gezeigt, oder hast du alles selbst gelernt?
     antwort: ""
     nach: Vom Harley-Oldie zur Werkstatt
-  - frage: Seit wann gibt es die Werkstatt offiziell (ca. 2018?) und wann kam der Umzug nach Meilen? Gibt es das Larry-Bike noch, und wie sieht es heute aus? Was würdest du heute anders bauen?
+  - frage: Welche Teile der Larry-Maschine gibt es noch, und was ist aus ihnen geworden? Was würdest du heute anders bauen?
     antwort: ""
     nach: 20 Jahre später
 ---
@@ -36,7 +36,7 @@ Interessant ist, wie nah sich die beiden waren, ohne sich je zu begegnen. Diesel
 
 ## Vom Harley-Oldie zur Werkstatt
 
-Andy stammt aus Oetwil am See. Seine Liebe zu Motorrädern der alten Schule begann mit dem Kauf eines alten Harley-Oldies. Ihn faszinierte die betagte Technik, und so landete er bei allem, was «Old School» war und ist. Klassische Chopper, Hot-Rod-Kultur, Pinstriping. Und dieses Gefühl, mit einem Chopper durch die Strassen zu rollen, das man nicht beschreiben kann.
+Beruflich war Andy Wirtschaftsinformatiker. Glücklich war er dort nie, seine Leidenschaft gehörte den Harleys. Angefangen hatte sie mit dem Kauf eines alten Harley-Oldies. Ihn faszinierte die betagte Technik, und so landete er bei allem, was «Old School» war und ist. Klassische Chopper, Hot-Rod-Kultur, Pinstriping. Und dieses Gefühl, mit einem Chopper durch die Strassen zu rollen, das man nicht beschreiben kann.
 
 ## Ein Bike aus eigenen Teilen
 
@@ -52,7 +52,9 @@ Nach neun Monaten war das Indian-Larry-Memory-Bike fertig. Seither gilt die Devi
 
 ## 20 Jahre später
 
-Aus dem Hobby wurde eine Werkstatt: Gemperle's KustomWork, zuerst in Oetwil am See, heute an der Seestrasse 619 in Meilen. Was gleich geblieben ist: Andy baut Bikes, die man fährt. Mit möglichst vielen eigenen Teilen und mit Respekt vor der alten Technik.
+2018 zog Andy den Schlussstrich unter die Informatik und machte sein Hobby zum Beruf: Gemperle's KustomWork, die eigene Werkstatt an der Seestrasse 619 in Meilen.
+
+Die Larry-Maschine gibt es so, wie sie im Magazin stand, nicht mehr. Erhalten sind nur noch Teile davon. Was gleich geblieben ist: Andy baut Bikes, die man fährt. Mit möglichst vielen eigenen Teilen und mit Respekt vor der alten Technik.
 
 ## Mehr über Indian Larry
 
